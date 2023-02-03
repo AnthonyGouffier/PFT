@@ -2,10 +2,10 @@
 
 int main() {
 
-  void init_pokemon()
-  {
+    void load_entites()
+    {
+      
 
-    
-  }
+    }
 
 }

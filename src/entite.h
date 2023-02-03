@@ -20,16 +20,19 @@ typedef struct pokemon_s
     /*partie graphique*/
     void * img;
     /*coordonne*/
-    int x , y;
+    int x,y;
 }pokemon_t;
 
 typedef struct player_s
 {
     int hp;
+    int level;
     pokemon_t *team;
     objet * objListe ;
     /*status*/
     int money;
     int interest;
     bool alive;
+
+
 }player_t;
