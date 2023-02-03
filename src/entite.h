@@ -4,7 +4,7 @@ typedef objet;
 
 typedef struct pokemon_s
 {
-    char name[64];
+    char * name;
     /*Stats*/
     int pv_max;
     int pv;
@@ -25,6 +25,7 @@ typedef struct pokemon_s
 
 typedef struct player_s
 {
+  char * name;
     int hp;
     int level;
     pokemon_t *team;
@@ -33,6 +34,7 @@ typedef struct player_s
     int money;
     int interest;
     bool alive;
+    //boutique_t boutique;
 
 
 }player_t;
