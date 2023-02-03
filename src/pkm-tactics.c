@@ -4,6 +4,7 @@ int main() {
 
   void init_pokemon()
   {
+
     
   }
 
