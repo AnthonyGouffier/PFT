@@ -35,6 +35,4 @@ typedef struct player_s
     int interest;
     bool alive;
     //boutique_t boutique;
-
-
 }player_t;
