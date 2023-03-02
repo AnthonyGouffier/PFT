@@ -10,6 +10,7 @@ void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
     (pokemon+j)->rarete=indRar;
     (pokemon+j)->stade=1;
     (pokemon+j)->alive=0;
+    (pokemon+j)->dresseur=0;
     (pokemon+j)->img=NULL;
     (pokemon+j)->x=0 , (pokemon+j)->y=0;
   }
@@ -23,7 +24,7 @@ char* capitalize(char *str) {
 
 /*Permet de créer un tableau de Pokémon avec les stats par défault*/
 pokemon_t * createPkmDatabase( int taille){
-  printf("taille %d",taille);
+  //printf("taille %d\n",taille);
   char nomRecherche[52];
   char saisie[52];
   int i = 0 ;
@@ -73,6 +74,7 @@ pokemon_t * createPkmDatabase( int taille){
 
 void printPkm(pokemon_t pokemon){
   printf("Nom : %s (id:%d) \nType : %s\nTotal %d\n PV max %d\n PV %d\n Attaque %3.f\n Defense %3.f\n Attaque Speciale %3.f\n Defense Speciale %3.f\n Vitesse %3.f\n portee %d\n Rarete %d\n ",pokemon.name,pokemon.id,pokemon.classe,pokemon.total,pokemon.pv_max,pokemon.pv,pokemon.att,pokemon.def,pokemon.attspe,pokemon.defspe,pokemon.spd,pokemon.range,pokemon.rarete);
+  printf("Ce Pokemon appartient a joueur %d\n", pokemon.dresseur);
   printf("Status : %d\n Stade d'évolution : %d\n",pokemon.alive,pokemon.stade);
   printf("Position actuelle :(%d,%d)\n", pokemon.x,pokemon.y);
 }
@@ -92,10 +94,9 @@ void affichertableau(pokemon_t *tableau, int taille){
 
 int main(){
     int taille=5;
-    int size;
-    printf("Saisir taille : "); scanf("%d",&size);
-    printf("valeur de taille : %d\n ",size);
-    pokemon_t *database=createPkmDatabase(size);
+ // printf("Saisir taille : "); scanf("%d",&taille);
+    printf("valeur de taille : %d\n ",taille);
+    pokemon_t *database=createPkmDatabase(taille);
     printf("Affichage de tableau :\n");
     sleep(1);
     affichertableau(database,taille);
