@@ -5,6 +5,7 @@ typedef bool objet;
 typedef struct pokemon_s
 {   
     int id;
+    int dresseur;
     char name[64];
     /*Stats*/
     int pv_max;
@@ -29,6 +30,7 @@ typedef struct pokemon_s
 
 typedef struct player_s
 {
+    int id;
     int hp;
     int niveau;
     pokemon_t *team;
