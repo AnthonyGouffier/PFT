@@ -1,61 +1,63 @@
-CC = gcc
+# project name (generate executable with this name)
+TARGETS  = pkm-tactics
 
-EXEC =Pkm
-CFLAGS = -Wall -g
+CC       = gcc
+# compiling flags here
+CFLAGS   = -std=c99 -Wall -I.
 
-SRCDIR=src
-OBJDIR=obj
-BINDIR=bin
-DOCDIR=doc
+LINKER   = gcc
+# linking flags here
+LFLAGS   = -Wall -I. -lm
 
-DIRS=$(OBJDIR) $(BINDIR)
+# change these to proper directories where each file should be
+SRCDIR   = src
+OBJDIR   = obj
+BINDIR   = bin
+TRGS	 := $(TARGETS:%=$(BINDIR)/%)
 
-.PHONY=DIRS
 
-all: $(DIRS) $(BINDIR)/$(EXEC)
+SDL_DIR=${HOME}/SDL2
+SDLLIB_DIR=${SDL_DIR}/lib
+SDLINC_DIR=${SDL_DIR}/include
 
+SLIBS=-L${SDLLIB_DIR} -lSDL2 -lSDL2_ttf -lSDL2_image
+SINCLUDES=-I${SDLINC_DIR}
+
+
+DIRS	 = $(OBJDIR) $(BINDIR)
+
+.PHONY: DIRS
+all: $(DIRS) $(TRGS)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
 $(BINDIR):
 	mkdir -p $(BINDIR)
-$(DOCDIR):
-	mkdir -p $(DOCDIR)
 
-SOURCES = $(wildcard $(SRCDIR)/*.c)
-INCLUDES = $(wildcard $(SRCDIR)/*.h)
-
-OBJECTS = $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-
-
-$(BINDIR)/$(EXEC): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $@
-	@echo "Liens terminés!"
-	./bin/$(EXEC)
-        #doxygen -g (si on veut générer le doxyfile à l'exécution du makefile)
+SOURCES  := $(wildcard $(SRCDIR)/*.c)
+INCLUDES := $(wildcard $(SRCDIR)/*.h)
+OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+MAINS	 := $(TARGETS:%=$(OBJDIR)/%.o)
+# Liste des fichiers .o sans ceux contenant un main
+OBJS	 := $(filter-out $(MAINS),$(OBJECTS))
+rm       = rm -f
 
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	$(CC) -c $< -I$(SRCDIR) -o $@
-	@echo "Compilation de "$<" terminée!"
+#$(BINDIR)/$(TARGET): $(OBJECTS)
+$(TRGS): $(OBJECTS)
+	@$(LINKER) $(subst $(BINDIR),$(OBJDIR),$@).o $(OBJS) $(LFLAGS) -o $@
+	@echo "Linking complete!"
 
-
+$(OBJECTS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "Compiled "$<" successfully!"
 
 .PHONY: clean
 clean:
-	-rm -rf $(OBJDIR)
-	@echo "Nettoyage terminé!"
+	@$(rm) $(OBJECTS)
+	@echo "Cleanup complete!"
 
-.PHONY: mrproper
-mrproper:
-	-rm -rf $(BINDIR)
-	-rm -rf doc/
-	@echo "Exécutable et documentation supprimés!"
-
-.PHONY: docs
-doxygen:
-	doxygen -g
-docs:
-	#mkdir -p doc : paramétrer doxyfile pour envoyer les fichiers de sortie dans le rep doc
-	doxygen doxyfile
-	open doc/html/index.html
+.PHONY: remove
+remove: clean
+	@$(rm) $(BINDIR)/$(TARGETS)
+	@echo "Executable removed!"
