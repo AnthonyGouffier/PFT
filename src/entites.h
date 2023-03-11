@@ -3,10 +3,10 @@
 typedef bool objet;
 
 typedef struct pokemon_s
-{
+{   
     int id;
     int dresseur;
-    char * name;
+    char name[64];
     /*Stats*/
     int pv_max;
     int pv;
@@ -33,10 +33,11 @@ typedef struct player_s
     int id;
     int hp;
     int niveau;
-    pokemon_t * team;
+    pokemon_t *team;
     objet * objListe ;
     /*status*/
     int money;
     int interest;
     bool alive;
 }player_t;
+
