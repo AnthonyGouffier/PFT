@@ -1,11 +1,9 @@
-# Makefile for test.c
-
 CC=gcc
 CFLAGS=-c -Wall -g
 LDFLAGS=
-SOURCES=*.c
+SOURCES=database.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=test
+EXECUTABLE=test.exe
 
 all: $(SOURCES) $(EXECUTABLE)
 
@@ -17,4 +15,3 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	rm -rf *o $(EXECUTABLE)
-
