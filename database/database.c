@@ -28,6 +28,33 @@ void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
   }
 }
 
+pokemon_t initialiserPkm(pokemon_t pokemon){
+    pokemon.id=0;
+    pokemon.dresseur=0;
+    *pokemon.name='\0';
+    /*Stats*/
+    pokemon.pv_max=0;
+    pokemon.pv=0;
+    pokemon.total=0;
+    pokemon.att=0;
+    pokemon.def=0;
+    pokemon.attspe=0;
+    pokemon.defspe=0;
+    pokemon.spd=0;
+    pokemon.range=0;
+    /*autre*/
+    *pokemon.classe='\0';
+    pokemon.rarete=0;
+    pokemon.stade=0;
+    pokemon.alive=-1;
+    /*partie graphique*/
+    pokemon.img=NULL;
+    /*coordonne*/
+    pokemon.x=0;
+    pokemon.y=0;
+  return pokemon;
+}
+
 char* capitalize(char *str) {
     char* new_str = strdup(str);
     new_str[0] = toupper(new_str[0]);
