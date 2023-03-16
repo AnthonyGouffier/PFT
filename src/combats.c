@@ -54,7 +54,6 @@ int degats_subi_pkm(int hp,int armor,int attaque){
 
 int aporter(pok_t mat[N][N],int porter,int xpos,int ypos,pos_t enemipos){
   int i,j;
-  printf("ici ap");
   for(i=(xpos-porter);i<=(xpos+porter);i++){
     for(j=(ypos-porter);j<=(ypos+porter);j++){
       if(enemipos.y==ypos && enemipos.x==xpos){
@@ -100,26 +99,7 @@ void deplacement_pok(pok_t mat[N][N],pos_t pos,pos_t newpos){
 }
 
 
-pos_t detecte_enemie_proche(pos_t pos,pok_t mat[N][N]){
-    int i,j;
-    int plus_procheX=N,plus_procheY=N;
-    for(i=0;i<=N;i++){
-        for(j=0;j<=N;j++){       //parcous la matrice 
-            if(mat[i][j].equipe==enemi){   //Si il trouve un enemie
-                if(sqrt((i-pos.y)*(i-pos.y) + (j-pos.x)*(j-pos.x)) < sqrt((plus_procheX-pos.y)*(plus_procheX-pos.y) + (plus_procheY-pos.x)*(plus_procheY-pos.x))){
-                plus_procheX=j;
-                plus_procheY=i;
-              }
-            }
-        }
-    }
-    printf("%d",plus_procheY);
-    printf("%d",plus_procheX);
-    pos.y=plus_procheY;
-    pos.x=plus_procheX;
-    printf("%d %d ",pos.y,pos.x);
-    return pos;
-}
+
 
 void avance(pok_t mat[N][N],int xenemie,int yenemie,int posx,int posy){
   pos_t newpos;
@@ -128,33 +108,49 @@ void avance(pok_t mat[N][N],int xenemie,int yenemie,int posx,int posy){
   pos.y=posy; 
   newpos.x=posx;
   newpos.y=posy; 
-  if(posx<xenemie){
-    printf("ici 1");
-    newpos.x+=1;
-    deplacement_pok(mat,pos,newpos);
-  }else if(posx>xenemie){
-    printf("ici 2");
-    newpos.y-=1;
-    deplacement_pok(mat,pos,newpos);
-    printf("-1 x");
-  }
-  else{
-    if(posy<yenemie){
-      printf("ici");
-      newpos.y+=1;
-      deplacement_pok(mat,pos,newpos);
-        printf("+y");
+  if (posx < xenemie) {
+    newpos.x += 1;
+    deplacement_pok(mat, pos, newpos);
+    pos = newpos;
+  } else if (posx > xenemie) {
+    newpos.x -= 1;
+    deplacement_pok(mat, pos, newpos);
+    pos = newpos;
+  } else {
+    if (posy < yenemie) {
+      newpos.y += 1;
+      deplacement_pok(mat, pos, newpos);
+      pos = newpos;
+    } else if (posy > yenemie) {
+      newpos.y -= 1;
+      deplacement_pok(mat, pos, newpos);
+      pos = newpos;
     }
-    else if(posy>yenemie){
-        printf("ici");
-        newpos.y-=1;
-        deplacement_pok(mat,pos,newpos);
-        printf("y-");
-    } 
   }
 }
 
-
+pos_t detecte_enemie_proche(pos_t pos,pok_t mat[N][N],int equipe){
+    int i,j;
+    int plus_procheX=-1,plus_procheY=-1;
+    double distance_min = INFINITY;
+    for(i=0;i<N;i++){
+        for(j=0;j<N;j++){       //parcours la matrice 
+            if(mat[i][j].equipe!=equipe && mat[i][j].equipe!=0){   //Si il trouve un enemie
+                double distance = sqrt(pow(i-pos.y, 2) + pow(j-pos.x, 2));
+                if(distance < distance_min){
+                    distance_min = distance;
+                    plus_procheX = j;
+                    plus_procheY = i;
+                }
+            }
+        }
+    }
+    if(plus_procheX != -1 && plus_procheY != -1){
+        pos.x = plus_procheX;
+        pos.y = plus_procheY;
+    }
+    return pos;
+}
 
 int recupere_valeur(int row, int col) {
     FILE * fiche;
@@ -230,40 +226,71 @@ void initialise(pok_t mat[N][N]){
       mat[i][j].x=i;
       mat[i][j].y=j;
       mat[i][j].porter=0;
-      mat[i][j].evol=0;
+      mat[i][j].evol=0; 
       mat[i][j].tier=0;
     }
   }
 }
 
+void affiche_stat(pok_t mat[N][N],pos_t pos){
+  int i=pos.x,j=pos.y;
+  printf("%d %d %d %d %d %d %d %d %d %d",mat[i][j].life
+  ,mat[i][j].equipe
+  ,mat[i][j].hp
+  ,mat[i][j].attaque
+  ,mat[i][j].armor
+  ,mat[i][j].x
+  ,mat[i][j].y
+  ,mat[i][j].porter
+  ,mat[i][j].evol
+  ,mat[i][j].tier);
+
+}
+
+void affiche_tout(pok_t mat[N][N]){
+  int i,j;
+  pos_t pos;
+  for (i=0; i<N; i++) {
+    for(j=0;j<N;j++){
+      printf("\n");
+      pos.x=i;
+      pos.y=j;
+      affiche_stat(mat,pos);
+    }
+  }
+}
 
 
 int main(){
 
     pok_t mat[N][N];
     initialise(mat);
+    pos_t test75;
+    test75.x =7;
+    test75.y =7; 
+    affiche_stat(mat,test75);
+    affiche_tout(mat);
+    mat[5][5].equipe=pok;
+    mat[5][5].hp=50;
+    mat[5][5].attaque=9;
+    mat[5][5].armor=30;
+    mat[5][5].x=5;
+    mat[5][5].y=5;
+    mat[5][5].porter=2;
+    mat[5][5].evol=1;
+    mat[5][5].tier=2;
+    mat[5][5].life=1;
 
-    mat[5][2].equipe=pok;
-    mat[5][2].hp=50;
-    mat[5][2].attaque=9;
-    mat[5][2].armor=30;
-    mat[5][2].x=5;
-    mat[5][2].y=2;
-    mat[5][2].porter=2;
-    mat[5][2].evol=1;
-    mat[5][2].tier=2;
-    mat[5][2].life=1;
-
-    mat[0][0].equipe=enemi;
-    mat[0][0].hp=50;
-    mat[0][0].attaque=9;  
-    mat[0][0].armor=30;
-    mat[0][0].x=0;
-    mat[0][0].y=0;
-    mat[0][0].porter=2;
-    mat[0][0].evol=1;
-    mat[0][0].tier=2;
-    mat[0][0].life=2;
+    mat[1][1].equipe=enemi;
+    mat[1][1].hp=50;
+    mat[1][1].attaque=9;  
+    mat[1][1].armor=30;
+    mat[1][1].x=1;
+    mat[1][1].y=1;
+    mat[1][1].porter=2;
+    mat[1][1].evol=1;
+    mat[1][1].tier=2;
+    mat[1][1].life=1;
 
     PL_t player1;
     PL_t player2;
@@ -275,7 +302,7 @@ int main(){
     pos_t enemi1;
     pos_t pok1;
     pos_t enemi_proche;
-
+    pos_t testdep;
     enemi1.x =0;
     enemi1.y =0;
     pok1.x =5;
@@ -293,14 +320,21 @@ int main(){
       for(i=0;i<N; i++){
         for(j=0;j<N;j++){
           if(mat[i][j].life==1){
-            printf("ici");
             enemi_proche.x=i;
             enemi_proche.y=j;
-            enemi_proche=detecte_enemie_proche(enemi_proche,mat);
+            printf("\n %d %d ",enemi_proche.y,enemi_proche.x);
+            enemi_proche=detecte_enemie_proche(enemi_proche,mat,mat[i][j].equipe);
+
+            printf("\n %d %d ",enemi_proche.y,enemi_proche.x);
             if(aporter(mat,mat[i][j].porter,i,j,enemi_proche)){
+              printf("aporter");
               mat[i][j].hp=degats_subi_pkm(mat[i][j].hp,mat[i][j].armor,mat[i][j].attaque);
             }else{
+              printf("avance");
               avance(mat,i,j,enemi_proche.x,enemi_proche.y);
+              testdep.x=i;
+              testdep.y=j;
+              affiche_stat(mat,testdep);
             }
           }
         }
@@ -322,5 +356,5 @@ int main(){
     }
 
     printf("fini");
-
+    return 0;
 }
