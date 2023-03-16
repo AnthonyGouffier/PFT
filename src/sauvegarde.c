@@ -1,4 +1,3 @@
-#include "commun.h"
 #include "entites.h"
 
 #define N 7
