@@ -54,6 +54,7 @@ int degats_subi_pkm(int hp,int armor,int attaque){
 
 int aporter(pok_t mat[N][N],int porter,int xpos,int ypos,pos_t enemipos){
   int i,j;
+  printf("ici ap");
   for(i=(xpos-porter);i<=(xpos+porter);i++){
     for(j=(ypos-porter);j<=(ypos+porter);j++){
       if(enemipos.y==ypos && enemipos.x==xpos){
@@ -116,6 +117,7 @@ pos_t detecte_enemie_proche(pos_t pos,pok_t mat[N][N]){
     printf("%d",plus_procheX);
     pos.y=plus_procheY;
     pos.x=plus_procheX;
+    printf("%d %d ",pos.y,pos.x);
     return pos;
 }
 
@@ -127,20 +129,24 @@ void avance(pok_t mat[N][N],int xenemie,int yenemie,int posx,int posy){
   newpos.x=posx;
   newpos.y=posy; 
   if(posx<xenemie){
+    printf("ici 1");
     newpos.x+=1;
     deplacement_pok(mat,pos,newpos);
   }else if(posx>xenemie){
+    printf("ici 2");
     newpos.y-=1;
     deplacement_pok(mat,pos,newpos);
     printf("-1 x");
   }
   else{
     if(posy<yenemie){
+      printf("ici");
       newpos.y+=1;
       deplacement_pok(mat,pos,newpos);
         printf("+y");
     }
     else if(posy>yenemie){
+        printf("ici");
         newpos.y-=1;
         deplacement_pok(mat,pos,newpos);
         printf("y-");
@@ -246,6 +252,7 @@ int main(){
     mat[5][2].porter=2;
     mat[5][2].evol=1;
     mat[5][2].tier=2;
+    mat[5][2].life=1;
 
     mat[0][0].equipe=enemi;
     mat[0][0].hp=50;
@@ -256,6 +263,7 @@ int main(){
     mat[0][0].porter=2;
     mat[0][0].evol=1;
     mat[0][0].tier=2;
+    mat[0][0].life=2;
 
     PL_t player1;
     PL_t player2;
@@ -285,6 +293,7 @@ int main(){
       for(i=0;i<N; i++){
         for(j=0;j<N;j++){
           if(mat[i][j].life==1){
+            printf("ici");
             enemi_proche.x=i;
             enemi_proche.y=j;
             enemi_proche=detecte_enemie_proche(enemi_proche,mat);
