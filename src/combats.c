@@ -228,7 +228,7 @@ void initialise(pok_t mat[N][N]){
     for(j=0;j<N;j++) {
       mat[i][j].life=-1;
       mat[i][j].equipe=0;
-      mat[i][j].hp=0;   printf("deg = %f",deg);
+      mat[i][j].hp=0;   
       mat[i][j].attaque=0;
       mat[i][j].armor=0;
       mat[i][j].x=i;
@@ -334,8 +334,10 @@ int main(){
         affiche_test(mat); 
         affiche_stat(mat,testdep);
       }
-    }*/
+    }
     /*
+
+
     //test de porter (marche)
     int testpor;
     mat[0][2]=mat[h2][h1];
@@ -345,10 +347,10 @@ int main(){
     testpor=aporter(mat,mat[1][5].porter,1,5);
     printf("%d porter \n ",mat[1][5].porter);
     printf("%d porter \n ",testpor);
-    */
 
- 
-    /*                  //test pour avance (marche)
+    */
+    /*
+                //test pour avance (marche)
     pos_t test8; 
     pos_t savepos;
     mat[0][2]=mat[h2][h1];
@@ -368,7 +370,7 @@ int main(){
 
 
     //test de dega a porter (marche)
-    /*
+  /*
     pos_t test9; 
     mat[4][5]=mat[h2][h1];
     mat[4][4]=mat[g2][g1];
@@ -436,8 +438,8 @@ int main(){
 
       affiche_test(mat);
     }
-
     */
+    
 
 
 

@@ -1,5 +1,5 @@
 #include "commun.h"
-#include "boutique.h"
+// #include "boutique.h"
 
 typedef bool objet;
 
@@ -36,7 +36,7 @@ typedef struct player_s
     int niveau;
     pokemon_t *team;
     objet * objListe ;
-    boutique_t boutique;
+    //boutique_t boutique;
     /*status*/
     int money;
     int interest;
