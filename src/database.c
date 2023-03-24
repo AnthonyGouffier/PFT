@@ -9,6 +9,8 @@ const int NbNiv4=3;
 const int NbNiv5=2;
 
 
+
+
 /*Permet d'assigner des valeurs par default dans la structure*/
 void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
   int indRar;
@@ -68,7 +70,7 @@ pokemon_t * createPkmDatabase(int taille){
   char saisie[52];
   int i = 0 ;
   pokemon_t *tableau=malloc(sizeof(pokemon_t)*taille);        /* alloc taille tableau par rapport au nombre de Pokemon */
-  FILE * ptrFich = fopen("data.csv","r"); 
+  FILE * ptrFich = fopen("./res/data.csv","r");
   if (ptrFich == NULL) {
     perror("Erreur lors de l'ouverture du fichier");
   }
@@ -88,12 +90,12 @@ pokemon_t * createPkmDatabase(int taille){
             strcat(nomRecherche, capitalize(token)); // Ajoute le mot suivant à la variable nomRecherche
         }
     }
-                  /*recherche pokemon*/ 
+                  /*recherche pokemon*/
     fscanf(ptrFich,"%d;%[^;];%[^;];%d;%d;%f;%f;%f;%f;%f;",&(tableau+i)->id,(tableau+i)->name,(tableau+i)->classe,&(tableau+i)->total,&(tableau+i)->pv_max,&(tableau+i)->att,&(tableau+i)->def,&(tableau+i)->attspe,&(tableau+i)->defspe,&(tableau+i)->spd);
-    while((strcmp(nomRecherche, tableau[i].name) != 0) && (!feof(ptrFich)) ){       
-      //printf("Recherche en cours : %s %s\n",nomRecherche,tableau[i].name); 
+    while((strcmp(nomRecherche, tableau[i].name) != 0) && (!feof(ptrFich)) ){
+      //printf("Recherche en cours : %s %s\n",nomRecherche,tableau[i].name);
       fscanf(ptrFich,"%d;%[^;];%[^;];%d;%d;%f;%f;%f;%f;%f;",&(tableau+i)->id,(tableau+i)->name,(tableau+i)->classe,&(tableau+i)->total,&(tableau+i)->pv_max,&(tableau+i)->att,&(tableau+i)->def,&(tableau+i)->attspe,&(tableau+i)->defspe,&(tableau+i)->spd);
-      //printf("Valeur de i  : %d\n",i);        
+      //printf("Valeur de i  : %d\n",i);
     }
     if(feof(ptrFich)){
       printf("Erreur lors de la saisie du nom du Pokémon, veuillez réésayer\n");
@@ -138,7 +140,7 @@ void afficherEquipe(pokemon_t *equipe,int taille){
   {
     printPkm(equipe[i]);
   }
-  
+
 }
 
 /* Copie les pokemon N fois selon le niveau de rarete */
@@ -220,7 +222,7 @@ int main(){
   free(pkm4);
   free(pkm5);
 
-  affichertableau(basetest,NbNivTotal);  
+  affichertableau(basetest,NbNivTotal);
   printf("Le code fonctionne correctement !\n");
   distribution(basetest,database,NbNivTotal);
   affichertableau(database,tailleFinal);

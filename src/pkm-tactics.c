@@ -26,8 +26,8 @@
 	poke1_tier1->rarete = 1;
 	poke2_tier1->rarete = 1;
 
-	poke1_tier1->name = "Pikachu";
-	poke2_tier1->name = "Chenipan";
+	//poke1_tier1->name = "Pikachu";
+	//poke2_tier1->name = "Chenipan";
 
 	database[0] = poke1_tier1;
 	database[1] = poke2_tier1;
