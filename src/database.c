@@ -8,10 +8,14 @@ const int NbNiv3=4;
 const int NbNiv4=3;
 const int NbNiv5=2;
 
+#define DEFAULT_MAX_HP 100
+#define DEFAULT_RANGE 1
+#define DEFAULT_STAGE 1
+#define DEFAULT_ALIVE false
+#define DEFAULT_X 0
+#define DEFAULT_Y 0
 
-
-
-/*Permet d'assigner des valeurs par default dans la structure*/
+//assigne les stats par defaut à un pokemon.
 void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
   int indRar;
   do{
@@ -19,66 +23,70 @@ void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
   }
   while (indRar < 0 || indRar > 5);
   for (int j = 0 ; j < taille ; j++){
-    (pokemon+j)->pv=(pokemon+j)->pv_max;
-    (pokemon+j)->range=1;
-    (pokemon+j)->stade=1;
-    (pokemon+j)->alive=0;
-    (pokemon+j)->dresseur=0;
-    (pokemon+j)->img=NULL;
-    (pokemon+j)->x=0 , (pokemon+j)->y=0;
-    (pokemon+j)->rarete=indRar;
+    (pokemon+j)->pv=(pokemon+j)->pv_max = DEFAULT_MAX_HP;
+    (pokemon+j)->range = DEFAULT_RANGE;
+    (pokemon+j)->stade = DEFAULT_STAGE;
+    (pokemon+j)->alive = DEFAULT_ALIVE;
+    (pokemon+j)->dresseur = 0;
+    (pokemon+j)->img = NULL;
+    (pokemon+j)->x = DEFAULT_X;
+    (pokemon+j)->y = DEFAULT_Y;
+    (pokemon+j)->rarete = indRar;
   }
 }
 
-pokemon_t initialiserPkm(pokemon_t pokemon){
-    pokemon.id=0;
-    pokemon.dresseur=0;
-    *pokemon.name='\0';
+
+pokemon_t* initialiserPkm(pokemon_t* pokemon){
+    pokemon->id = 0;
+    pokemon->dresseur = 0;
+    memset(pokemon->name, 0, sizeof(pokemon->name));
     /*Stats*/
-    pokemon.pv_max=0;
-    pokemon.pv=0;
-    pokemon.total=0;
-    pokemon.att=0;
-    pokemon.def=0;
-    pokemon.attspe=0;
-    pokemon.defspe=0;
-    pokemon.spd=0;
-    pokemon.range=0;
+    pokemon->pv_max = 0;
+    pokemon->pv = 0;
+    pokemon->total = 0;
+    pokemon->att = 0;
+    pokemon->def = 0;
+    pokemon->attspe = 0;
+    pokemon->defspe = 0;
+    pokemon->spd = 0;
+    pokemon->range = 0;
     /*autre*/
-    *pokemon.classe='\0';
-    pokemon.rarete=0;
-    pokemon.stade=0;
-    pokemon.alive=-1;
+    *pokemon->classe = '\0';
+    pokemon->rarete = 0;
+    pokemon->stade = 0;
+    pokemon->alive = -1;
     /*partie graphique*/
-    pokemon.img=NULL;
+    pokemon->img = NULL;
     /*coordonne*/
-    pokemon.x=0;
-    pokemon.y=0;
-  return pokemon;
+    pokemon->x = 0;
+    pokemon->y = 0;
+    return pokemon;
 }
 
+//prend en entrée une chaîne de caractères et renvoie une nouvelle chaîne avec la première lettre en majuscule.
 char* capitalize(char *str) {
     char* new_str = strdup(str);
     new_str[0] = toupper(new_str[0]);
     return new_str;
+    // NOTE : on aura besoin de free new_str
 }
 
 /*Permet de créer un tableau de N Pokémon avec les stats par défault*/
 pokemon_t * createPkmDatabase(int taille){
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF);
   printf("taille %d\n",taille);
   char nomRecherche[52];
   char saisie[52];
   int i = 0 ;
   pokemon_t *tableau=malloc(sizeof(pokemon_t)*taille);        /* alloc taille tableau par rapport au nombre de Pokemon */
-  FILE * ptrFich = fopen("../res/data.csv","r");
+  FILE * ptrFich = fopen("data.csv","r");
   if (ptrFich == NULL) {
     perror("Erreur lors de l'ouverture du fichier");
   }
   while(i<taille){
-    ptrFich = fopen("data.csv","r");
     printf("Saisir le nom du pokemon à rechercher : ");
     /*saisie nom pokemon*/
-    fflush(stdin);
     fgets(saisie, sizeof(saisie), stdin);
     saisie[strcspn(saisie, "\n")] = '\0'; // Remplace '\n' par '\0'
     char *token = strtok(saisie, " "); // Divise la chaîne de caractères en plusieurs mots
@@ -175,7 +183,7 @@ void distribution(pokemon_t* base, pokemon_t* sortie, int taille){
       copie=0;
       break;
     }
-    printf("Copie du pokemon %d fois :", copie);
+    printf("Copie du pokemon %d fois\n", copie);
     for (int j = 0; j < copie; j++) {
       printf("%d ", index+j);
       sortie[index+j] = base[i];
@@ -191,7 +199,7 @@ int main(){
   int NbNivTotal=(NbNiv1)+(NbNiv2)+(NbNiv3)+(NbNiv4)+(NbNiv5);
 
   /*initialisation statique du tableau final*/
-  pokemon_t *database = malloc(sizeof(pokemon_t)*(NbNiv1*29)+(NbNiv2*22)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10));
+  pokemon_t *database = malloc(sizeof(pokemon_t)*tailleFinal);
 
   int tailleCpl=NbNiv1+NbNiv2+NbNiv3+NbNiv4+NbNiv5;
 
