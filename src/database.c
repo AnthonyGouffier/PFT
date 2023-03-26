@@ -79,9 +79,10 @@ char* capitalize(char *str) {
 
 /*Permet de créer un tableau de N Pokémon avec les stats par défault*/
 pokemon_t * createPkmDatabase(int taille){
+  printf("(Si necessaire appuyer sur entree)\n");
   int c;
   while ((c = getchar()) != '\n' && c != EOF);
-  printf("taille %d\n",taille);
+  printf("Creation de %d Pokemon :\n",taille);
   char nomRecherche[52];
   char saisie[52];
   int i = 0 ;
