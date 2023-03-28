@@ -32,23 +32,42 @@ int main ( int argc, char* argv[] )
 		else
 		{
             myRender=SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
-            SDL_SetRenderDrawColor(myRender,255,255,255,255);
-			SDL_RenderSetLogicalSize(myRender,128,72);
+            SDL_SetRenderDrawColor(myRender,100,100,100,255);
+			SDL_RenderSetLogicalSize(myRender,86,71);
 			SDL_RenderClear(myRender);
 
-            animation = CEV_gifAnimLoad("res/sprite/nyan.gif", myRender);
+            animation = CEV_gifAnimLoad("res/sprite/Florisar.gif", myRender);
+            CEV_gifTimeSet(animation, GIF_ALL,500);
 
 			actTexture = CEV_gifTexture(animation);
 			CEV_gifLoopMode(animation, GIF_REPEAT_FOR);
 
 
+      int quit = 0;
+
             //while(!interrupt())
-						while(1)
+						while(!quit)
             {
+              //CEV_gifTimeSet(animation, GIF_ALL,500);
+
+              SDL_Event event;
+              while(SDL_PollEvent(&event))
+              {
+                switch (event.type) {
+                  case SDL_QUIT:
+                    quit = 1;
+                    break;
+                }
+              }
+
+              if(CEV_gifAnimAuto(animation))
+		          {
                 CEV_gifAnimAuto(animation);
                 SDL_RenderClear(myRender);
                 SDL_RenderCopy(myRender,actTexture,NULL,&blitPos);
                 SDL_RenderPresent(myRender);
+              }
+
             }
 
 			CEV_gifAnimFree(animation);
