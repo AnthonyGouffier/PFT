@@ -1,6 +1,6 @@
 # sdl2 cmake project-config-version input for ./configure scripts
 
-set(PACKAGE_VERSION "2.26.2")
+set(PACKAGE_VERSION "2.26.4")
 
 if(PACKAGE_VERSION VERSION_LESS PACKAGE_FIND_VERSION)
   set(PACKAGE_VERSION_COMPATIBLE FALSE)
