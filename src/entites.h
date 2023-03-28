@@ -42,3 +42,8 @@ typedef struct player_s
     int interest;
     bool alive;
 }player_t;
+
+typedef struct boutique_s
+{
+  pokemon_t * deck[5];
+} boutique_t;

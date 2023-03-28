@@ -186,12 +186,12 @@ void distribution(pokemon_t* base, pokemon_t* sortie, int taille){
 }
 
 
-int main(){
+/*int main(){
   int tailleFinal=(NbNiv1*29)+(NbNiv2*29)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10);
   int NbNivTotal=(NbNiv1)+(NbNiv2)+(NbNiv3)+(NbNiv4)+(NbNiv5);
 
   /*initialisation statique du tableau final*/
-  pokemon_t *database = malloc(sizeof(pokemon_t)*(NbNiv1*29)+(NbNiv2*22)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10));
+  /*pokemon_t *database = malloc(sizeof(pokemon_t)*(NbNiv1*29)+(NbNiv2*22)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10));
 
   int tailleCpl=NbNiv1+NbNiv2+NbNiv3+NbNiv4+NbNiv5;
 
@@ -226,4 +226,4 @@ int main(){
   printf("Le code fonctionne correctement !\n");
   distribution(basetest,database,NbNivTotal);
   affichertableau(database,tailleFinal);
-}
+}*/

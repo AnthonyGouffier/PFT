@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
+#include "entites.h"
 #define pok 1
 #define enemi 2
 #define N 7
@@ -46,7 +47,7 @@ int valides(int x,int y){
   }
 }
 
-// calcul de degats 
+// calcul de degats
 int degats_subi_pkm(int hp,int armor,int attaque){
    int  deg = attaque-((armor*attaque)/100);
    hp -= deg;
@@ -67,11 +68,11 @@ int aporter(pok_t mat[N][N],int porter,int xpos,int ypos){
     for(j=(ypos-porter);j<=(ypos+porter);j++){
       if(valides(i,j)){
         if(mat[i][j].life==1 && mat[i][j].equipe!=mat[xpos][ypos].equipe){
-        return 1; 
+        return 1;
         }
       }
     }
-  } 
+  }
   return 0;
 }
 
@@ -88,7 +89,7 @@ void effacer(pok_t mat[N][N],pos_t pos){
       mat[i][j].porter=0;
       mat[i][j].evol=0;
       mat[i][j].tier=0;
-} 
+}
 
 
 
@@ -117,16 +118,16 @@ pos_t avance(pok_t mat[N][N],int xenemie,int yenemie,int posx,int posy){
   pos_t newpos;
   pos_t pos;
   pos.x=posx;
-  pos.y=posy; 
+  pos.y=posy;
   newpos.x=posx;
-  newpos.y=posy; 
+  newpos.y=posy;
   if (posx < xenemie && valides((newpos.x+1),newpos.y)){
     newpos.x += 1;
     return newpos;
   } else if (posx > xenemie && valides((newpos.x-1),newpos.y)){
     newpos.x -= 1;
     return newpos;
-  } else if(posy < yenemie && valides(newpos.x,(newpos.y+1))){ 
+  } else if(posy < yenemie && valides(newpos.x,(newpos.y+1))){
       newpos.y += 1;
       return newpos;
   }else if(posy > yenemie && valides(newpos.x,(newpos.y-1))){
@@ -142,14 +143,14 @@ pos_t detecte_enemie_proche(pos_t pos,pok_t mat[N][N],int equipe){
     int plus_procheX=-1,plus_procheY=-1;
     double distance_min = INFINITY;
     for(i=0;i<N;i++){
-        for(j=0;j<N;j++){       //parcours la matrice 
+        for(j=0;j<N;j++){       //parcours la matrice
             if(mat[i][j].equipe!=equipe && mat[i][j].equipe!=0){   //Si il trouve un enemie
-                double distance = sqrt(pow(i-pos.y, 2) + pow(j-pos.x, 2));
+                /*double distance = sqrt(pow(i-pos.y, 2) + pow(j-pos.x, 2));
                 if(distance < distance_min){
                     distance_min = distance;
                     plus_procheX = j;
                     plus_procheY = i;
-                }
+                }*/
             }
         }
     }
@@ -200,7 +201,7 @@ int recuperehp(pok_t mat[N][N],int x,int y){
   int hp;
   mat[x][y].hp=hp;
   return hp;
-} 
+}
 
 
 void affiche_test(pok_t automate[N][N]){
@@ -228,13 +229,13 @@ void initialise(pok_t mat[N][N]){
     for(j=0;j<N;j++) {
       mat[i][j].life=-1;
       mat[i][j].equipe=0;
-      mat[i][j].hp=0;   
+      mat[i][j].hp=0;
       mat[i][j].attaque=0;
       mat[i][j].armor=0;
       mat[i][j].x=i;
       mat[i][j].y=j;
       mat[i][j].porter=0;
-      mat[i][j].evol=0; 
+      mat[i][j].evol=0;
       mat[i][j].tier=0;
     }
   }
@@ -270,7 +271,7 @@ void affiche_tout(pok_t mat[N][N]){
 }
 
 
-int main(){
+/*int main(){
 
     pok_t mat[N][N];
     initialise(mat);
@@ -288,7 +289,7 @@ int main(){
     int h2=0,h1=1;
     mat[h2][h1].equipe=enemi;
     mat[h2][h1].hp=50;
-    mat[h2][h1].attaque=20;  
+    mat[h2][h1].attaque=20;
     mat[h2][h1].armor=5;
     mat[h2][h1].x=h2;
     mat[h2][h1].y=h1;
@@ -331,7 +332,7 @@ int main(){
         testdep.x=r;
         testdep.y=r2;
         deplacement_pok(mat,testdep2,testdep);
-        affiche_test(mat); 
+        affiche_test(mat);
         affiche_stat(mat,testdep);
       }
     }
@@ -351,7 +352,7 @@ int main(){
     */
     /*
                 //test pour avance (marche)
-    pos_t test8; 
+    pos_t test8;
     pos_t savepos;
     mat[0][2]=mat[h2][h1];
     mat[1][2]=mat[h2][h1];
@@ -371,7 +372,7 @@ int main(){
 
     //test de dega a porter (marche)
   /*
-    pos_t test9; 
+    pos_t test9;
     mat[4][5]=mat[h2][h1];
     mat[4][4]=mat[g2][g1];
     mat[4][4].x=4;
@@ -439,11 +440,11 @@ int main(){
       affiche_test(mat);
     }
     */
-    
 
+/*
 
 
 
     printf("fini");
     return 0;
-}
+}*/
