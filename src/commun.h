@@ -8,17 +8,13 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void ras(){
+/*void ras(){
     printf("Le code fonctionne correctement !\n");
 }
 
 void waiting(int time){
     sleep(time);
     system("cls");system("clear");
-}
-
-
-
-void waiting(int time);
+}*/
 
 #endif

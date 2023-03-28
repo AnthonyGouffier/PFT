@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "entites.h"
-#include "boutique.h"
 
 //srand( time( NULL ) );
 
@@ -22,17 +21,14 @@ int rarete[9][5] = // stocke la probabilité de chaque tier de pokemon pour chaq
 };
 
 
-
-typedef struct boutique_s
-{
-
-  pokemon_t * deck[5];
-
-} boutique_t;
+int nbPokeTier[5]     = { 6,5,4,3,2 };     // nombre de pokemon différent pour chaque tier
+int nbRepliqueTier[5] = { 29,22,16,12,10}; // nombre de replique de chaque pokemon different pour chaque tier
 
 /*
 
   ** structure database **
+
+  [29 * 6, 22 * 5, 16 * 4, 12 * 3, 10 * 2]
 
   [tier1*nb_tier1,tier2*nb_tier2,tier3*nb_tier3,tier4*nb_tier4,tier5*nb_tier5] : size = taille
 
@@ -54,18 +50,15 @@ typedef struct boutique_s
 
 */
 
-int nbTier[5] = { 6,5,4,3,2 }
-
-
 pokemon_t * tirerPokemon(int tier, pokemon_t * database)
 {
   int start = 0;
   for(int i = 0; i <= tier-1; i++)
   {
-    start += nbTier[i];
+    start += nbPokeTier[i] * nbRepliqueTier[i];
   }
 
-  int pok_pos = rand() % nbTier[tier];
+  int pok_pos = rand() % (nbPokeTier[tier] * nbRepliqueTier[tier]);
   pok_pos += start;
 
   return database += sizeof(pokemon_t) * pok_pos;
@@ -74,12 +67,12 @@ pokemon_t * tirerPokemon(int tier, pokemon_t * database)
 
 void acheter(player_t * player, pokemon_t * pokemon, boutique_t * boutique)
 {
-  if(player->money >= pokemon->tier)
+  if(player->money >= pokemon->rarete)
   {
-    player->money-=pokemon->tier;
+    player->money-=pokemon->rarete;
     // supprimer le pokemon de la boutique
     // rajouter le pokemon au deck du joueur
-    player->team += pokemon;
+    //player->team += pokemon;
   }
 }
 
@@ -111,78 +104,10 @@ void genererBoutique(player_t * player, pokemon_t * database)
     printf("\n  ** TIER **  %i\n", tier+1);
 
     // tirage d'un pokemon aléatoire du tier tirer
-    pokemon_t poke = getRandomPokemon(tier+1, database);
+    pokemon_t * poke = tirerPokemon(tier+1, database);
     // stockage du pokemon dans la boutique du joueur
-    player->boutique = poke;
-    player->boutique += sizeof(pokemon_t);
+    //player->boutique = poke;
+    //player->boutique += sizeof(pokemon_t);
 }
 
-
-
-    /*while(drop >= rarete[indice][tier] && tier > 0)
-    {generate
-      if(!(drop >= rarete[indice][tier])) break;
-      drop = rand() % 101;
-      printf("Tier(%i): %i% | drop: %i \n", tier+1, rarete[indice][tier], drop);
-      tier--;
-    }
-    printf("Tier(%i): %i% | drop: %i \n", tier+1, rarete[indice][tier], drop);
-
-
-    printf("\n => drop tier(%i)\n", tier+1);*/
-  }
-
-
-
-
-
-  /*player_t player;
-  player.level = 6;
-  player.name = "sacha";
-
-  // tier 1
-  pokemon_t poke1_tier1;
-  pokemon_t poke2_tier1;
-  poke1_tier1.name = "poke1 tier1";
-  poke1_tier1.rarete = 0;
-  poke2_tier1.name = "poke2 tier1";
-  poke2_tier1.rarete = 0;
-
-  // tier 2
-  pokemon_t poke1_tier2;
-  pokemon_t poke2_tier2;
-  poke1_tier2.name = "poke1 tier2";
-  poke1_tier2.rarete = 1;
-  poke2_tier2.name = "poke2 tier2";
-  poke2_tier2.rarete = 1;
-
-  // tier 3
-  pokemon_t poke1_tier3;
-  pokemon_t poke2_tier3;
-  poke1_tier3.name = "poke1 tier3";
-  poke1_tier3.rarete = 2;
-  poke2_tier3.name = "poke2 tier3";
-  poke2_tier3.rarete = 2;
-
-  // tier 4
-  pokemon_t poke1_tier4;
-  pokemon_t poke2_tier4;
-  poke1_tier4.name = "poke1 tier4";
-  poke1_tier4.rarete = 3;
-  poke2_tier4.name = "poke2 tier4";
-  poke2_tier4.rarete = 3;
-
-  // tier 5
-  pokemon_t poke1_tier5;
-  pokemon_t poke2_tier5;
-  poke1_tier5.name = "poke1 tier5";
-  poke1_tier5.rarete = 4;
-  poke2_tier5.name = "poke2 tier5";
-  poke2_tier5.rarete = 4;
-
-
-  printf("Niveau joueur : %i\nNom joueur : %s\n", player.level, player.name);
-
-  generate(&player);
-
-}*/
+}

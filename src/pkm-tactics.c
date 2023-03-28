@@ -1,76 +1,65 @@
 #include <stdio.h>
-#include <stdbool.h>
+#include "../include/lin/SDL.h"
+#include "../include/lin/SDL_ttf.h"
+#include "../include/lin/SDL_image.h"
+#include "time.h"
+#include "CEV_gif.h"
 #include <stdlib.h>
-#include <time.h>
-#include "entites.h"
-#include "boutique.h"
+#include <stdint.h>
 
-	int main(){
+int main ( int argc, char* argv[] )
+{
+    SDL_Window* window      = NULL;
+	SDL_Texture* actTexture = NULL;
+	SDL_Rect blitPos 		= {0, 0 , 50 ,50};
 
-	srand( time( NULL ) );
+	CEV_GifAnim * animation = NULL;
 
-	//pokemon_t *database=createPkmDatabase(3);
+	SDL_Renderer* myRender =NULL;
 
+    srand(time(NULL));
 
-  player_t player;
-  player.niveau = 3;
-  /*player.name = "sacha";*/
+	if( SDL_Init( SDL_INIT_VIDEO ) <0)
+	{
+		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+	}
+	else
+	{
+	    window = SDL_CreateWindow( "SDL2 gif stress", 50, 50, 500, 500, 0);
+		if( !window )
+			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError());
 
-	pokemon_t * database[2];
+		else
+		{
+            myRender=SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+            SDL_SetRenderDrawColor(myRender,255,255,255,255);
+			SDL_RenderSetLogicalSize(myRender,128,72);
+			SDL_RenderClear(myRender);
 
+            animation = CEV_gifAnimLoad("res/sprite/nyan.gif", myRender);
 
-  // tier 1
-  pokemon_t * poke1_tier1;
-  pokemon_t * poke2_tier1;
-
-	poke1_tier1->rarete = 1;
-	poke2_tier1->rarete = 1;
-
-	//poke1_tier1->name = "Pikachu";
-	//poke2_tier1->name = "Chenipan";
-
-	database[0] = poke1_tier1;
-	database[1] = poke2_tier1;
-
-
-
-	//affichertableau(database, 1);
-
-  // tier 2
-  /*pokemon_t poke1_tier2;
-  pokemon_t poke2_tier2;
-  poke1_tier2.name = "poke1 tier2";
-  poke1_tier2.rarete = 1;
-  poke2_tier2.name = "poke2 tier2";
-  poke2_tier2.rarete = 1;
-
-  // tier 3
-  pokemon_t poke1_tier3;
-  pokemon_t poke2_tier3;
-  poke1_tier3.name = "poke1 tier3";
-  poke1_tier3.rarete = 2;
-  poke2_tier3.name = "poke2 tier3";
-  poke2_tier3.rarete = 2;
-
-  // tier 4
-  pokemon_t poke1_tier4;
-  pokemon_t poke2_tier4;
-  poke1_tier4.name = "poke1 tier4";
-  poke1_tier4.rarete = 3;
-  poke2_tier4.name = "poke2 tier4";
-  poke2_tier4.rarete = 3;
-
-  // tier 5
-  pokemon_t poke1_tier5;
-  pokemon_t poke2_tier5;
-  poke1_tier5.name = "poke1 tier5";
-  poke1_tier5.rarete = 4;
-  poke2_tier5.name = "poke2 tier5";
-  poke2_tier5.rarete = 4;*/
+			actTexture = CEV_gifTexture(animation);
+			CEV_gifLoopMode(animation, GIF_REPEAT_FOR);
 
 
-  //printf("Niveau joueur : %i\nNom joueur : %s\n", player.level, player.name);
+            //while(!interrupt())
+						while(1)
+            {
+                CEV_gifAnimAuto(animation);
+                SDL_RenderClear(myRender);
+                SDL_RenderCopy(myRender,actTexture,NULL,&blitPos);
+                SDL_RenderPresent(myRender);
+            }
 
-  generate(&player, database);
+			CEV_gifAnimFree(animation);
 
+		}
+	}
+
+    SDL_DestroyRenderer(myRender);
+	SDL_DestroyWindow( window );
+
+	SDL_Quit();
+
+	return 0;
 }
