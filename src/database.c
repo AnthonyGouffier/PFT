@@ -70,7 +70,7 @@ pokemon_t * createPkmDatabase(int taille){
   char saisie[52];
   int i = 0 ;
   pokemon_t *tableau=malloc(sizeof(pokemon_t)*taille);        /* alloc taille tableau par rapport au nombre de Pokemon */
-  FILE * ptrFich = fopen("../res/data.csv","r");
+  FILE * ptrFich = fopen("data.csv","r");
   if (ptrFich == NULL) {
     perror("Erreur lors de l'ouverture du fichier");
   }
@@ -187,43 +187,7 @@ void distribution(pokemon_t* base, pokemon_t* sortie, int taille){
 
 
 int main(){
-  int tailleFinal=(NbNiv1*29)+(NbNiv2*29)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10);
-  int NbNivTotal=(NbNiv1)+(NbNiv2)+(NbNiv3)+(NbNiv4)+(NbNiv5);
-
-  /*initialisation statique du tableau final*/
-  pokemon_t *database = malloc(sizeof(pokemon_t)*(NbNiv1*29)+(NbNiv2*22)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10));
-
-  int tailleCpl=NbNiv1+NbNiv2+NbNiv3+NbNiv4+NbNiv5;
-
-  pokemon_t *basetest = malloc(sizeof(pokemon_t) * tailleCpl);
-  if (basetest == NULL) {
-      fprintf(stderr, "Erreur d'allocation mémoire.\n");
-      exit(EXIT_FAILURE);
-  }
-
   // Création des tableaux par rapport au niveau
   pokemon_t *pkm1 = createPkmDatabase(NbNiv1);
-  pokemon_t *pkm2 = createPkmDatabase(NbNiv2);
-  pokemon_t *pkm3 = createPkmDatabase(NbNiv3);
-  pokemon_t *pkm4 = createPkmDatabase(NbNiv4);
-  pokemon_t *pkm5 = createPkmDatabase(NbNiv5);
 
-  // Concaténation des tableaux
-  memcpy(basetest, pkm1, sizeof(pokemon_t) * NbNiv1);
-  memcpy(basetest + NbNiv1, pkm2, sizeof(pokemon_t) * NbNiv2);
-  memcpy(basetest + NbNiv1 + NbNiv2, pkm3, sizeof(pokemon_t) * NbNiv3);
-  memcpy(basetest + NbNiv1 + NbNiv2 + NbNiv3, pkm4, sizeof(pokemon_t) * NbNiv4);
-  memcpy(basetest + NbNiv1 + NbNiv2 + NbNiv3 + NbNiv4, pkm5, sizeof(pokemon_t) * NbNiv5);
-
-  // Libération de la mémoire allouée pour les tableaux créés par createPkmDatabase
-  free(pkm1);
-  free(pkm2);
-  free(pkm3);
-  free(pkm4);
-  free(pkm5);
-
-  affichertableau(basetest,NbNivTotal);
-  printf("Le code fonctionne correctement !\n");
-  distribution(basetest,database,NbNivTotal);
-  affichertableau(database,tailleFinal);
 }
