@@ -43,6 +43,12 @@ typedef struct player_s
     bool alive;
 }player_t;
 
+typedef struct boutique_s
+{
+  pokemon_t * deck[5];
+}boutique_t;
+
+
 typedef struct pos_s{
   int y;
   int x;
