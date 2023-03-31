@@ -269,7 +269,7 @@ void affiche_tout(pok_t mat[N][N]){
   }
 }
 
-
+/*
 int main(){
 
     pok_t mat[N][N];
@@ -391,7 +391,7 @@ int main(){
     }
     affiche_stat(mat,test9);
     affiche_test(mat);
-    */
+
     affiche_test(mat);
     for(k=0;(k<50 || fin==1);k++){    //timer de 20 coup ou s arrete a fin
       printf("Temp=%d \n ",k);
@@ -437,3 +437,5 @@ int main(){
     printf("fini");
     return 0;
 }
+
+*/
