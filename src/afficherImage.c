@@ -1,7 +1,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-int main() {
+
+int main(int argc, char* argv[]) {
     // Initialisation de SDL
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -9,7 +12,7 @@ int main() {
     IMG_Init(IMG_INIT_JPG);
 
     // Chargement de l'image
-    SDL_Surface* imageSurface = IMG_Load("ressources/img/image.png");
+    SDL_Surface* imageSurface = IMG_Load("ressources/img/image.jpg");
     if (!imageSurface) {
         printf("Erreur de chargement de l'image : %s\n", IMG_GetError());
         return 1;
@@ -41,3 +44,5 @@ int main() {
 
     return 0;
 }
+
+
