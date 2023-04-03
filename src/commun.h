@@ -8,6 +8,12 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
+
+void drawCases(SDL_Renderer *renderer, int x, int y, int width, int height, int rows, int cols);
+
 /*void ras(){
     printf("Le code fonctionne correctement !\n");
 }

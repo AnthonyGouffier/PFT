@@ -27,17 +27,7 @@ int initialiserModules() {
         return 1;
     }
 }
-/*
-void chargerpolice(char *nomPolice){
-    char* police=strcat("./ressources/font/",nomPolice);
-    // Chargement de la police Arial
-    TTF_Font* font = TTF_OpenFont(police,16);
-    if (!font) {
-        printf("Erreur de chargement de la police: %s\n", TTF_GetError());
-        // Gestion de l'erreur
-    }
-}
-*/
+
 int main(int argc, char* argv[]) {
     initialiserModules();    
     // Création de la fenêtre et du renderer
