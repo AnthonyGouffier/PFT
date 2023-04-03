@@ -6,6 +6,8 @@
         "sdl_stdinc.h": "c",
         "sdl_ttf.h": "c",
         "test_img_disparaitre.C": "cpp",
-        "commun.h": "c"
+        "commun.h": "c",
+        "entites.h": "c",
+        "unistd.h": "c"
     }
 }

@@ -12,6 +12,9 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
+pokemon_t * createPkmDatabase(int taille);
+
+
 void drawCases(SDL_Renderer *renderer, int x, int y, int width, int height, int rows, int cols);
 
 /*void ras(){
