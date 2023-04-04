@@ -19,8 +19,11 @@
 pokemon_t* createPkmDatabase(int);
 pokemon_t* genererationDatabase();
 
+int initialiserModules();
 
 void drawCases(SDL_Renderer *renderer, int, int, int, int, int, int);
+
+char* int_to_string(int );
 
 /*void ras(){
     printf("Le code fonctionne correctement !\n");
@@ -30,5 +33,7 @@ void waiting(int time){
     sleep(time);
     system("cls");system("clear");
 }*/
+
+
 
 #endif
