@@ -72,18 +72,12 @@ void detruireCarteBoutique(int mouseX, int mouseY) {
 
 
 int main(int argc, char* argv[]) {
-
-    // Initialisation de SDL
-    if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) != 0){
-        SDL_Log("Erreur initialisation SDL : %s\n",SDL_GetError());
-        return EXIT_FAILURE;
-    }
-    // Initialisation de SDL_image
-    IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG);
+    
+    initialiserModules();
 
     // Création de la fenêtre
     SDL_Window* window = SDL_CreateWindow("PFT", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if ( window == NULL){
+    if ( window == NULL){ 
         SDL_Log("Creation fenetre: %s\n",SDL_GetError());
         return EXIT_FAILURE;
     }

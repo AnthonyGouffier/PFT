@@ -2,18 +2,17 @@
 
 
 
-int main(int argc, char* argv[]) {
+void creerBouton(pokemon_t pokemon) {
     initialiserModules();   
-    pokemon_t* pokemon = createPkmDatabase(1);
     // Récupération de l'ID du pokémon
-    printf("%d",pokemon->id);
+    printf("%d",pokemon.id);
 
     // Création de la fenêtre et du renderer
     SDL_Window* window = SDL_CreateWindow("Ma fenêtre", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 320, 250, SDL_WINDOW_SHOWN);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 
     // Récupération de la rareté du pokémon
-    int pokemonRarity = pokemon->rarete;
+    int pokemonRarity = pokemon.rarete;
 
     // Définition de la couleur de dessin en fonction de la rareté du pokémon
     switch (pokemonRarity) {
@@ -61,7 +60,7 @@ int main(int argc, char* argv[]) {
     SDL_RenderCopy(renderer, imageTexture, NULL,&blueRect);
     // Construction du nom de fichier de l'image
     char filename[64];
-    sprintf(filename, "ressources/img/Artwork2D/%d.png", pokemon->id);
+    sprintf(filename, "ressources/img/Artwork2D/%d.png", pokemon.id);
 
     printf("Localisation : %s",filename);
     // Chargement de l'image
@@ -104,7 +103,7 @@ int main(int argc, char* argv[]) {
     // Création d'une surface contenant le texte rendu avec la police Arial
     SDL_Color textColor = {255,255,255};
 
-    char* cout = int_to_string(pokemon->rarete);
+    char* cout = int_to_string(pokemon.rarete);
     SDL_Surface* prixText = TTF_RenderText_Solid(font,cout,textColor);
     if (!prixText) {
         printf("Erreur de rendu du texte: %s\n", TTF_GetError());
@@ -125,7 +124,7 @@ int main(int argc, char* argv[]) {
     SDL_RenderCopy(renderer,textTexture,NULL,&prixRect);
 
     
-    SDL_Surface* nomText = TTF_RenderText_Solid(font,pokemon->name,textColor);
+    SDL_Surface* nomText = TTF_RenderText_Solid(font,pokemon.name,textColor);
     if (!nomText) {
         printf("Erreur de rendu du texte: %s\n", TTF_GetError());
     }

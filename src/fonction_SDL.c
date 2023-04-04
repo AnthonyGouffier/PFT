@@ -10,6 +10,44 @@ paramètres  SDL_Renderer, coordonnées x et y du rectangle contenant les cases
 largeur et sa hauteur width et height,
 nombre de lignes et de colonnes de cases rows et cols
 */
+
+int initialiserModules() {
+    // Initialisation de SDL
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        printf("Erreur d'initialisation de SDL: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    // Initialisation de SDL_image
+    int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+    if (!(IMG_Init(imgFlags) & imgFlags)) {
+        printf("Erreur d'initialisation de SDL_image: %s\n", IMG_GetError());
+        SDL_Quit();
+        return 1;
+    }
+
+    // Initialisation de SDL_ttf
+    if (TTF_Init() == -1) {
+        printf("Erreur d'initialisation de SDL_ttf: %s\n", TTF_GetError());
+        IMG_Quit();
+        SDL_Quit();
+        return 1;
+    }
+}
+
+char* int_to_string(int n) {
+    // Calculer le nombre de chiffres de l'entier
+    int num_digits = snprintf(NULL, 0, "%d", n);
+    
+    // Allouer de la mémoire pour la chaîne de caractères
+    char* str = (char*) malloc((num_digits + 1) * sizeof(char));
+    
+    // Convertir l'entier en chaîne de caractères
+    snprintf(str, num_digits + 1, "%d", n);
+    
+    return str;
+}
+
 void drawCases(SDL_Renderer *renderer, int x, int y, int width, int height, int rows, int cols)
 {
     // Dessiner le rectangle
