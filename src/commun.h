@@ -8,14 +8,19 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "entites.h"
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
 
-pokemon_t * createPkmDatabase(int taille);
+/*PROTOTYPE DES FONCTION DE GENERER DATABASE*/
+pokemon_t* createPkmDatabase(int);
+pokemon_t* genererationDatabase();
 
 
-void drawCases(SDL_Renderer *renderer, int x, int y, int width, int height, int rows, int cols);
+void drawCases(SDL_Renderer *renderer, int, int, int, int, int, int);
 
 /*void ras(){
     printf("Le code fonctionne correctement !\n");

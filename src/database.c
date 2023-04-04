@@ -5,7 +5,6 @@ Le tableau final correspond à la database du jeu , il contient tout les pokemon
 */
 
 #include "commun.h"
-#include "entites.h"
 
 /*Initialisation des taille */
 const int NbNiv1=6;
@@ -200,8 +199,7 @@ void distribution(pokemon_t* base, pokemon_t* sortie, int taille){
   }
 }
 
-
-int main(int argc, char* argv[]){
+pokemon_t* genererationDatabase(){
   int tailleFinal=(NbNiv1*29)+(NbNiv2*29)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10);
   int NbNivTotal=(NbNiv1)+(NbNiv2)+(NbNiv3)+(NbNiv4)+(NbNiv5);
 
