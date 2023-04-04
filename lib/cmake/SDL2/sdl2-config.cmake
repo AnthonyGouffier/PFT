@@ -39,8 +39,13 @@ unset(bindir)
 unset(libdir)
 unset(includedir)
 
+<<<<<<< HEAD
 set(_sdl2_libraries_in "-lSDL2")
 set(_sdl2_static_private_libs_in " -lm -ldl -lpthread -lrt")
+=======
+set(_sdl2_libraries_in "-lmingw32 -lSDL2main -lSDL2 -mwindows")
+set(_sdl2_static_private_libs_in " -Wl,--dynamicbase -Wl,--nxcompat -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid")
+>>>>>>> origin/SDL
 
 # Convert _sdl2_libraries to list and keep only libraries + library directories
 string(REGEX MATCHALL "-[lm]([-a-zA-Z0-9._]+)" _sdl2_libraries "${_sdl2_libraries_in}")
@@ -64,7 +69,11 @@ if(_sdl2_libraries MATCHES ".*SDL2main.*")
   list(INSERT SDL2_STATIC_LIBRARIES 0 SDL2::SDL2main)
 endif()
 
+<<<<<<< HEAD
 set(_sdl2main_library ${SDL2_LIBDIR}/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2main${CMAKE_STATIC_LIBRARY_SUFFIX})
+=======
+set(_sdl2main_library ${SDL2_LIBDIR}/libSDL2main.a)
+>>>>>>> origin/SDL
 if(EXISTS "${_sdl2main_library}")
   set(SDL2MAIN_LIBRARY SDL2::SDL2main)
   if(NOT TARGET SDL2::SDL2main)
@@ -103,8 +112,13 @@ set(_sdl2_link_libraries ${_sdl2_libraries})
 list(REMOVE_ITEM _sdl2_link_libraries SDL2 SDL2main mingw32 cygwin)
 
 if(WIN32)
+<<<<<<< HEAD
   set(_sdl2_implib "${SDL2_LIBDIR}/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${CMAKE_SHARED_LIBRARY_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
   set(_sdl2_dll "${SDL2_BINDIR}/SDL2${CMAKE_SHARED_LIBRARY_SUFFIX}")
+=======
+  set(_sdl2_implib "${SDL2_LIBDIR}/libSDL2.dll.a")
+  set(_sdl2_dll "${SDL2_BINDIR}/SDL2.dll")
+>>>>>>> origin/SDL
   if(EXISTS "${_sdl2_implib}" AND EXISTS "${_sdl2_dll}")
     if(NOT TARGET SDL2::SDL2)
       add_library(SDL2::SDL2 SHARED IMPORTED)
@@ -124,7 +138,11 @@ if(WIN32)
   unset(_sdl2_implib)
   unset(_sdl2_dll)
 else()
+<<<<<<< HEAD
   set(_sdl2_shared "${SDL2_LIBDIR}/${CMAKE_SHARED_LIBRARY_PREFIX}SDL2${CMAKE_SHARED_LIBRARY_SUFFIX}")
+=======
+  set(_sdl2_shared "${SDL2_LIBDIR}/libSDL2${CMAKE_SHARED_LIBRARY_SUFFIX}")
+>>>>>>> origin/SDL
   if(EXISTS "${_sdl2_shared}")
     if(NOT TARGET SDL2::SDL2)
       add_library(SDL2::SDL2 SHARED IMPORTED)
@@ -143,7 +161,11 @@ else()
   unset(_sdl2_shared)
 endif()
 
+<<<<<<< HEAD
 set(_sdl2_static "${SDL2_LIBDIR}/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${CMAKE_STATIC_LIBRARY_SUFFIX}")
+=======
+set(_sdl2_static "${SDL2_LIBDIR}/libSDL2.a")
+>>>>>>> origin/SDL
 if(EXISTS "${_sdl2_static}")
   if(NOT TARGET SDL2::SDL2-static)
     add_library(SDL2::SDL2-static STATIC IMPORTED)
@@ -164,7 +186,11 @@ unset(_sdl2_static)
 
 unset(_sdl2_link_libraries)
 
+<<<<<<< HEAD
 set(_sdl2test_library "${SDL2_LIBDIR}/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2_test${CMAKE_STATIC_LIBRARY_SUFFIX}")
+=======
+set(_sdl2test_library "${SDL2_LIBDIR}/libSDL2_test.a")
+>>>>>>> origin/SDL
 if(EXISTS "${_sdl2test_library}")
   if(NOT TARGET SDL2::SDL2test)
     add_library(SDL2::SDL2test STATIC IMPORTED)
