@@ -8,8 +8,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-<<<<<<< HEAD
-=======
 #include "entites.h"
 
 #include <SDL.h>
@@ -24,7 +22,6 @@ pokemon_t* genererationDatabase();
 
 void drawCases(SDL_Renderer *renderer, int, int, int, int, int, int);
 
->>>>>>> origin/SDL
 /*void ras(){
     printf("Le code fonctionne correctement !\n");
 }
