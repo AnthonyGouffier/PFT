@@ -1,8 +1,4 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <stdio.h>
-#include <string.h>
+#include "commun.h"
 
 int initialiserModules() {
     // Initialisation de SDL
@@ -29,7 +25,8 @@ int initialiserModules() {
 }
 
 int main(int argc, char* argv[]) {
-    initialiserModules();    
+    initialiserModules();   
+    createPkmDatabase(5);
     // Création de la fenêtre et du renderer
     SDL_Window* window = SDL_CreateWindow("Ma fenêtre", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 320, 250, SDL_WINDOW_SHOWN);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
