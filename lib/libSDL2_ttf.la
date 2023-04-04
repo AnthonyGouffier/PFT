@@ -5,17 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-<<<<<<< HEAD
-dlname='libSDL2_ttf-2.0.so.0'
-
-# Names of this library.
-library_names='libSDL2_ttf-2.0.so.0.18.0 libSDL2_ttf-2.0.so.0 libSDL2_ttf.so'
-=======
 dlname='../bin/SDL2_ttf.dll'
 
 # Names of this library.
 library_names='libSDL2_ttf.dll.a'
->>>>>>> origin/SDL
 
 # The name of the static archive.
 old_library='libSDL2_ttf.a'
@@ -24,25 +17,15 @@ old_library='libSDL2_ttf.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-<<<<<<< HEAD
-dependency_libs=' -L/info/etu/l2info/s2102070/Documents/Projet/Pkm-Tactics/SDL_lib/lib /info/etu/l2info/s2102070/Documents/Projet/Pkm-Tactics/SDL_lib/lib/libSDL2.la -lm -ldl -lpthread -lrt'
-=======
 dependency_libs=' -lusp10 -lrpcrt4 -L/usr/local/i686-w64-mingw32/lib /usr/local/i686-w64-mingw32/lib/libSDL2.la -ldinput8 -ldxguid -ldxerr8 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lsetupapi -lversion -luuid /opt/homebrew/Cellar/mingw-w64/10.0.0_4/toolchain-i686/i686-w64-mingw32/lib/../lib/libstdc++.la'
->>>>>>> origin/SDL
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
 
 # Version information for libSDL2_ttf.
-<<<<<<< HEAD
-current=18
-age=18
-revision=0
-=======
 current=2000
 age=2000
 revision=2
->>>>>>> origin/SDL
 
 # Is this an already installed library?
 installed=yes
@@ -55,8 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-<<<<<<< HEAD
-libdir='/info/etu/l2info/s2102070/Documents/Projet/Pkm-Tactics/SDL_lib/lib'
-=======
 libdir='/Users/valve/release/SDL_ttf/SDL2_ttf-2.20.2/i686-w64-mingw32/lib'
->>>>>>> origin/SDL

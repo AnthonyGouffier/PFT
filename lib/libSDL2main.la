@@ -38,8 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-<<<<<<< HEAD
-libdir='/info/etu/l2info/s2102070/Documents/Projet/Pkm-Tactics/SDL_lib/lib'
-=======
 libdir='/Users/valve/release/SDL2/SDL2-2.26.4/i686-w64-mingw32/lib'
->>>>>>> origin/SDL

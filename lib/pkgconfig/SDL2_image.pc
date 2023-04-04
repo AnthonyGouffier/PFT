@@ -1,19 +1,11 @@
-<<<<<<< HEAD
-prefix=/info/etu/l2info/s2102070/Documents/Projet/Pkm-Tactics/SDL_lib
-=======
 prefix=/i686-w64-mingw32
->>>>>>> origin/SDL
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
 Name: SDL2_image
 Description: image loading library for Simple DirectMedia Layer
-<<<<<<< HEAD
-Version: 2.6.2
-=======
 Version: 2.6.3
->>>>>>> origin/SDL
 Requires: sdl2 >= 2.0.9
 Libs: -L${libdir} -lSDL2_image
 Requires.private: 
