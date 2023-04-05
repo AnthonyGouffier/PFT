@@ -8,9 +8,10 @@
 
 
 int main(int argc, char const *argv[]) {
+    
     int sock = 0;
     struct sockaddr_in serv_addr;
-    my_struct data;
+    pokemon_t *pokemon;
 
     // création d'un socket file descriptor
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -33,22 +34,15 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
 
-    // boucle pour envoyer des données au serveur en continu
-    for(int i=0;i<1;i++) {
-        // saisie des données à envoyer
-        printf("Entrez un entier : ");
-        scanf("%d", &(data.i));
-        printf("Entrez un caractère : ");
-        scanf(" %c", &(data.c));
-
-        // envoi des données au serveur
-        if (send(sock, &data, sizeof(data), 0) == -1) {
-            perror("Erreur lors de l'envoi");
-            exit(EXIT_FAILURE);
-        }
-
-        printf("Données envoyées avec succès.\n");
+     // réception d'un pokemon envoyé par le serveur
+    if (recv(sock, &pokemon, sizeof(pokemon_t), 0) == -1) {
+        perror("Erreur lors de la réception du pokemon");
+        exit(EXIT_FAILURE);
     }
+
+    printf("Pokemon reçu :\n");
+    //printPkm(pokemon[0]);
+    afficherEquipe(pokemon,2);
 
     // fermer la connexion
     close(sock);

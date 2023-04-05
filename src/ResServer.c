@@ -5,11 +5,12 @@
 
 #define PORT 8080
 
-int read_data_from_network(int argc, char const *argv[]) {
+int main(int argc, char const *argv[]) {
+    pokemon_t* pokemon=createPkmDatabase(2);
     int server_fd, new_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    my_struct data;
+
 
     // création d'un socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
@@ -44,20 +45,9 @@ int read_data_from_network(int argc, char const *argv[]) {
             exit(EXIT_FAILURE);
         }
 
-        // réception des données envoyées par le client
-        if (recv(new_socket, &data, sizeof(data), 0) == -1) {
-            perror("Erreur lors de la réception des données");
-            exit(EXIT_FAILURE);
-        }
-
-        // affichage des données reçues
-        printf("Entier reçu : %d\n", data.i);
-        printf("Caractère reçu : %c\n", data.c);
-
-        // envoi d'une réponse au client
-        char *msg = "Données reçues avec succès.";
-        if (send(new_socket, msg, strlen(msg), 0) == -1) {
-            perror("Erreur lors de l'envoi de la réponse");
+        // envoi d'un pokemon au client
+        if (send(new_socket, pokemon, sizeof(pokemon_t), 0) == -1) {
+            perror("Erreur lors de l'envoi du pokemon");
             exit(EXIT_FAILURE);
         }
 
