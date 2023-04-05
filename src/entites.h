@@ -1,3 +1,4 @@
+#include "SDL.h"
 #include "commun.h"
 // #include "boutique.h"
 
@@ -24,7 +25,7 @@ typedef struct pokemon_s
     int stade;
     bool alive;
     /*partie graphique*/
-    void * img;
+    SDL_Surface * imgSurface;
     /*coordonne*/
     int x , y;
 }pokemon_t;

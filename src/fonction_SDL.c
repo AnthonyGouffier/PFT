@@ -1,5 +1,4 @@
 #include "commun.h"
-#include <SDL.h>
 /*
 CE FICHIER CONTIENT DES FONCTION POUR UTILISER LA SDL PLUS RAPIDEMENT
 */

@@ -33,10 +33,16 @@ void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
     (pokemon+j)->stade = DEFAULT_STAGE;
     (pokemon+j)->alive = DEFAULT_ALIVE;
     (pokemon+j)->dresseur = 0;
-    (pokemon+j)->img = NULL;
     (pokemon+j)->x = DEFAULT_X;
     (pokemon+j)->y = DEFAULT_Y;
     (pokemon+j)->rarete = indRar;
+
+     // Construction du nom de fichier de l'image
+    char filename[64];
+    sprintf(filename, "ressources/img/Artwork2D/%d.png", pokemon->id);
+    printf("Localisation : %s",filename);
+    // Chargement de l'image
+    (pokemon+j)->imgSurface = IMG_Load(filename);
   }
 }
 
@@ -61,7 +67,7 @@ pokemon_t* initialiserPkm(pokemon_t* pokemon){
     pokemon->stade = 0;
     pokemon->alive = -1;
     /*partie graphique*/
-    pokemon->img = NULL;
+    pokemon->imgSurface = NULL;
     /*coordonne*/
     pokemon->x = 0;
     pokemon->y = 0;

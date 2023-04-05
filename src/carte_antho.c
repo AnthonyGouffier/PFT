@@ -1,7 +1,5 @@
 #include "commun.h"
 
-
-
 int main(int argc, char* argv[]) {
     initialiserModules();   
     pokemon_t* pokemon = createPkmDatabase(1);
@@ -59,15 +57,12 @@ int main(int argc, char* argv[]) {
     SDL_Surface* imageSurface = IMG_Load("ressources/img/backgroundcard.jpg");
     SDL_Texture* imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
     SDL_RenderCopy(renderer, imageTexture, NULL,&blueRect);
-    // Construction du nom de fichier de l'image
-    char filename[64];
-    sprintf(filename, "ressources/img/Artwork2D/%d.png", pokemon->id);
 
-    printf("Localisation : %s",filename);
     // Chargement de l'image
-    imageSurface = IMG_Load(filename);
+    imageSurface = pokemon->imgSurface;
     imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
 
+    
     // Récupération des dimensions de l'image
     int imageWidth = imageSurface->w;
     int imageHeight = imageSurface->h;

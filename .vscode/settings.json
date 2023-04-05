@@ -8,6 +8,8 @@
         "test_img_disparaitre.C": "cpp",
         "commun.h": "c",
         "entites.h": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "sdl_mixer.h": "c",
+        "carte.h": "c"
     }
 }

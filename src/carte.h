@@ -1,47 +1,37 @@
 #include "commun.h"
 
-
-
-void creerBouton(pokemon_t pokemon) {
-    initialiserModules();   
-    // Récupération de l'ID du pokémon
-    printf("%d",pokemon.id);
-
-    // Création de la fenêtre et du renderer
-    SDL_Window* window = SDL_CreateWindow("Ma fenêtre", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 320, 250, SDL_WINDOW_SHOWN);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
-
+void afficherCarte(SDL_Renderer* renderer, SDL_Rect* destRect, pokemon_t* pokemon) {
     // Récupération de la rareté du pokémon
-    int pokemonRarity = pokemon.rarete;
-
-    // Définition de la couleur de dessin en fonction de la rareté du pokémon
+    int pokemonRarity = pokemon->rarete;
+    // Dessin du rectangle avec la couleur spécifiée
+    SDL_Rect rectRouge = *destRect;
     switch (pokemonRarity) {
-    case 1:
-        SDL_SetRenderDrawColor(renderer, 128, 128, 128, 255); // Gris
-        break;
-    case 2:
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Vert
-        break;
-    case 3:
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // Bleu
-        break;
-    case 4:
-        SDL_SetRenderDrawColor(renderer, 128, 0, 128, 255); // Violet
-        break;
-    case 5:
-        SDL_SetRenderDrawColor(renderer, 255, 215, 0, 255); // Doré
-        break;
-    default:
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Rouge
-}
+        case 1:
+            SDL_SetRenderDrawColor(renderer, 128, 128, 128, 255); // Gris
+            break;
+        case 2:
+            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Vert
+            break;
+        case 3:
+            SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // Bleu
+            break;
+        case 4:
+            SDL_SetRenderDrawColor(renderer, 128, 0, 128, 255); // Violet
+            break;
+        case 5:
+            SDL_SetRenderDrawColor(renderer, 255, 215, 0, 255); // Doré
+            break;
+        default:
+            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Rouge
+    }
 
 // Dessin du rectangle avec la couleur spécifiée
     SDL_Rect redRect = {0, 0, 320, 250};
-    SDL_RenderFillRect(renderer,&redRect);
+    SDL_RenderFillRect(renderer,&rectRouge);
 
     // Calcul des coordonnées du coin supérieur gauche du rectangle noir
-    int blackRectX = (redRect.w - 300) / 2;
-    int blackRectY = (redRect.h - 230) / 2;
+    int blackRectX = (rectRouge.w - 300) / 2;
+    int blackRectY = (rectRouge.h - 230) / 2;
 
     // Dessin du rectangle noir
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -58,15 +48,12 @@ void creerBouton(pokemon_t pokemon) {
     SDL_Surface* imageSurface = IMG_Load("ressources/img/backgroundcard.jpg");
     SDL_Texture* imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
     SDL_RenderCopy(renderer, imageTexture, NULL,&blueRect);
-    // Construction du nom de fichier de l'image
-    char filename[64];
-    sprintf(filename, "ressources/img/Artwork2D/%d.png", pokemon.id);
 
-    printf("Localisation : %s",filename);
     // Chargement de l'image
-    imageSurface = IMG_Load(filename);
+    imageSurface = pokemon->imgSurface;
     imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
 
+    
     // Récupération des dimensions de l'image
     int imageWidth = imageSurface->w;
     int imageHeight = imageSurface->h;
@@ -87,10 +74,10 @@ void creerBouton(pokemon_t pokemon) {
     int destY = blueRect.y + (blueRect.h - destHeight) / 2;
 
     // Définition du rectangle de destination
-    SDL_Rect destRect = {destX, destY, destWidth, destHeight};
+    SDL_Rect destRect2 = {destX, destY, destWidth, destHeight};
 
     // Affichage de l'image dans le rectangle de destination
-    SDL_RenderCopy(renderer, imageTexture, NULL, &destRect);
+    SDL_RenderCopy(renderer, imageTexture, NULL, &destRect2);
     
     
     // Chargement de la police Arial
@@ -103,7 +90,7 @@ void creerBouton(pokemon_t pokemon) {
     // Création d'une surface contenant le texte rendu avec la police Arial
     SDL_Color textColor = {255,255,255};
 
-    char* cout = int_to_string(pokemon.rarete);
+    char* cout = int_to_string(pokemon->rarete);
     SDL_Surface* prixText = TTF_RenderText_Solid(font,cout,textColor);
     if (!prixText) {
         printf("Erreur de rendu du texte: %s\n", TTF_GetError());
@@ -124,7 +111,7 @@ void creerBouton(pokemon_t pokemon) {
     SDL_RenderCopy(renderer,textTexture,NULL,&prixRect);
 
     
-    SDL_Surface* nomText = TTF_RenderText_Solid(font,pokemon.name,textColor);
+    SDL_Surface* nomText = TTF_RenderText_Solid(font,pokemon->name,textColor);
     if (!nomText) {
         printf("Erreur de rendu du texte: %s\n", TTF_GetError());
     }
@@ -160,16 +147,4 @@ void creerBouton(pokemon_t pokemon) {
     // Mise à jour de l'écran
     SDL_RenderPresent(renderer);
     }
-
-
-    // Libération des ressources
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-
-    TTF_Quit();
-    IMG_Quit();
-    SDL_Quit();
-
-    return 0;
 }
