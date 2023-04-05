@@ -13,6 +13,9 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
+void generer_carteV1(pokemon_t* , SDL_Renderer* , int, int);
+
+
 /*PROTOTYPE DES FONCTION DE GENERER DATABASE*/
 pokemon_t* createPkmDatabase(int);
 pokemon_t* genererationDatabase();

@@ -10,6 +10,7 @@
         "entites.h": "c",
         "unistd.h": "c",
         "sdl_mixer.h": "c",
-        "carte.h": "c"
+        "carte.h": "c",
+        "cartegpt.h": "c"
     }
 }

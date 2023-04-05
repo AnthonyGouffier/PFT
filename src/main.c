@@ -25,7 +25,7 @@ Button CartePkm[NUM_BUTTONS];
 /**/
 SDL_Rect ArenaZone = {(SCREEN_WIDTH-AREA_WIDTH)/2,0,AREA_WIDTH,AREA_HIGH};
 
-
+pokemon_t *pokemon=NULL;
 
 void genererCartes(SDL_Renderer* renderer) {
     /* "parametres des boutons (taille espacement...)"*/
