@@ -92,7 +92,7 @@ pokemon_t * createPkmDatabase(int taille){
   char saisie[52];
   int i = 0 ;
   pokemon_t *tableau=malloc(sizeof(pokemon_t)*taille);        /* alloc taille tableau par rapport au nombre de Pokemon */
-  FILE * ptrFich = fopen("ressources./data.csv","r");
+  FILE * ptrFich = fopen("ressources/data.csv","r");
   if (ptrFich == NULL) {
     perror("Erreur lors de l'ouverture du fichier");
   }
