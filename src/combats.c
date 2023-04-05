@@ -1,39 +1,5 @@
-#include "stdio.h"
-#include "stdlib.h"
-#include "math.h"
-#define pok 1
-#define enemi 2
-#define N 7
+#include "combats.h"
 
-typedef struct pos_s{
-  int y;
-  int x;
-}pos_t;
-
-typedef struct PL_s{
-  int hp;
-  int level;
-}PL_t;
-
-typedef struct pok_s{
-  int y;
-  int x;
-  int hp;
-  int attaque;
-  int armor;
-  int life;
-  int equipe;
-  int porter;
-  int tier;
-  int evol;
-}pok_t;
-
-
-int tier_damage[3][5] = {   //tier de damage a infliger au joueur
-  {1,1,1,2,3},
-  {2,2,2,3,4},
-  {3,3,3,5,8}
-};
 
 
 int valides(int x,int y){
@@ -61,12 +27,12 @@ int est_mort_pkm(int hp){
 }
 
 
-int aporter(pok_t mat[N][N],int porter,int xpos,int ypos){
+int aporter(pokemon_t mat[N][N],int porter,int xpos,int ypos){
   int j,i;
   for(i=(xpos-porter);i<=(xpos+porter);i++){
     for(j=(ypos-porter);j<=(ypos+porter);j++){
       if(valides(i,j)){
-        if(mat[i][j].life==1 && mat[i][j].equipe!=mat[xpos][ypos].equipe){
+        if(mat[i][j].alive==1 && mat[i][j].dresseur!=mat[xpos][ypos].dresseur){
         return 1; 
         }
       }
@@ -76,35 +42,33 @@ int aporter(pok_t mat[N][N],int porter,int xpos,int ypos){
 }
 
 
-void effacer(pok_t mat[N][N],pos_t pos){
+void effacer(pokemon_t mat[N][N],pos_t pos){
       int i=pos.x,j=pos.y;
-      mat[i][j].life=-1;
-      mat[i][j].equipe=0;
-      mat[i][j].hp=0;
-      mat[i][j].attaque=0;
-      mat[i][j].armor=0;
+      mat[i][j].id=0;
+      mat[i][j].alive=0;
+      mat[i][j].dresseur=0;
+      mat[i][j].pv=0;
+      mat[i][j].pv_max=0;
+      mat[i][j].total=0;
+      mat[i][j].att=0;
+      mat[i][j].def=0;
+      mat[i][j].attspe=0;
+      mat[i][j].defspe=0;
+      mat[i][j].spd=0;
       mat[i][j].x=i;
       mat[i][j].y=j;
-      mat[i][j].porter=0;
-      mat[i][j].evol=0;
-      mat[i][j].tier=0;
+      mat[i][j].range=0;
+      mat[i][j].stade=0;
+      mat[i][j].rarete=0;
+      mat[i][j].imgSurface=NULL;
 } 
 
 
 
-void deplacement_pok(pok_t mat[N][N],pos_t pos,pos_t newpos){
+void deplacement_pok(pokemon_t mat[N][N],pos_t pos,pos_t newpos){
     int i=newpos.x,j=newpos.y;
     int x=pos.x,y=pos.y;
-      mat[i][j].life=mat[x][y].life;
-      mat[i][j].equipe=mat[x][y].equipe;
-      mat[i][j].hp=mat[x][y].hp;
-      mat[i][j].attaque=mat[x][y].attaque;
-      mat[i][j].armor=mat[x][y].armor;
-      mat[i][j].x=newpos.x;
-      mat[i][j].y=newpos.y;
-      mat[i][j].porter=mat[x][y].porter;
-      mat[i][j].evol=mat[x][y].evol;
-      mat[i][j].tier=mat[x][y].tier;
+      mat[i][j]=mat[x][y];
       effacer(mat,pos);
       pos.x=newpos.x;
       pos.y=newpos.y;
@@ -113,23 +77,23 @@ void deplacement_pok(pok_t mat[N][N],pos_t pos,pos_t newpos){
 
 
 
-pos_t avance(pok_t mat[N][N],int xenemie,int yenemie,int posx,int posy){
+pos_t avance(pokemon_t mat[N][N],int xenemie,int yenemie,int posx,int posy){
   pos_t newpos;
   pos_t pos;
   pos.x=posx;
   pos.y=posy; 
   newpos.x=posx;
   newpos.y=posy; 
-  if (posx < xenemie && valides((newpos.x+1),newpos.y ) && mat[newpos.x+1][newpos.y].life!=1){
+  if (posx < xenemie && valides((newpos.x+1),newpos.y ) && mat[newpos.x+1][newpos.y].alive!=1){
     newpos.x += 1;
     return newpos;
-  } else if (posx > xenemie && valides((newpos.x-1),newpos.y) && mat[newpos.x-1][newpos.y].life!=1){
+  } else if (posx > xenemie && valides((newpos.x-1),newpos.y) && mat[newpos.x-1][newpos.y].alive!=1){
     newpos.x -= 1;
     return newpos;
-  } else if(posy < yenemie && valides(newpos.x,(newpos.y+1)) && mat[newpos.x][newpos.y+1].life!=1){ 
+  } else if(posy < yenemie && valides(newpos.x,(newpos.y+1)) && mat[newpos.x][newpos.y+1].alive!=1){ 
       newpos.y += 1;
       return newpos;
-  }else if(posy > yenemie && valides(newpos.x,(newpos.y-1)) && mat[newpos.x][newpos.y-1].life!=1){
+  }else if(posy > yenemie && valides(newpos.x,(newpos.y-1)) && mat[newpos.x][newpos.y-1].alive!=1){
       newpos.y -= 1;
       return newpos;
   }
@@ -137,13 +101,13 @@ pos_t avance(pok_t mat[N][N],int xenemie,int yenemie,int posx,int posy){
   return newpos;
 }
 
-pos_t detecte_enemie_proche(pos_t pos,pok_t mat[N][N],int equipe){
+pos_t detecte_enemie_proche(pokemon_t mat[N][N],pos_t pos,int equipe){
     int i,j;
     int plus_procheX=-1,plus_procheY=-1;
     double distance_min = INFINITY;
     for(i=0;i<N;i++){
         for(j=0;j<N;j++){       //parcours la matrice 
-            if(mat[i][j].equipe!=equipe && mat[i][j].equipe!=0){   //Si il trouve un enemie
+            if(mat[i][j].dresseur!=equipe && mat[i][j].dresseur!=0){   //Si il trouve un enemie
                 double distance = sqrt(pow(i-pos.y, 2) + pow(j-pos.x, 2));
                 if(distance < distance_min){
                     distance_min = distance;
@@ -160,34 +124,16 @@ pos_t detecte_enemie_proche(pos_t pos,pok_t mat[N][N],int equipe){
     return pos;
 }
 
-int recupere_valeur(int row, int col) {
-    FILE * fiche;
-    int value;
-
-    fiche = fopen("infoequipe.txt", "r");
-    if (fiche == NULL) {
-        printf("Error\n");
-        return -1;
-    }
-    for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) {
-            fscanf(fiche, "%d", &value);
-        }
-    }
-
-    fclose(fiche);
-
-    return value;
-}
 
 
-int dmg_player(pok_t mat[N][N],int stage,int hp){
+
+int dmg_player(pokemon_t mat[N][N],int stage,int hp){
   int dmg=0;
   int i,j;
   for(i=0; i<N; i++){
     for(j=0;j<N;j++){
-      if(mat[i][j].equipe==enemi && mat[i][j].life==1){
-        dmg+=tier_damage[mat[i][j].evol][mat[i][j].tier];
+      if(mat[i][j].dresseur==enemi && mat[i][j].alive==1){
+        dmg+=tier_damage[mat[i][j].stade][mat[i][j].rarete];
       }
     }
   }
@@ -196,23 +142,23 @@ int dmg_player(pok_t mat[N][N],int stage,int hp){
 }
 
 
-int recuperehp(pok_t mat[N][N],int x,int y){
+int recuperehp(pokemon_t mat[N][N],int x,int y){
   int hp;
-  mat[x][y].hp=hp;
+  mat[x][y].pv=hp;
   return hp;
 } 
 
 
-void affiche_test(pok_t automate[N][N]){
+void affiche_test(pokemon_t automate[N][N]){
   printf("\n");
   int i,j;
 
   printf("\n");
   for (i=0; i<N; i++) {
     for(j=0;j<N;j++) {
-      if(automate[i][j].equipe==enemi){
+      if(automate[i][j].dresseur==enemi){
         printf(" E ");
-      }else if(automate[i][j].equipe==pok){
+      }else if(automate[i][j].dresseur==pok){
         printf(" P ");
       }else{
         printf(" _ ");
@@ -222,41 +168,24 @@ void affiche_test(pok_t automate[N][N]){
   }
 }
 
-void initialise(pok_t mat[N][N]){
-  int i,j;
-  for (i=0; i<N; i++) {
-    for(j=0;j<N;j++) {
-      mat[i][j].life=-1;
-      mat[i][j].equipe=0;
-      mat[i][j].hp=0;   
-      mat[i][j].attaque=0;
-      mat[i][j].armor=0;
-      mat[i][j].x=i;
-      mat[i][j].y=j;
-      mat[i][j].porter=0;
-      mat[i][j].evol=0; 
-      mat[i][j].tier=0;
-    }
-  }
-}
 
-void affiche_stat(pok_t mat[N][N],pos_t pos){
+void affiche_stat(pokemon_t mat[N][N],pos_t pos){
   int i=pos.x,j=pos.y;
-  printf("%d %d %d %d %d %d %d %d %d %d",mat[i][j].life
-  ,mat[i][j].equipe
-  ,mat[i][j].hp
-  ,mat[i][j].attaque
-  ,mat[i][j].armor
+  printf("%d %d %d %f %f %d %d %d %d %d",mat[i][j].alive
+  ,mat[i][j].dresseur
+  ,mat[i][j].pv
+  ,mat[i][j].att
+  ,mat[i][j].def
   ,mat[i][j].x
   ,mat[i][j].y
-  ,mat[i][j].porter
-  ,mat[i][j].evol
-  ,mat[i][j].tier);
+  ,mat[i][j].range
+  ,mat[i][j].stade
+  ,mat[i][j].rarete);
   printf(" \n ");
 
 }
 
-void affiche_tout(pok_t mat[N][N]){
+void affiche_tout(pokemon_t mat[N][N]){
   int i,j;
   pos_t pos;
   for (i=0; i<N; i++) {
