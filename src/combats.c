@@ -1,5 +1,4 @@
 #include "combats.h"
-#include "entites.h"
 
 
 
@@ -33,7 +32,7 @@ int aporter(pokemon_t mat[N][N],int porter,int xpos,int ypos){
   for(i=(xpos-porter);i<=(xpos+porter);i++){
     for(j=(ypos-porter);j<=(ypos+porter);j++){
       if(valides(i,j)){
-        if(mat[i][j].life==1 && mat[i][j].dresseur!=mat[xpos][ypos].dresseur){
+        if(mat[i][j].alive==1 && mat[i][j].dresseur!=mat[xpos][ypos].dresseur){
         return 1; 
         }
       }
@@ -61,7 +60,7 @@ void effacer(pokemon_t mat[N][N],pos_t pos){
       mat[i][j].range=0;
       mat[i][j].stade=0;
       mat[i][j].rarete=0;
-      mat[i][j].img=NULL;
+      mat[i][j].imgSurface=NULL;
 } 
 
 
@@ -169,32 +168,10 @@ void affiche_test(pokemon_t automate[N][N]){
   }
 }
 
-void initialise(pokemon_t mat[N][N]){
-  int i,j;
-  for (i=0; i<N; i++) {
-    for(j=0;j<N;j++) {
-      mat[i][j].alive=0;
-      mat[i][j].dresseur=0;
-      mat[i][j].pv=0;  
-      mat[i][j].pv_max=0;  
-      mat[i][j].att=0;
-      mat[i][j].def=0;
-      mat[i][j].attspe=0;
-      mat[i][j].defspe=0;
-      mat[i][j].spd=0;
-      mat[i][j].x=i;
-      mat[i][j].y=j;
-      mat[i][j].range=0;
-      mat[i][j].stade=0; 
-      mat[i][j].total=0;
-      mat[i][j].rarete=0;
-    }
-  }
-}
 
 void affiche_stat(pokemon_t mat[N][N],pos_t pos){
   int i=pos.x,j=pos.y;
-  printf("%d %d %d %d %d %d %d %d %d %d",mat[i][j].alive
+  printf("%d %d %d %f %f %d %d %d %d %d",mat[i][j].alive
   ,mat[i][j].dresseur
   ,mat[i][j].pv
   ,mat[i][j].att

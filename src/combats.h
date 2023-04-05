@@ -10,19 +10,11 @@
 #ifndef COMBATS_H
 #define COMBATS_H
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "math.h"
-
+#include "commun.h"
 
 #define pok 1
 #define enemi 2
-#define N 7
-
-typedef struct pos_s{
-  int y;
-  int x;
-}pos_t;
+#define N 5
 
 typedef struct PL_s{
   int hp;
@@ -123,7 +115,7 @@ pos_t avance(pokemon_t mat[N][N],int xenemie,int yenemie,int posx,int posy);
  * @param equipe 
  * @return pos_t 
  */
-pos_t detecte_enemie_proche(pos_t pos,pokemon_t mat[N][N],int equipe);
+pos_t detecte_enemie_proche(pokemon_t mat[N][N],pos_t pos,int equipe);
 
 
 /**
@@ -153,12 +145,7 @@ int recuperehp(pokemon_t mat[N][N],int x,int y);
  */
 void affiche_test(pokemon_t automate[N][N]);
 
-/**
- * @brief initialise a zero tout les stat de tout les case et -1 pour life 
- * 
- * @param mat 
- */
-void initialise(pokemon_t mat[N][N]);
+
 
 
 /**

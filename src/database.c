@@ -65,7 +65,7 @@ pokemon_t* initialiserPkm(pokemon_t* pokemon){
     *pokemon->classe = '\0';
     pokemon->rarete = 0;
     pokemon->stade = 0;
-    pokemon->alive = -1;
+    pokemon->alive = 0;
     /*partie graphique*/
     pokemon->imgSurface = NULL;
     /*coordonne*/
@@ -135,7 +135,7 @@ pokemon_t * createPkmDatabase(int taille){
 }
 
 void printPkm(pokemon_t pokemon){
-  printf("Nom : %s (id:%d) \nType : %s\nTotal %d\n PV max %d\n PV %d\n Attaque %3.f\n Defense %3.f\n Attaque Speciale %3.f\n Defense Speciale %3.f\n Vitesse %3.f\n portee %d\n Rarete %d\n ",pokemon.name,pokemon.id,pokemon.classe,pokemon.total,pokemon.pv_max,pokemon.pv,pokemon.att,pokemon.def,pokemon.attspe,pokemon.defspe,pokemon.spd,pokemon.range,pokemon.rarete);
+  printf("Nom : %s (id:%d) \nType : %s\nTotal %d\n PV max %d\n PV %d\n Attaque %3.f\n Defense %3.f\n Attaque Speciale %3.f\n Defense Speciale %3.f\n Vitesse %3.f\n portee %d\n Rarete %d\n alive %d \n ",pokemon.name,pokemon.id,pokemon.classe,pokemon.total,pokemon.pv_max,pokemon.pv,pokemon.att,pokemon.def,pokemon.attspe,pokemon.defspe,pokemon.spd,pokemon.range,pokemon.rarete,pokemon.alive);
   printf("Ce Pokemon appartient a joueur %d\n", pokemon.dresseur);
   printf("Status : %d\n Stade d'évolution : %d\n",pokemon.alive,pokemon.stade);
   printf("Position actuelle :(%d,%d)\n", pokemon.x,pokemon.y);
