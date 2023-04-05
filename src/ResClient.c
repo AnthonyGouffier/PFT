@@ -5,13 +5,11 @@
 
 #define PORT 8080
 
-
-
 int main(int argc, char const *argv[]) {
-    
+
     int sock = 0;
     struct sockaddr_in serv_addr;
-    pokemon_t *pokemon;
+    pokemon_t pokemon[2];
 
     // création d'un socket file descriptor
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -34,15 +32,15 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
 
-     // réception d'un pokemon envoyé par le serveur
-    if (recv(sock, &pokemon, sizeof(pokemon_t), 0) == -1) {
-        perror("Erreur lors de la réception du pokemon");
+    // réception de l'équipe de pokemons envoyée par le serveur
+    if (recv(sock, &pokemon, sizeof(pokemon), 0) == -1) {
+        perror("Erreur lors de la réception de l'équipe de pokemons");
         exit(EXIT_FAILURE);
     }
 
-    printf("Pokemon reçu :\n");
-    //printPkm(pokemon[0]);
-    afficherEquipe(pokemon,2);
+    printf("Equipe de pokemons reçue :\n");
+    printPkm(pokemon[1]);
+    afficherEquipe(pokemon, 2);
 
     // fermer la connexion
     close(sock);
