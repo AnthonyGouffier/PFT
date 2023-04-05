@@ -19,7 +19,7 @@ pokemon_t* genererationDatabase();
 pokemon_t* initialiserPkm(pokemon_t* );
 
 /*Creer un bouton du shop dynamiquement*/
-SDL_Rect genererCartePokemon(SDL_Renderer* renderer, int x, int y, int largeur, int hauteur, pokemon_t* pokemon) ; 
+SDL_Rect genererCartePokemon(SDL_Renderer* renderer, int x, int y, int largeur, int hauteur, pokemon_t* pokemon) ;
 
 
 /*Fonctions pratiques*/
