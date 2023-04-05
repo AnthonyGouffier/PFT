@@ -174,7 +174,7 @@ pokemon_t * genererBoutique(player_t * player, pokemon_t * database, int databas
     printf("pokemon tirer(2) : %s\n", boutique[i].name);
 
 
-    if(i!=4)boutique++;
+    //if(i!=4)boutique++;
     //boutique++;
     // tirage d'un pokemon aléatoire du tier tirer
     //pokemon_t * poke = tirerPokemon(tier+1, database);
@@ -182,11 +182,7 @@ pokemon_t * genererBoutique(player_t * player, pokemon_t * database, int databas
     //player->boutique = poke;
     //player->boutique += sizeof(pokemon_t);
   }
-  boutique = debut;
-
-  printf("\n%s\n",boutique->name);
-  boutique++;
-  printf("\n%s\n",boutique->name);
+  //boutique = debut;
 
   return boutique;
 }
@@ -198,7 +194,7 @@ int main(int argc, char* argv[])
   srand( time( NULL ) );
 
 
-  int pokemon_size = 4;
+  int pokemon_size = 6;
   pokemon_t * database = createPkmDatabase(pokemon_size);
   pokemon_t **liste = database;
   printf("Liste pokemons :\n");
@@ -231,10 +227,12 @@ int main(int argc, char* argv[])
   //printf("\n%s\n",boutique->name);
   //boutique+=sizeof(pokemon_t);
   //printf("\n%s\n",boutique->name);
-  /*for(int i = 0; i < 5; i++)
+
+  printf("\n\n------BOUTIQUE------\n\n");
+  for(int i = 0; i < 5; i++)
   {
     printf("(POKEMON %d) : %s \n", i+1, boutique->name);
-    boutique+=sizeof(pokemon_t);
-  }*/
+    boutique++;
+  }
 
 }
