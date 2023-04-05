@@ -1,5 +1,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "combats.h"
+#include "entites.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -9,50 +13,42 @@ const int GRID_ROWS = 6;
 const int GRID_COLUMNS = 6;
 
 
+
+
 void setButtonImage(SDL_Renderer* renderer, SDL_Texture* imageTexture, SDL_Rect* buttonRect) {
     // Applique la texture à la zone définie par le rectangle du bouton
     SDL_RenderCopy(renderer, imageTexture, NULL, buttonRect);
 }
 
-void swapButtonImages(SDL_Renderer* renderer, SDL_Texture* imageTexture, SDL_Rect* button1Rect, SDL_Rect* button2Rect) {
-    // Création d'une surface pour stocker l'image du premier bouton
-    SDL_Surface* button1Surface = SDL_CreateRGBSurface(0, button1Rect->w, button1Rect->h, 32, 0, 0, 0, 0);
+typedef struct {
+    SDL_Rect rect;       // Rectangle définissant la position et la taille du bouton
+    SDL_Texture* texture; // Texture du bouton (à générer avec SDL_CreateTextureFromSurface())
+} Button;
 
-    // Copie de l'image du premier bouton sur la surface
-    SDL_RenderReadPixels(renderer, button1Rect, SDL_PIXELFORMAT_ARGB8888, button1Surface->pixels, button1Surface->pitch);
-
-    // Création d'une texture à partir de la surface
-    SDL_Texture* button1Texture = SDL_CreateTextureFromSurface(renderer, button1Surface);
-
-    // Libération de la surface
-    SDL_FreeSurface(button1Surface);
-
-    // Copie de l'image du deuxième bouton sur le premier bouton
-    SDL_RenderCopy(renderer, imageTexture, button2Rect, button1Rect);
-
-    // Copie de l'image du premier bouton sur le deuxième bouton
-    SDL_RenderCopy(renderer, button1Texture, NULL, button2Rect);
-
-    // Libération de la texture du premier bouton
-    SDL_DestroyTexture(button1Texture);
-}
 
 SDL_Rect getButtonRect(int bouttonx, int bouttony) {
-    SDL_Rect buttonRect;
-    buttonRect.x = bouttonx;
-    buttonRect.y = bouttony;
-    buttonRect.w = BUTTON_SIZE;
-    buttonRect.h = BUTTON_SIZE;
-    return buttonRect;
+    Button buttonRect;
+    buttonRect.rect.x = bouttonx;
+    buttonRect.rect.y = bouttony;
+    buttonRect.rect.w = BUTTON_SIZE;
+    buttonRect.rect.h = BUTTON_SIZE;
+    
+    return buttonRect.rect;
 }
+
 
 
 int main(int argc, char* args[]) {
+
+
     // Initialisation de la SDL et des bouton sdl
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Rect bouton1;
-    SDL_Rect bouton2;
+    Button bouton1;
+    Button bouton2;
+    Button buttonRect;
+
+
 
     // Création d'une fenêtre
     SDL_Window* window = SDL_CreateWindow("Grille de boutons SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -72,6 +68,8 @@ int main(int argc, char* args[]) {
     SDL_Texture* buttonTexture2 = SDL_CreateTextureFromSurface(renderer, buttonSurface2);
     SDL_FreeSurface(buttonSurface2);
 
+    SDL_Texture* texture_save;
+
     // Chargement de l'image de fond
     SDL_Surface* backgroundSurface = IMG_Load("../res/gigarena.jpg");
     if (backgroundSurface == NULL) {
@@ -88,7 +86,43 @@ int main(int argc, char* args[]) {
 
     // Boucle principale
     int quit = 0;
-    int cpt_deplacement=0; //compteur pour que tout les 2 bouton on switch les deplacement
+    int cpt=0; //compteur pour que tout les 2 bouton on switch les deplacement
+
+    pokemon_t plateau[GRID_ROWS][GRID_COLUMNS];
+    pokemon_t poke;
+    // initialise les image du poke de test 
+
+    SDL_Surface* buttonSurface3 = IMG_Load("../res/bouton2.png");
+    SDL_Texture* buttonTexture3 = SDL_CreateTextureFromSurface(renderer, buttonSurface3);
+    SDL_FreeSurface(buttonSurface3);
+
+    //pokemon test 
+    poke.id=26;
+    poke.dresseur=2;
+    poke.name;
+    poke.classe;
+    poke.pv_max=100;
+    poke.pv=100;
+    poke.total=100;
+    poke.att=50;
+    poke.def=10;
+    poke.attspe=160;
+    poke.defspe=130;
+    poke.spd=20;
+    poke.range=40;
+    
+    poke.rarete=4;
+    poke.stade=1;
+    poke.alive=1;
+    poke.img=buttonTexture3;
+    poke.x=0;
+    poke.y=0;
+
+    //place les poke de test
+    plateau[3][3]=poke;
+    plateau[4][4]=poke;
+
+
     while (!quit) {
         int mouseX, mouseY;
         // Gestion des événements
@@ -105,15 +139,16 @@ int main(int argc, char* args[]) {
                         for (int column = 0; column < GRID_COLUMNS; column++) {
                             int buttonX = gridX + column * (BUTTON_SIZE + BUTTON_MARGIN);
                             int buttonY = gridY + row * (BUTTON_SIZE + BUTTON_MARGIN);
-                            if (mouseX >= buttonX && mouseX <= buttonX + BUTTON_SIZE && mouseY >= buttonY && mouseY <= buttonY + BUTTON_SIZE) {                          
-                                    printf("Bouton (%d, %d) cliqué !\n", row, column);
-                                    if(cpt_deplacement==0){
-                                        bouton1=getButtonRect(buttonX,buttonY);
-                                        cpt_deplacement++;
+                            if (mouseX >= buttonX && mouseX <= buttonX + BUTTON_SIZE && mouseY >= buttonY && mouseY <= buttonY + BUTTON_SIZE) { 
+                                   /* if(cpt==0){
+                                        bouton1.rect=getButtonRect(buttonX,buttonY);
+                                        bouton1.texture=buttonRect.texture;
+                                        cpt++;
                                     }else{
-                                        cpt_deplacement=0;
-                                        bouton2=getButtonRect(buttonX,buttonY);
-                                    }
+                                        cpt=0;
+                                        bouton2.rect=getButtonRect(buttonX,buttonY);
+                                        bouton2.texture=buttonRect.texture;
+                                    }*/
 
                             }
                         }
@@ -134,13 +169,26 @@ int main(int argc, char* args[]) {
                 // Calcul de la position du bouton dans la grille
                 int buttonX = gridX + column * (BUTTON_SIZE + BUTTON_MARGIN);
                 int buttonY = gridY + row * (BUTTON_SIZE + BUTTON_MARGIN);
-
-                // Dessiner le rectangle du bouton
-                SDL_Rect buttonRect = { buttonX, buttonY, BUTTON_SIZE, BUTTON_SIZE };
-                SDL_RenderFillRect(renderer, &buttonRect);
-                SDL_RenderCopy(renderer, buttonTexture, NULL, &buttonRect);
-                setButtonImage(renderer,buttonTexture2,&bouton1);
-                setButtonImage(renderer,buttonTexture2,&bouton2);
+                 // Dessiner le rectangle du bouton
+                buttonRect.rect.x =  buttonX;   
+                buttonRect.rect.y = buttonY;
+                buttonRect.rect.w =  BUTTON_SIZE;
+                buttonRect.rect.h = BUTTON_SIZE;
+                if(plateau[row][column].alive==1){
+                    //charge la texture du pok
+                    setButtonImage(renderer,buttonTexture,&buttonRect.rect);
+                }/*
+                if (cpt == 1) {
+                    if (bouton1.texture && bouton2.texture) {
+                          SDL_Texture* texture_save = bouton2.texture;
+                          bouton2.texture = bouton1.texture;
+                          bouton1.texture = texture_save;
+                          setButtonImage(renderer,bouton1.texture , &bouton1.rect);
+                          setButtonImage(renderer,bouton2.texture , &bouton2.rect);
+                    }
+                             
+                } 
+                */  
             }
         }
 
@@ -149,6 +197,7 @@ int main(int argc, char* args[]) {
     }
 
     // Nettoyage des ressources
+    SDL_DestroyTexture(buttonTexture3);
     SDL_DestroyTexture(buttonTexture2);
     SDL_DestroyTexture(buttonTexture);
     SDL_DestroyTexture(backgroundTexture);
