@@ -1,3 +1,14 @@
+/**
+ * @file ResServer.c
+ * @author vivien (you@domain.com)
+ * @brief Le programme est un serveur pour le réseaux. Ce programme vas d'abord créer une socket puis vas ensuite configurer l'adresse IP et le port du serveur. Une fois cela fais il vas attaché le socket à l'adresse IP et au port. Le serveur vas ensuite attendre une connexion. Une fois la connexion faite le serveur vas envoyer les données au client et fermera la connexion.
+ * @version 0.1
+ * @date 2023-04-05
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>

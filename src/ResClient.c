@@ -1,3 +1,15 @@
+/**
+ * @file ResClient.c
+ * @author vivien (you@domain.com)
+ * @brief le programme est un client réseaux, ce programme va d'abord créer un socket file descriptor. Puis il va convertir l'adresse IP du serveur en format binaire. Le programme vas ensuite ce connecté au serveur et vas recevoir les données puis la connexion ce fermera.
+ * @version 0.1
+ * @date 2023-04-05
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
+
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
