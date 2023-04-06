@@ -13,6 +13,9 @@ COMPILER SUR WINDOWS :
 #define  AREA_WIDTH SCREEN_WIDTH * 0.6 
 #define  AREA_HIGH  SCREEN_HEIGHT * 0.65
 
+#define WIDTHX_CARTE 320
+#define HIGHTY_CARTE 250
+
 typedef struct {
     SDL_Rect rect;
     SDL_Texture* texture;
@@ -22,29 +25,42 @@ typedef struct {
 } Button;
 
 Button CartePkm[NUM_BUTTONS];
+carteBoutique tabCartes[NUM_BUTTONS]; 
 
 /**/
 SDL_Rect ArenaZone = {(SCREEN_WIDTH-AREA_WIDTH)/2,0,AREA_WIDTH,AREA_HIGH};
 
+
+/*
+pokemon_t genererCartes(SDL_Renderer* renderer , SDL_Window* window, pokemon_t* tabCartes) {
+
+ //   "parametres des boutons (taille espacement...)"*/
+
 pokemon_t *pokemon=NULL;
 
-void genererCartes(SDL_Renderer* renderer) {
-    /* "parametres des boutons (taille espacement...)"*/
+carteBoutique* genererTabCarte(pokemon_t* pokemonListe, SDL_Renderer* renderer, SDL_Window* window) {
     int buttonWidth = (SCREEN_WIDTH * 0.6) / NUM_BUTTONS;
     int buttonHeight = SCREEN_HEIGHT / 6;
     int buttonSpacing = SCREEN_WIDTH * 0.1 / (NUM_BUTTONS + 1);
     int buttonOffset = (SCREEN_WIDTH * 0.5) / (NUM_BUTTONS + 1);
     int firstButtonX = buttonOffset + buttonSpacing;
 
-    for (int i = 0; i < NUM_BUTTONS; i++) {
-        CartePkm[i].rect.x = firstButtonX + i * buttonWidth + i * buttonSpacing;
-        CartePkm[i].rect.y = SCREEN_HEIGHT * 0.8125;
-        CartePkm[i].rect.w = buttonWidth;
-        CartePkm[i].rect.h = buttonHeight;
-        CartePkm[i].visible = true;
-        CartePkm[i].clicked = false;
+    // Allouer dynamiquement de la mémoire pour le tableau de structures
+    carteBoutique* tabCarte = malloc(NUM_BUTTONS * sizeof(carteBoutique));
+    if (tabCarte == NULL) {
+        // Gestion de l'erreur si l'allocation échoue
+        printf("Erreur d'allocation de mémoire\n");
+        return NULL; // ou effectuer une autre action appropriée
     }
+
+    for (int i = 0; i < NUM_BUTTONS; i++) {
+        printPkm(pokemonListe[i]);
+        printf("valeur de i : %d\n\n",i);
+        tabCarte[i] = genererCartePkmBoutique(pokemonListe[i], renderer, window ,((i * buttonSpacing) + (i*buttonWidth*1.5)), 0 ,WIDTHX_CARTE,HIGHTY_CARTE) ;
+    }
+    return tabCarte;
 }
+
 
 void afficherCarteBoutique(SDL_Renderer* renderer) {
     char* images[NUM_BUTTONS] = {"ressources/img/pokeball.jpg", "ressources/img/superball.jpg", "ressources/img/hyperball.jpg", "ressources/img/masterball.jpg", "ressources/img/rapidball.jpg"};
@@ -72,7 +88,7 @@ void detruireCarteBoutique(int mouseX, int mouseY) {
 
 int main(int argc, char* argv[]) {
     initialiserModules();
-    pokemon_t* pokemon = createPkmDatabase(1);
+    pokemon_t* listepokemon = createPkmDatabase(5);
 
     // Création de la fenêtre
     SDL_Window* window = SDL_CreateWindow("PFT", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -113,6 +129,8 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
+
+
     // Bouton d'actualisation de la boutique
     Button BtnActu;
     BtnActu.rect.x =  SCREEN_WIDTH * 0.8;
@@ -132,10 +150,13 @@ int main(int argc, char* argv[]) {
     AcheterNiveau.clicked = false;
     
     // Initialisation des boutons
+    carteBoutique carte1=genererCartePkmBoutique(listepokemon[1], renderer, window ,1050, 800 ,WIDTHX_CARTE,HIGHTY_CARTE) ;
+    carteBoutique carte2=genererCartePkmBoutique(listepokemon[2], renderer, window ,1050, 250,WIDTHX_CARTE,HIGHTY_CARTE) ;
 
-    carteBoutique  bouton1=genererCartePkmBoutique( *pokemon , renderer , window  , 500 , 500 );
-    genererCartes(renderer);
-    afficherCarteBoutique(renderer);
+
+    carteBoutique *tabcarte=genererTabCarte(listepokemon,renderer,window);
+    
+   // carteBoutique carte1 = genererCartePkmBoutique(listepokemon[0], renderer, window, 500, 500);
     
     // Boucle principale
     SDL_Event event;
@@ -168,17 +189,15 @@ int main(int argc, char* argv[]) {
                         mouseX = event.button.x;
                         mouseY = event.button.y;
                         if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &BtnActu.rect)) {
-                            genererCartes(renderer);
+                            //genererCartes(renderer,window);
                             printf("Bouton Actualiser cliqué !\n");
+                            //genererTabCarte(pokemon,renderer,window);
                             // Enlever 2 or dans la structure du joueur
                         }
                         else if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &AcheterNiveau.rect)) {
                             printf("+4 exp !\n");
                             // Enlever 4 or dans la struct joueur
                             // Ajouter 4 point de XP dans la structure joueur
-                        }
-                        else {
-                            detruireCarteBoutique(mouseX, mouseY);
                         }
                     }
                     break;
@@ -189,6 +208,16 @@ int main(int argc, char* argv[]) {
         SDL_RenderCopy(renderer, arena, NULL,&ArenaZone);
         // Afficher les cartes
         afficherCarteBoutique(renderer);
+        
+
+        afficherCartePkmBoutique(carte1 ,renderer , listepokemon[1]);//ça marche
+        afficherCartePkmBoutique(carte2 ,renderer , listepokemon[1]);
+
+        afficherCartePkmBoutique(tabcarte[0],renderer , listepokemon[0] );
+        afficherCartePkmBoutique(tabcarte[1],renderer , listepokemon[1] );
+        afficherCartePkmBoutique(tabcarte[2],renderer , listepokemon[2] );
+        afficherCartePkmBoutique(tabcarte[3],renderer , listepokemon[3] );
+        afficherCartePkmBoutique(tabcarte[4],renderer , listepokemon[4] );
 
 /*----------------RENDU DES BOUTONS-------------------------*/
         if (BtnActu.hovering==true) {
@@ -199,7 +228,6 @@ int main(int argc, char* argv[]) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
         SDL_RenderFillRect(renderer, &BtnActu.rect);
         }
-        afficherCartePkmBoutique(bouton1 ,renderer , *pokemon );
 
 
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
@@ -207,7 +235,6 @@ int main(int argc, char* argv[]) {
 
 /*------------------RENDU BANC------------------*/
     drawCases(renderer, 50, 50, 200, 800, 6, 2);
-
 
 
     SDL_RenderPresent(renderer);

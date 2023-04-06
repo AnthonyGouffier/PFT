@@ -28,7 +28,7 @@ void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
   }
   while (indRar < 0 || indRar > 5);
   for (int j = 0 ; j < taille ; j++){
-    (pokemon+j)->pv=(pokemon+j)->pv_max = DEFAULT_MAX_HP;
+    (pokemon+j)->pv=(pokemon+j)->pv_max;
     (pokemon+j)->range = DEFAULT_RANGE;
     (pokemon+j)->stade = DEFAULT_STAGE;
     (pokemon+j)->alive = DEFAULT_ALIVE;
@@ -127,8 +127,8 @@ pokemon_t * createPkmDatabase(int taille){
   fclose(ptrFich);
   auto_fill_pkm_stats(tableau,taille);
 
-  system("cls");
-  system("clear");
+//  system("cls");
+//  system("clear");
   printf("\a liste créé ! \n\n\n");
   sleep(1);
   return tableau;

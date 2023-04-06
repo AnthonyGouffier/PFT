@@ -1,10 +1,9 @@
 #include "commun.h"
 #include "carte.h"
 
-
 /*******************************************GENERATION*******************************************************/
 
-carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, SDL_Window * window ,int x , int y) {
+carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, SDL_Window * window ,int x , int y, int selectlargeur , int selecthauteur){
     // Récupération de la rareté du pokémon
     carteBoutique carte; 
     int pokemonRarity = pokemon.rarete;
@@ -12,17 +11,17 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     // Dessin du rectangle avec la couleur spécifiée
     carte.lvlRect.x=x; 
     carte.lvlRect.y=y;
-    carte.lvlRect.w=320;
-    carte.lvlRect.h=250;
+    carte.lvlRect.w=selectlargeur;
+    carte.lvlRect.h=selecthauteur;
     
     // Calcul des coordonnées du coin supérieur gauche du rectangle noir
-    int blackRectX = (carte.lvlRect.w - 300) / 2;
-    int blackRectY = (carte.lvlRect.h - 230) / 2;
+    int blackRectX = (x * 1.028) ;
+    int blackRectY = (y * 1.04);
     
     carte.blackRect.x=blackRectX;
     carte.blackRect.y=blackRectY;
-    carte.blackRect.w=300;
-    carte.blackRect.h = 230;
+    carte.blackRect.w = carte.lvlRect.w * 0.9375;
+    carte.blackRect.h = carte.lvlRect.h *  0.92;
     
     // Calcul de la hauteur du rectangle bleu
     int blueRectH = carte.blackRect.h * 0.75;
