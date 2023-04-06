@@ -1,3 +1,14 @@
+/**
+ * @file carteV1.c
+ * @author Gouffier Anthony
+ * @brief porgramme qui créer une carte du pokémon que l'on peut acheter dans la boutique, cette carte vas aussi contenir le cout et la rereté du pokémon 
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "commun.h"
 #include "carte.h"
 

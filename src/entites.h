@@ -1,3 +1,14 @@
+/**
+ * @file entites.h
+ * @author Gouffier Anthony
+ * @brief fichier qui contient les structures
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "SDL.h"
 #include <stdbool.h>
 //#include "commun.h"

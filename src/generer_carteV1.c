@@ -1,3 +1,14 @@
+/**
+ * @file generer_carteV1.c
+ * @author Gouffier Anthony
+ * @brief programme qui affiche la carte du pokemon
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "commun.h"
 
 void generer_carteV1(pokemon_t* pokemon, SDL_Renderer* renderer, int x, int y) {

@@ -1,3 +1,15 @@
+/**
+ * @file commun.h
+ * @author Gouffier Anthony, Deletang Elie, Gaumont Mael, Gérome vivien
+ * @brief contient les prototys
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
+
 #ifndef COMMUN_H_INCLUDED
 #define COMMUN_H_INCLUDED
 

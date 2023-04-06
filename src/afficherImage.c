@@ -1,3 +1,15 @@
+/**
+ * @file afficherImage.c
+ * @author Gouffier Anthony
+ * @brief test de la SDL 
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdlib.h>

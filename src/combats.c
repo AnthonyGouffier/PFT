@@ -1,3 +1,13 @@
+/**
+ * @file combats.c
+ * @author Gaumont Mael
+ * @brief programme qui va permetre de faire combatre deux équipes de pokémon l'une contre l'autre
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include "combats.h"
 
 

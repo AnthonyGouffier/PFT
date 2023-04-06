@@ -1,7 +1,7 @@
 /**
  * \file combats.h
  * @author mael (you@domain.com)
- * @brief le combat ptdr
+ * @brief le combat 
  * @version 0.1
  * @date 2023-04-03
  * 

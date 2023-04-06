@@ -1,3 +1,15 @@
+/**
+ * @file boutique.c
+ * @author Deletang Elie
+ * @brief Programme qui tire et génère un pokémon qui vas pouvoir ensuite etre acheter
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
+
 #include <time.h>
 #include "commun.h"
 

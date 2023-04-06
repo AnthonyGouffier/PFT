@@ -1,3 +1,13 @@
+/**
+ * @file fonction_SDL.c
+ * @author Gouffier Anthony
+ * @brief 
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include "commun.h"
 /*
 CE FICHIER CONTIENT DES FONCTION POUR UTILISER LA SDL PLUS RAPIDEMENT

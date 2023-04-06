@@ -1,3 +1,13 @@
+/**
+ * @file banc.c
+ * @author Gouffier Anthony
+ * @brief Fonction qui dessine le banc qui vas contenir les pokémon en attente
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include <SDL.h>
 
 /*

@@ -1,3 +1,6 @@
+
+
+
 /*
     GNU/Linux et MacOS
         > gcc main.c $(sdl2-config --cflags --libs) -o prog
