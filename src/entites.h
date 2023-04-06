@@ -1,5 +1,6 @@
 #include "SDL.h"
-#include "commun.h"
+#include <stdbool.h>
+//#include "commun.h"
 // #include "boutique.h"
 
 typedef bool objet;

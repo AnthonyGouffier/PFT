@@ -9,7 +9,7 @@
 
 int main ( int argc, char* argv[] )
 {
-    SDL_Window* window      = NULL;
+  SDL_Window* window      = NULL;
 	SDL_Texture* actTexture = NULL;
   SDL_Texture* actTexture_back = NULL;
 
@@ -48,9 +48,9 @@ int main ( int argc, char* argv[] )
 			SDL_RenderSetLogicalSize(myRender,125,100);
 			SDL_RenderClear(myRender);
 
-      animation = CEV_gifAnimLoad("res/sprite/charizard.gif", myRender);
+      animation = CEV_gifAnimLoad("res/sprite/D.gif", myRender);
 
-      animation_back = CEV_gifAnimLoad("res/sprite/charizard_back.gif", myRender);
+      animation_back = CEV_gifAnimLoad("res/sprite/D_back.gif", myRender);
 
 
       animation_g = CEV_gifAnimLoad("res/sprite/G.gif", myRender);
