@@ -217,6 +217,7 @@ int main(int argc, char* argv[])
   joueur->niveau = 1;
 
   // TEST FONCTION GENERER BOUTIQUE
+  
   //database = liste;
   pokemon_t * boutique = malloc(sizeof(pokemon_t)*5);
   pokemon_t **debut_boutique = boutique;

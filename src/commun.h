@@ -13,6 +13,9 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
+void generer_carteV1(pokemon_t* , SDL_Renderer* , int, int);
+
+
 /*PROTOTYPE DES FONCTION DE GENERER DATABASE*/
 pokemon_t* createPkmDatabase(int);
 pokemon_t* genererationDatabase();
@@ -22,7 +25,6 @@ void afficherEquipe(pokemon_t *,int );
 
 /*Creer un bouton du shop dynamiquement*/
 SDL_Rect genererCartePokemon(SDL_Renderer* renderer, int x, int y, int largeur, int hauteur, pokemon_t* pokemon) ;
-
 
 /*Fonctions pratiques*/
 int initialiserModules();
