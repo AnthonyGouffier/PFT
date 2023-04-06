@@ -1,3 +1,14 @@
+/**
+ * @file database.c
+ * @author Gouffier Anthony
+ * @brief  
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 /*CE CODE CONTIENT LES FONCTIONS DE LA DATABASE
 il permet de des pokemon , de leur donner des statistiques par défault
 On choisit la rareté d'un pokemon

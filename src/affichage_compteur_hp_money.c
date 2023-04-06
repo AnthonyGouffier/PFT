@@ -1,6 +1,16 @@
+/**
+ * @file affichage_compteur_hp_money.c
+ * @author Gérome vivien
+ * @brief affiche un carré en bas à droite de la fenetre qui contient les points de vie des joueurs et l'argent des joueurs
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
+
 #include "commun.h"
-
-
 
 
 void afficher_case_player(SDL_Renderer* renderer, TTF_Font* font, player_t player) {

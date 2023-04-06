@@ -1,7 +1,7 @@
 /**
  * @file grille.c
- * @author your name (you@domain.com)
- * @brief 
+ * @author Gaumont Mael
+ * @brief  affiche la grille ou seront placé les pokemon sur le champ de bataille
  * @version 0.1
  * @date 2023-04-06
  * 

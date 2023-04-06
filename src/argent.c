@@ -1,3 +1,14 @@
+/**
+ * @file argent.c
+ * @author Gérome vivien
+ * @brief fonction qui calcul le nombre d'or que le joueur vas récupérer et calcul aussi les intérets
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "commun.h"
 
 int money(int tours,player_t player){

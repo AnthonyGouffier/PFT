@@ -1,3 +1,14 @@
+/**
+ * @file main_copy.c
+ * @author Gouffier Anthony
+ * @brief 
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "carte.h"
 #include "commun.h"
 
