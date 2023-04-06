@@ -1,3 +1,14 @@
+/**
+ * @file grille.c
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2023-04-06
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "grille.h"
 
 const int SCREEN_WIDTH = 640;
@@ -9,9 +20,14 @@ const int GRID_COLUMNS = 6;
 
 
 
-
+/**
+ * @brief Applique la texture à la zone définie par le rectangle du bouton
+ * 
+ * @param renderer 
+ * @param imageTexture 
+ * @param buttonRect 
+ */
 void setButtonImage(SDL_Renderer* renderer, SDL_Texture* imageTexture, SDL_Rect* buttonRect) {
-    // Applique la texture à la zone définie par le rectangle du bouton
     SDL_RenderCopy(renderer, imageTexture, NULL, buttonRect);
 }
 
@@ -80,9 +96,11 @@ int main(int argc, char* args[]) {
     // Boucle principale
     int quit = 0;
     int cpt=0; //compteur pour que tout les 2 bouton on switch les deplacement
-
+    int phase=1;
+    int x_save,y_save;
     pokemon_t *  plateau[GRID_ROWS][GRID_COLUMNS];
     pokemon_t *  poke=createPkmDatabase(1);
+    pokemon_t * poke_save;
     poke->alive=1;
     // initialise les image du poke de test 
     /*
@@ -100,9 +118,9 @@ int main(int argc, char* args[]) {
     }
 
     plateau[3][3]=poke;
-    plateau[4][4]=poke;
-
-    printPkm(*poke);
+    plateau[4][4]=poke;                                            plateau[x_save][y_save]=plateau[row][column];
+    poke_save=poke;
+    printPkm(*poke_save);
 
 
     while (!quit) {
@@ -123,6 +141,25 @@ int main(int argc, char* args[]) {
                             int buttonY = gridY + row * (BUTTON_SIZE + BUTTON_MARGIN);
                             if (mouseX >= buttonX && mouseX <= buttonX + BUTTON_SIZE && mouseY >= buttonY && mouseY <= buttonY + BUTTON_SIZE) { 
                                    printf("Bouton (%d, %d) cliqué !\n", row, column);
+                                   if(phase==1){
+                                        if(cpt==0 && plateau[row][column]->alive==1){     //si le joueur click sur pok vivant on le sauvegadre
+                                            printf("1 click \n \n");
+                                            poke_save=plateau[row][column];      
+                                            x_save=row;
+                                            y_save=column;
+                                            cpt++;
+                                        }else if(cpt==1){                                 // on inverse avec le pok sauvegarder
+                                            plateau[x_save][y_save]=plateau[row][column];   
+                                            plateau[row][column]=poke_save;
+                                            printf("2 click \n \n");
+                                            cpt--;
+                                        }
+                                        //phase==2;
+                                   }else if(phase==2){
+                                        
+                                        //phase==1;
+                                   }
+                                   
                                    /* if(cpt==0){
                                         bouton1.rect=getButtonRect(buttonX,buttonY);
                                         bouton1.texture=buttonRect.texture;
@@ -161,6 +198,8 @@ int main(int argc, char* args[]) {
                     SDL_Texture* Texturetampon = SDL_CreateTextureFromSurface(renderer, plateau[row][column]->imgSurface);
                     setButtonImage(renderer,Texturetampon,&buttonRect.rect);
                     SDL_DestroyTexture(Texturetampon);
+                }else{
+                    setButtonImage(renderer,buttonTexture2,&buttonRect.rect);
                 }
             }
         }
