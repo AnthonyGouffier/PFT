@@ -1,4 +1,5 @@
 #include "commun.h"
+#include "carte.h"
 
 /*
 COMPILER SUR WINDOWS :
@@ -69,8 +70,6 @@ void detruireCarteBoutique(int mouseX, int mouseY) {
     }
 }
 
-
-
 int main(int argc, char* argv[]) {
     initialiserModules();
     pokemon_t* pokemon = createPkmDatabase(1);
@@ -133,6 +132,8 @@ int main(int argc, char* argv[]) {
     AcheterNiveau.clicked = false;
     
     // Initialisation des boutons
+
+    carteBoutique  bouton1=genererCartePkmBoutique( *pokemon , renderer , window  , 500 , 500 );
     genererCartes(renderer);
     afficherCarteBoutique(renderer);
     
@@ -198,6 +199,7 @@ int main(int argc, char* argv[]) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
         SDL_RenderFillRect(renderer, &BtnActu.rect);
         }
+        afficherCartePkmBoutique(bouton1 ,renderer , *pokemon );
 
 
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
