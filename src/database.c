@@ -122,8 +122,8 @@ pokemon_t * createPkmDatabase(int taille){
   while(i<taille){
     printf("Saisir le nom du pokemon à rechercher : ");
     /*saisie nom pokemon*/
-    saisie[strcspn(saisie, "\n")] = '\0'; // Remplace '\n' par '\0'
     fgets(saisie, sizeof(saisie), stdin);
+    saisie[strcspn(saisie, "\n")] = '\0'; // Remplace '\n' par '\0'
     //saisie=tabSaisie[indiceRarete][i];
     char *token = strtok(saisie, " "); // Divise la chaîne de caractères en plusieurs mots
     strcpy(nomRecherche, capitalize(token)); // Stocke le premier mot dans la variable nomRecherche
@@ -137,7 +137,7 @@ pokemon_t * createPkmDatabase(int taille){
                   /*recherche pokemon*/
     fscanf(ptrFich,"%d;%[^;];%[^;];%d;%d;%f;%f;%f;%f;%f;",&(tableau+i)->id,(tableau+i)->name,(tableau+i)->classe,&(tableau+i)->total,&(tableau+i)->pv_max,&(tableau+i)->att,&(tableau+i)->def,&(tableau+i)->attspe,&(tableau+i)->defspe,&(tableau+i)->spd);
     while((strcmp(nomRecherche, tableau[i].name) != 0) && (!feof(ptrFich)) ){
-      //printf("Recherche en cours : %s %s\n",nomRecherche,tableau[i].name);
+      printf("Recherche en cours : %s %s\n",nomRecherche,tableau[i].name);
       fscanf(ptrFich,"%d;%[^;];%[^;];%d;%d;%f;%f;%f;%f;%f;",&(tableau+i)->id,(tableau+i)->name,(tableau+i)->classe,&(tableau+i)->total,&(tableau+i)->pv_max,&(tableau+i)->att,&(tableau+i)->def,&(tableau+i)->attspe,&(tableau+i)->defspe,&(tableau+i)->spd);
       //printf("Valeur de i  : %d\n",i);
     }
