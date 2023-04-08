@@ -270,6 +270,6 @@ pokemon_t* genererationDatabase(){
   printf("Le code fonctionne correctement !\n");
   //affichertableau(database,tailleFinal);
   free(basetest);
-  free(pkm1);  free(pkm2);  free(pkm3);  free(pkm4);  free(pkm5);
+
   return database;
 }
