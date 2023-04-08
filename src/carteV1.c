@@ -15,6 +15,7 @@
 /*******************************************GENERATION*******************************************************/
 
 carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, SDL_Window * window ,int x , int y, int selectlargeur , int selecthauteur){
+    
     // Récupération de la rareté du pokémon
     carteBoutique carte; 
     int pokemonRarity = pokemon.rarete;
@@ -26,13 +27,19 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     carte.lvlRect.h=selecthauteur;
     
     // Calcul des coordonnées du coin supérieur gauche du rectangle noir
-    int blackRectX = (x * 1.028) ;
-    int blackRectY = (y * 1.04);
-    
+    int decalX = selectlargeur * 0.05;
+    printf("decalage = %d\n",decalX);
+    int decalY = selecthauteur * 0.05;
+    printf("decalage = %d\n",decalX);
+    int blackRectX = x +decalX; 
+    printf("coordonné x du rectangle de niveau %d\n",x);
+    printf("coordonné x du rectangle noir %d\n",blackRectX);
+    printf("delta des deux coordonnés %d\n",x-blackRectX);
+    int blackRectY = y+decalY;
     carte.blackRect.x=blackRectX;
     carte.blackRect.y=blackRectY;
-    carte.blackRect.w = carte.lvlRect.w * 0.9375;
-    carte.blackRect.h = carte.lvlRect.h *  0.92;
+    carte.blackRect.w = carte.lvlRect.w * 0.9;
+    carte.blackRect.h = carte.lvlRect.h *  0.9;
     
     // Calcul de la hauteur du rectangle bleu
     int blueRectH = carte.blackRect.h * 0.75;
@@ -45,14 +52,18 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     // Chargement de l'image de fond
     SDL_Surface* bgSurface = IMG_Load("ressources/img/backgroundcard.jpg");
     carte.bgTexture = SDL_CreateTextureFromSurface(renderer, bgSurface);
-    
+
     // Chargement de l'image du Pokémon
-    SDL_Surface* pkmSurface = pokemon.imgSurface;
-    carte.pkmTexture = SDL_CreateTextureFromSurface(renderer, pkmSurface);
+    carte.pkmTexture = SDL_CreateTextureFromSurface(renderer, pokemon.imgSurface);
+    if(!carte.pkmTexture) {
+        printf("Erreur de chargement de l'image : %s", IMG_GetError());
+    }
+    //SDL_FreeSurface(pokemon.imgSurface);
+    
     
     // Récupération des dimensions de l'image
-    int imageWidth = pkmSurface->w;
-    int imageHeight = pkmSurface->h;
+    int imageWidth = pokemon.imgSurface->w;
+    int imageHeight = pokemon.imgSurface->h;
     
     // Calcul des dimensions du rectangle de destination
     int destWidth = carte.blueRect.w;
@@ -135,6 +146,9 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     carte.rectanglePiece.y=rectanglePieceY;
     carte.rectanglePiece.w=25;
     carte.rectanglePiece.h=25;
+
+    //initalisation de la carte en tant que non cliquée
+    carte.click=0;
     return carte;
 }
 /*************************************AFFICHAGE*************************************/

@@ -3,6 +3,7 @@
 #include "commun.h"
 
 typedef struct {
+    bool click;
     SDL_Rect lvlRect;
     SDL_Rect blackRect;
     SDL_Rect blueRect;
