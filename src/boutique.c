@@ -207,7 +207,7 @@ int main(int argc, char* argv[])
 
 
   int pokemon_size = 6;
-  pokemon_t * database = createPkmDatabase(pokemon_size);
+  pokemon_t * database = createPkmDatabase(pokemon_size,1);
   pokemon_t **liste = database;
   printf("Liste pokemons :\n");
   for(int i = 0; i < pokemon_size; i++)
