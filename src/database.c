@@ -51,8 +51,8 @@ void auto_fill_pkm_stats(pokemon_t* pokemon,int taille/*  ,int indRar  */){
 
      // Construction du nom de fichier de l'image
     char filename[64];
-    sprintf(filename, "ressources/img/Artwork2D/%d.png", pokemon->id);
-    printf("Localisation : %s",filename);
+    sprintf(filename, "ressources/img/Artwork2D/%d.png", (pokemon+j)->id);
+    printf("Localisation de la surface : %s\n",filename);
     // Chargement de l'image
     (pokemon+j)->imgSurface = IMG_Load(filename);
   }
@@ -137,7 +137,7 @@ pokemon_t * createPkmDatabase(int taille){
                   /*recherche pokemon*/
     fscanf(ptrFich,"%d;%[^;];%[^;];%d;%d;%f;%f;%f;%f;%f;",&(tableau+i)->id,(tableau+i)->name,(tableau+i)->classe,&(tableau+i)->total,&(tableau+i)->pv_max,&(tableau+i)->att,&(tableau+i)->def,&(tableau+i)->attspe,&(tableau+i)->defspe,&(tableau+i)->spd);
     while((strcmp(nomRecherche, tableau[i].name) != 0) && (!feof(ptrFich)) ){
-      printf("Recherche en cours : %s %s\n",nomRecherche,tableau[i].name);
+      //printf("Recherche en cours : %s %s\n",nomRecherche,tableau[i].name);
       fscanf(ptrFich,"%d;%[^;];%[^;];%d;%d;%f;%f;%f;%f;%f;",&(tableau+i)->id,(tableau+i)->name,(tableau+i)->classe,&(tableau+i)->total,&(tableau+i)->pv_max,&(tableau+i)->att,&(tableau+i)->def,&(tableau+i)->attspe,&(tableau+i)->defspe,&(tableau+i)->spd);
       //printf("Valeur de i  : %d\n",i);
     }
@@ -163,6 +163,7 @@ void printPkm(pokemon_t pokemon){
   printf("Ce Pokemon appartient a joueur %d\n", pokemon.dresseur);
   printf("Status : %d\n Stade d'évolution : %d\n",pokemon.alive,pokemon.stade);
   printf("Position actuelle :(%d,%d)\n", pokemon.x,pokemon.y);
+  printf("Aperçu de la surface %x\n",pokemon.imgSurface);
   printf("\n");
 }
 
