@@ -32,12 +32,13 @@ const int NbNiv5=2;
 #define DEFAULT_Y 0
 
 //assigne les stats par defaut à un pokemon.
-void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
+void auto_fill_pkm_stats(pokemon_t* pokemon,int taille/*  ,int indRar  */){
   int indRar;
   do{
     printf("Saisir rareté (gris = 1 , vert  = 2 , bleu = 3 , violet = 4 or = 5) ");scanf("%d",&indRar);
   }
   while (indRar < 0 || indRar > 5);
+
   for (int j = 0 ; j < taille ; j++){
     (pokemon+j)->pv=(pokemon+j)->pv_max;
     (pokemon+j)->range = DEFAULT_RANGE;
@@ -97,6 +98,15 @@ char* capitalize(char *str) {
 pokemon_t * createPkmDatabase(int taille){
   printf("(Si necessaire appuyer sur entree)\n");
   int c;
+  int indRar=0;
+  char *tabSaisie[5][6] = {
+      {"roucool", "chenipan", "aspicot", "pichu", "togepi", "toudoudou"},
+      {"caninos", "tentacool", "ponyta", "doduo", "otaria", NULL},
+      {"pikachu", "salameche", "carapuce", "bulbizarre", NULL, NULL},
+      {"Typhlosion", "Meganium", "Tortank", NULL, NULL, NULL},
+      {"mew", "arceus", NULL, NULL, NULL, NULL}
+  };
+
   while ((c = getchar()) != '\n' && c != EOF);
   printf("Creation de %d Pokemon :\n",taille);
   char nomRecherche[52];
@@ -107,11 +117,14 @@ pokemon_t * createPkmDatabase(int taille){
   if (ptrFich == NULL) {
     perror("Erreur lors de l'ouverture du fichier");
   }
+
+
   while(i<taille){
     printf("Saisir le nom du pokemon à rechercher : ");
     /*saisie nom pokemon*/
-    fgets(saisie, sizeof(saisie), stdin);
     saisie[strcspn(saisie, "\n")] = '\0'; // Remplace '\n' par '\0'
+    fgets(saisie, sizeof(saisie), stdin);
+    //saisie=tabSaisie[indiceRarete][i];
     char *token = strtok(saisie, " "); // Divise la chaîne de caractères en plusieurs mots
     strcpy(nomRecherche, capitalize(token)); // Stocke le premier mot dans la variable nomRecherche
     while (token != NULL) {
@@ -137,7 +150,7 @@ pokemon_t * createPkmDatabase(int taille){
   }
   fclose(ptrFich);
   auto_fill_pkm_stats(tableau,taille);
-
+  //indRar++ ;
 //  system("cls");
 //  system("clear");
   printf("\a liste créé ! \n\n\n");
