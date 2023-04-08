@@ -29,7 +29,7 @@ void generer_carteV1(pokemon_t* , SDL_Renderer* , int, int);
 
 
 /*PROTOTYPE DES FONCTION DE GENERER DATABASE*/
-pokemon_t* createPkmDatabase(int);
+pokemon_t* createPkmDatabase(int,int);
 pokemon_t* genererationDatabase();
 pokemon_t* initialiserPkm(pokemon_t* );
 void printPkm(pokemon_t );

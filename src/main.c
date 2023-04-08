@@ -12,8 +12,8 @@
 #include "commun.h"
 #include "carte.h"
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
 #define NUM_BUTTONS 5
 
 #define  AREA_WIDTH SCREEN_WIDTH * 0.6 
@@ -66,7 +66,7 @@ carteBoutique* genererTabCarte(pokemon_t* pokemonListe, SDL_Renderer* renderer, 
     return tabCarte;
 }
 
-
+/*
 void afficherCarteBoutique(SDL_Renderer* renderer) {
     char* images[NUM_BUTTONS] = {"ressources/img/pokeball.jpg", "ressources/img/superball.jpg", "ressources/img/hyperball.jpg", "ressources/img/masterball.jpg", "ressources/img/rapidball.jpg"};
     for (int i = 0; i < NUM_BUTTONS; i++) {
@@ -90,13 +90,16 @@ void detruireCarteBoutique(int mouseX, int mouseY) {
         }
     }
 }
+*/
 
 int main(int argc, char* argv[]) {
+    printf("Bienvenue sur TFT !\n");
     initialiserModules();
-    pokemon_t* listepokemon = createPkmDatabase(5);
+    pokemon_t* listepokemon= genererationDatabase();
+    //afficherEquipe(listepokemon,100);
+
+    //pokemon_t* listepokemon = createPkmDatabase(5,2);
     afficherEquipe(listepokemon,5);
-  //  pokemon_t *poketest1 = createPkmDatabase(1);
-  //  pokemon_t *poketest2 = createPkmDatabase(1);
     // Création de la fenêtre
     SDL_Window* window = SDL_CreateWindow("PFT", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if ( window == NULL){ 
