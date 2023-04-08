@@ -12,13 +12,8 @@
 #include "commun.h"
 #include "carte.h"
 
-/*
-COMPILER SUR WINDOWS :
- clear && gcc .\src\interface.c .\src\fonction_SDL.c -o .\bin\prog  -I include -L lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image && .\bin\prog.exe
-*/
-
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
 #define NUM_BUTTONS 5
 
 #define  AREA_WIDTH SCREEN_WIDTH * 0.6 
@@ -63,10 +58,10 @@ carteBoutique* genererTabCarte(pokemon_t* pokemonListe, SDL_Renderer* renderer, 
         printf("Erreur d'allocation de mémoire\n");
         return NULL; // ou effectuer une autre action appropriée
     }
-    for (int i = 0; i < NUM_BUTTONS; i++) {
-     //   printPkm(pokemonListe[i]);
-        printf("valeur de i : %d\n\n",i);
-        tabCarte[i] = genererCartePkmBoutique(pokemonListe[i], renderer, window , firstButtonX + i*(buttonWidth) , (SCREEN_HEIGHT - buttonHeight) , buttonWidth , buttonHeight) ;
+    for (int i=0; i < NUM_BUTTONS; i++) {
+        // tabCarte[0] = genererCartePkmBoutique(pokemonListe[0], renderer, window , SCREEN_WIDTH * 0.1 / (NUM_BUTTONS + 1), (SCREEN_HEIGHT - buttonHeight) , buttonWidth , buttonHeight) ;
+        //   printPkm(pokemonListe[i]);
+        tabCarte[i] = genererCartePkmBoutique(pokemonListe[i], renderer, window , firstButtonX + i*(buttonWidth) + buttonSpacing, (SCREEN_HEIGHT*0.975 - buttonHeight ) , buttonWidth , buttonHeight) ;
     }
     return tabCarte;
 }
