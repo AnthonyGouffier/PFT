@@ -220,10 +220,6 @@ int main(int argc, char* argv[]) {
         // Afficher les cartes
         afficherCarteBoutique(renderer);
         
-
-        afficherCartePkmBoutique(carte1 ,renderer , listepokemon[1]);//ça marche
-        afficherCartePkmBoutique(carte2 ,renderer , listepokemon[1]);
-
         afficherCartePkmBoutique(tabcarte[0],renderer , listepokemon[0] );
         afficherCartePkmBoutique(tabcarte[1],renderer , listepokemon[1] );
         afficherCartePkmBoutique(tabcarte[2],renderer , listepokemon[2] );
