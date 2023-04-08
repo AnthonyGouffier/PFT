@@ -1,25 +1,30 @@
-CC = gcc
-CFLAGS = -Iinclude
-LDFLAGS = -Llib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
-
-SRC_FILES = ./src/main.c ./src/database.c ./src/carteV1.c ./src/fonction_SDL.c
-OBJ_FILES = $(SRC_FILES:.c=.o)
-EXECUTABLE = ./bin/prog.exe
-
-# Détermination du système d'exploitation
-ifeq ($(OS), Windows_NT)
-	RM = del /Q /F
+ifeq ($(OS),Windows_NT)
+    # Compilation pour Windows
+    CC = gcc
+    CFLAGS = -I include -L lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
+    EXECUTABLE = bin/prog.exe
 else
-	RM = rm -f
+    # Compilation pour Linux
+    CC = gcc
+    CFLAGS = `sdl2-config --cflags`
+    LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_ttf
+    EXECUTABLE = bin/prog
 endif
+
+SRC_DIR = src
+BIN_DIR = bin
+
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(BIN_DIR)/%.o, $(SRC_FILES))
 
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJ_FILES)
-	$(CC) $(OBJ_FILES) -o $(EXECUTABLE) $(LDFLAGS)
+	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
-	$(RM) $(OBJ_FILES) $(EXECUTABLE)
+	rm -f $(BIN_DIR)/*.o $(EXECUTABLE)
+	del /Q /S $(BIN_DIR)\*.o $(EXECUTABLE)
