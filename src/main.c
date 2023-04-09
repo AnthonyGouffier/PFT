@@ -50,8 +50,8 @@ pokemon_t *pokemon=NULL;
 carteBoutique* genererTabCarte(pokemon_t* pokemonListe, SDL_Renderer* renderer, SDL_Window* window) {
     const int buttonWidth = (SCREEN_WIDTH * 0.6) / NUM_BUTTONS;
     const int buttonHeight = SCREEN_HEIGHT / 6;
-    int buttonSpacing = SCREEN_WIDTH * 0.1 / (NUM_BUTTONS + 1);
-    int buttonOffset = (SCREEN_WIDTH * 0.5) / (NUM_BUTTONS + 1);
+    int buttonSpacing = SCREEN_WIDTH * 0.2 / (NUM_BUTTONS + 1);
+    int buttonOffset = (SCREEN_WIDTH * 0.6) / (NUM_BUTTONS + 1);
     int firstButtonX = buttonOffset + buttonSpacing;
 
     // Allouer dynamiquement de la mémoire pour le tableau de structures
@@ -64,7 +64,7 @@ carteBoutique* genererTabCarte(pokemon_t* pokemonListe, SDL_Renderer* renderer, 
     for (int i=0; i < NUM_BUTTONS; i++) {
         // tabCarte[0] = genererCartePkmBoutique(pokemonListe[0], renderer, window , SCREEN_WIDTH * 0.1 / (NUM_BUTTONS + 1), (SCREEN_HEIGHT - buttonHeight) , buttonWidth , buttonHeight) ;
         //   printPkm(pokemonListe[i]);
-        tabCarte[i] = genererCartePkmBoutique(pokemonListe[i], renderer, window , firstButtonX + i*(buttonWidth) + buttonSpacing, (SCREEN_HEIGHT*0.975 - buttonHeight ) , buttonWidth , buttonHeight) ;
+        tabCarte[i] = genererCartePkmBoutique(pokemonListe[i], renderer, window , firstButtonX + i*(buttonWidth+(SCREEN_WIDTH * 0.0125)), (SCREEN_HEIGHT*0.975 - buttonHeight ) , buttonWidth , buttonHeight) ;
     }
     return tabCarte;
 }
@@ -96,13 +96,22 @@ void detruireCarteBoutique(int mouseX, int mouseY) {
 */
 
 int main(int argc, char* argv[]) {
-    printf("Bienvenue sur TFT !\n");
+    printf("Bienvenue sur PFT !\n");
     //Initilisation SDL 
     initialiserModules();
 
     //Creation d'un joueur
-    player_t joueur1;
-    createPlayer(&joueur1);
+
+    int nbjoueur;
+    printf("Saisir nombre de joueurs :"); scanf("%d",&nbjoueur);
+    player_t* TabJoueurs = malloc ( sizeof ( player_t ) * nbjoueur);
+    for(int i =0 ; i < nbjoueur ; i++){
+        player_t* joueur1;
+        createPlayer((TabJoueurs+i));
+        stat_player(&(TabJoueurs[i]));
+    }
+
+
 
     //Creation de la database
     pokemon_t* listepokemon= genererationDatabase();
@@ -211,8 +220,11 @@ int main(int argc, char* argv[]) {
                             // Enlever 2 or dans la structure du joueur
                         }
                         if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &AcheterNiveau.rect)) {
-                            acheterNiveauXP(&joueur1);// Enlever 4 or dans la struct joueur
-                            // Ajouter 4 point de XP dans la structure joueur
+                            acheterNiveauXP(&TabJoueurs[0]);// Enlever 4 or dans la struct joueur
+                            for (int i = 0; i < nbjoueur; i++)
+                            {
+                            stat_player(&(TabJoueurs[i]));
+                            }
                         }
                         for (int i = 0; i < 5; i++) {
                             if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &tabcarte[i].blackRect) && tabcarte[i].click==0) {
@@ -241,10 +253,11 @@ int main(int argc, char* argv[]) {
         SDL_RenderFillRect(renderer, &BtnActu.rect);
         }
 
+        //affiche les cartes si non clické
         for (int i = 0; i < 5; i++) {
-           if(tabcarte[i].click==0){
+            if(tabcarte[i].click==0){
                 afficherCartePkmBoutique(tabcarte[i],renderer,listepokemon[i]);
-           }
+            }
         }
 
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
