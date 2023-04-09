@@ -8,9 +8,9 @@
  * @copyright Copyright (c) 2023
  * 
  */
-
-#include "commun.h"
+#include "entites.h"
 #include "carte.h"
+#include "commun.h"
 
 /*******************************************GENERATION*******************************************************/
 

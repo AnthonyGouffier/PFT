@@ -16,6 +16,7 @@ Le tableau final correspond à la database du jeu , il contient tout les pokemon
 */
 
 #include "commun.h"
+#include "entites.h"
 
 /*Initialisation des taille */
 const int NbNiv1=6;

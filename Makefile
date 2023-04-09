@@ -14,7 +14,7 @@ endif
 SRC_DIR = src
 BIN_DIR = bin
 
-SRC_FILES = $(wildcard $(SRC_DIR)/fonction_SDL.c , $(SRC_DIR)/carteV1.c , $(SRC_DIR)/database.c , $(SRC_DIR)/main.c)
+SRC_FILES = $(wildcard $(SRC_DIR)/database.c $(SRC_DIR)/joueur.c $(SRC_DIR)/carteV1.c $(SRC_DIR)/fonction.c $(SRC_DIR)/main.c)
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(BIN_DIR)/%.o, $(SRC_FILES))
 
 all: $(EXECUTABLE)

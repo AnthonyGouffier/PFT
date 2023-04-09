@@ -10,7 +10,10 @@
  */
 
 #include "commun.h"
+#include "entites.h"
 #include "carte.h"
+#include "joueur.h"
+
 
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
@@ -94,7 +97,14 @@ void detruireCarteBoutique(int mouseX, int mouseY) {
 
 int main(int argc, char* argv[]) {
     printf("Bienvenue sur TFT !\n");
+    //Initilisation SDL 
     initialiserModules();
+
+    //Creation d'un joueur
+    player_t joueur1;
+    createPlayer(&joueur1);
+
+    //Creation de la database
     pokemon_t* listepokemon= genererationDatabase();
     //afficherEquipe(listepokemon,100);
 
@@ -201,12 +211,11 @@ int main(int argc, char* argv[]) {
                             // Enlever 2 or dans la structure du joueur
                         }
                         if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &AcheterNiveau.rect)) {
-                            printf("+4 exp !\n");
-                            // Enlever 4 or dans la struct joueur
+                            acheterNiveauXP(&joueur1);// Enlever 4 or dans la struct joueur
                             // Ajouter 4 point de XP dans la structure joueur
                         }
                         for (int i = 0; i < 5; i++) {
-                            if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &tabcarte[i].blackRect)) {
+                            if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &tabcarte[i].blackRect) && tabcarte[i].click==0) {
                                 printf("la carte numero %d à été cliqué\n",i);
                                 tabcarte[i].click=1;
                             }
@@ -234,7 +243,7 @@ int main(int argc, char* argv[]) {
 
         for (int i = 0; i < 5; i++) {
            if(tabcarte[i].click==0){
-                afficherCartePkmBoutique(tabcarte[i],renderer,listepokemon[i] );
+                afficherCartePkmBoutique(tabcarte[i],renderer,listepokemon[i]);
            }
         }
 

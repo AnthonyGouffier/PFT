@@ -8,9 +8,11 @@
  * @copyright Copyright (c) 2023
  * 
  */
+
 #include "commun.h"
+
 /*
-CE FICHIER CONTIENT DES FONCTION POUR UTILISER LA SDL PLUS RAPIDEMENT
+CE FICHIER CONTIENT DES FONCTION POUR OPTIMISER LE DEVELLOPPEMENT
 */
 
 
@@ -19,6 +21,12 @@ paramètres  SDL_Renderer, coordonnées x et y du rectangle contenant les cases
 largeur et sa hauteur width et height,
 nombre de lignes et de colonnes de cases rows et cols
 */
+
+void pressAnyKeyToContinue() {
+    printf("Appuyez sur une touche pour continuer...");
+    getchar(); // Attendre la saisie d'une touche
+    fflush(stdin); // Vider le tampon d'entrée pour éviter les problèmes
+}
 
 int initialiserModules() {
     // Initialisation de SDL

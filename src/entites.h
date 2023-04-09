@@ -9,8 +9,12 @@
  * 
  */
 
+#ifndef ENTITES_H
+#define ENTITES_H
+
 #include "SDL.h"
 #include <stdbool.h>
+
 //#include "commun.h"
 // #include "boutique.h"
 
@@ -42,19 +46,6 @@ typedef struct pokemon_s
     int x , y;
 }pokemon_t;
 
-typedef struct player_s
-{
-    int id;
-    int hp;
-    int niveau;
-    pokemon_t *team;
-    objet * objListe ;
-    //boutique_t boutique;
-    /*status*/
-    int money;
-    int interest;
-    bool alive;
-}player_t;
 
 typedef struct boutique_s
 {
@@ -66,3 +57,13 @@ typedef struct pos_s{
   int y;
   int x;
 }pos_t;
+
+/*PROTOTYPE DES FONCTION DE GENERER DATABASE*/
+pokemon_t* createPkmDatabase(int,int);
+pokemon_t* genererationDatabase();
+pokemon_t* initialiserPkm(pokemon_t* );
+void printPkm(pokemon_t );
+void afficherEquipe(pokemon_t *,int );
+
+
+#endif

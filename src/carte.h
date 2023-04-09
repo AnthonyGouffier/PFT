@@ -1,6 +1,8 @@
-#ifndef CARTE_H_INCLUDED
-#define CARTE_H_INCLUDED
-#include "commun.h"
+#ifndef CARTE_H
+#define CARTE_H
+
+#include <SDL.h>
+
 
 typedef struct {
     bool click;
@@ -21,6 +23,5 @@ typedef struct {
 
 carteBoutique genererCartePkmBoutique(pokemon_t ,SDL_Renderer* , SDL_Window *  ,int  , int , int , int) ;
 void afficherCartePkmBoutique(carteBoutique ,SDL_Renderer* ,pokemon_t );
-
 
 #endif
