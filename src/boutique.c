@@ -12,6 +12,8 @@
 
 #include <time.h>
 #include "commun.h"
+#include "entites.h"
+#include "joueur.h"
 
 //srand( time( NULL ) );
 
