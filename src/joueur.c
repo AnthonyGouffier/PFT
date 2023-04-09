@@ -1,6 +1,8 @@
 #include "stdio.h"
+#include "carte.h"
 #include "joueur.h"
 
+#define NBMAX_PKM 10
 
 void acheterNiveauXP(player_t *joueur){
     /*Recupere les valeures importantes*/
@@ -67,23 +69,41 @@ void acheterNiveauXP(player_t *joueur){
 }
 
 
-void createPlayer(player_t* joueur){
+void createPlayer(player_t* joueur, int id){
+
     printf("Veuillez saisir votre nom : ");
     scanf("%s", joueur->nom);
-
-    joueur->id = 0;
+    joueur->id = id;
     
     int lvlcap_init[8] = {2, 6, 10, 20, 36, 56, 80, 100};
     for (int i = 0; i < 8; i++) {
         joueur->lvlcap[i] = lvlcap_init[i];
     }
-
     joueur->xp = 0;
     joueur->hp = 100;
     joueur->niveau = 3;
     joueur->money = 1000;
     joueur->interest = 0;
     joueur->alive = true;
+
+    printf("initialisation du tableau...\n");
+    //Initialise le tableau à 0
+    for(int i=0;i<NBMAX_PKM;i++){
+        printf("Case num %d du tableau\n",i);
+        joueur->team[i] = initialiserPkm() ;
+    }
+    stat_player(joueur);
+}
+
+int nbPkmTeam(player_t* joueur){
+    int nombrePokemons = 0;
+    for(int i=0;i<NBMAX_PKM;i++){
+        printf("case %d joueur->team[i].id :%d\n",i,joueur->team[i].id);
+        if(joueur->team[i].id > 0){
+            nombrePokemons++;
+        }
+    }
+    return nombrePokemons;
 }
 
 void stat_player(player_t* joueur) {
@@ -97,12 +117,17 @@ void stat_player(player_t* joueur) {
     printf("Vivant : %s\n", joueur->alive ? "Oui" : "Non");
 }
 
-void acheter(player_t * player, pokemon_t pokemon, boutique_t * boutique){
-  if(player->money >= pokemon.rarete)
-  {
-    player->money-=pokemon.rarete;
-    // supprimer le pokemon de la boutique
-    // rajouter le pokemon au deck du joueur
-    //player->team += pokemon;
-  }
+void acheterCarte(player_t* joueur, carteBoutique* carte ,pokemon_t* pokemon){
+    //récupération du nombre de pkm de l'équipe
+    printf("Achat en cours...\n");
+    int nbpkm = nbPkmTeam(joueur);
+    printf("nombre de pkm : %d\n",nbpkm);
+    //Impossible d'acheter si :
+    if( joueur->alive==false && joueur->money < pokemon->rarete && nbpkm >= 10){
+        printf("Impossible d'effectuer l'achat de %s",pokemon->name);
+    }
+    else{
+        joueur->money-=pokemon->rarete;
+        carte->click=1;
+    }
 }

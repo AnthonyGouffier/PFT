@@ -61,7 +61,8 @@ typedef struct pos_s{
 /*PROTOTYPE DES FONCTION DE GENERER DATABASE*/
 pokemon_t* createPkmDatabase(int,int);
 pokemon_t* genererationDatabase();
-pokemon_t* initialiserPkm(pokemon_t* );
+//pokemon_t* initialiserPkm(pokemon_t* );
+pokemon_t initialiserPkm();
 void printPkm(pokemon_t );
 void afficherEquipe(pokemon_t *,int );
 

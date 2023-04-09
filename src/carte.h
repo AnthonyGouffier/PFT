@@ -1,10 +1,11 @@
-#ifndef CARTE_H
-#define CARTE_H
+#ifndef CARTE_H_INCLUDED
+#define CARTE_H_INCLUDED
 
+#include <stdbool.h>
 #include <SDL.h>
+#include "entites.h"
 
-
-typedef struct {
+typedef struct carteBoutique_s {
     bool click;
     SDL_Rect lvlRect;
     SDL_Rect blackRect;
@@ -19,7 +20,7 @@ typedef struct {
     SDL_Texture* textureText;
     SDL_Texture* prixTexture;
     SDL_Texture* nomTexture;
-}carteBoutique;
+} carteBoutique;
 
 carteBoutique genererCartePkmBoutique(pokemon_t ,SDL_Renderer* , SDL_Window *  ,int  , int , int , int) ;
 void afficherCartePkmBoutique(carteBoutique ,SDL_Renderer* ,pokemon_t );

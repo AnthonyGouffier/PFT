@@ -59,12 +59,12 @@ void auto_fill_pkm_stats(pokemon_t* pokemon,int taille , int indRar ){
   }
 }
 
-
+/*
 pokemon_t* initialiserPkm(pokemon_t* pokemon){
     pokemon->id = 0;
     pokemon->dresseur = 0;
     memset(pokemon->name, 0, sizeof(pokemon->name));
-    /*Stats*/
+    //Stats
     pokemon->pv_max = 0;
     pokemon->pv = 0;
     pokemon->total = 0;
@@ -74,18 +74,50 @@ pokemon_t* initialiserPkm(pokemon_t* pokemon){
     pokemon->defspe = 0;
     pokemon->spd = 0;
     pokemon->range = 0;
-    /*autre*/
+    //autre
     *pokemon->classe = '\0';
     pokemon->rarete = 0;
     pokemon->stade = 0;
     pokemon->alive = 0;
-    /*partie graphique*/
+    //partie graphique
     pokemon->imgSurface = NULL;
-    /*coordonne*/
+    //coordonne
     pokemon->x = 0;
     pokemon->y = 0;
     return pokemon;
 }
+*/
+
+pokemon_t initialiserPkm(){
+    pokemon_t pokemon;
+    pokemon.id = 0;
+    pokemon.dresseur = 0;
+    memset(pokemon.name, 0, sizeof(pokemon.name));
+    /*Stats*/
+    pokemon.pv_max = 0;
+    pokemon.pv = 0;
+    pokemon.total = 0;
+    pokemon.att = 0;
+    pokemon.def = 0;
+    pokemon.attspe = 0;
+    pokemon.defspe = 0;
+    pokemon.spd = 0;
+    pokemon.range = 0;
+    /*autre*/
+    *pokemon.classe = '\0';
+    pokemon.rarete = 0;
+    pokemon.stade = 0;
+    pokemon.alive = 0;
+    /*partie graphique*/
+    pokemon.imgSurface = NULL;
+    /*coordonne*/
+    pokemon.x = 0;
+    pokemon.y = 0;
+
+    printPkm(pokemon);
+    return pokemon;
+}
+
 
 //prend en entrée une chaîne de caractères et renvoie une nouvelle chaîne avec la première lettre en majuscule.
 char* capitalize(char *str) {

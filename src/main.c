@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
     player_t* TabJoueurs = malloc ( sizeof ( player_t ) * nbjoueur);
     for(int i =0 ; i < nbjoueur ; i++){
         player_t* joueur1;
-        createPlayer((TabJoueurs+i));
+        createPlayer((TabJoueurs+i),i+1);
         stat_player(&(TabJoueurs[i]));
     }
 
@@ -229,7 +229,7 @@ int main(int argc, char* argv[]) {
                         for (int i = 0; i < 5; i++) {
                             if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &tabcarte[i].blackRect) && tabcarte[i].click==0) {
                                 printf("la carte numero %d à été cliqué\n",i);
-                                tabcarte[i].click=1;
+                                acheterCarte(&TabJoueurs[0],&tabCartes[i],&pokemon[i]);
                             }
                         }
                 break;
