@@ -97,3 +97,12 @@ void stat_player(player_t* joueur) {
     printf("Vivant : %s\n", joueur->alive ? "Oui" : "Non");
 }
 
+void acheter(player_t * player, pokemon_t pokemon, boutique_t * boutique){
+  if(player->money >= pokemon.rarete)
+  {
+    player->money-=pokemon.rarete;
+    // supprimer le pokemon de la boutique
+    // rajouter le pokemon au deck du joueur
+    //player->team += pokemon;
+  }
+}
