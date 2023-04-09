@@ -1,6 +1,6 @@
 # ProjetL2 : PFT
 
-Bienvenue dans le README pour notre projet type roguelike en SDL2 nommé "Pokemon Figth Tactics (PFT)". 
+Bienvenue dans le README pour notre projet codé en SDL2 nommé "Pokemon Figth Tactics (PFT)". 
 
 ## Introduction
 Develloppé par Gerome Vivien - Gaumont Mael - Deletang Elie - Gouffier Anthony 
