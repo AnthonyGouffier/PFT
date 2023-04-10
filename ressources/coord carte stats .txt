@@ -1,0 +1,6 @@
+			x	  y	  w	  h
+rectangle texte 	0.02	0.19	0.84	0.28
+rectangle niv	0.75	0.55	0.167	0.265
+
+rectangle hp	0.17	0.633	0.53	0.105
+rectangle xp	0.06	0.895	0.82	0.07

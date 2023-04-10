@@ -50,7 +50,7 @@ void auto_fill_pkm_stats(pokemon_t* pokemon,int taille , int indRar ){
     (pokemon+j)->y = DEFAULT_Y;
     (pokemon+j)->rarete = indRar;
 
-     // Construction du nom de fichier de l'image
+    // Construction du nom de fichier de l'image
     char filename[64];
     sprintf(filename, "ressources/img/Artwork2D/%d.png", (pokemon+j)->id);
     printf("Localisation de la surface : %s\n",filename);

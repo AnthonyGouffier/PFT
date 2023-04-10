@@ -119,7 +119,7 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     carte.prixRect.h=prixtextH;
     SDL_Surface* nomText = TTF_RenderText_Solid(font,pokemon.name,textColor);
     if (!nomText) {
-        printf("Erreur de rendu du texte: %s\n", TTF_GetError());
+        printf("Erreur de surface du texte: %s\n", TTF_GetError());
     }
     
     // Création d'une texture à partir de la surface de texte
