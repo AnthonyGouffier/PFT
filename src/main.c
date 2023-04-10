@@ -15,12 +15,12 @@
 #include "joueur.h"
 
 
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
 #define NUM_BUTTONS 5
 
-#define  AREA_WIDTH SCREEN_WIDTH * 0.6 
-#define  AREA_HIGH  SCREEN_HEIGHT * 0.65
+#define  AREA_WIDTH SCREEN_WIDTH * 0.75
+#define  AREA_HIGH  SCREEN_HEIGHT * 0.8
 
 #define WIDTHX_CARTE 200
 #define HIGHTY_CARTE 150
@@ -36,7 +36,7 @@ typedef struct {
 Button CartePkm[NUM_BUTTONS];
 
 /**/
-SDL_Rect ArenaZone = {(SCREEN_WIDTH-AREA_WIDTH)/2,0,AREA_WIDTH,AREA_HIGH};
+SDL_Rect ArenaZone = {( SCREEN_WIDTH - AREA_WIDTH) / 2 , 0 , AREA_WIDTH , AREA_HIGH };
 
 
 /*

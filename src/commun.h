@@ -23,6 +23,7 @@
 #include <SDL_ttf.h>
 
 /*Fonctions pratiques*/
+char* capitalize(char *);
 void pressAnyKeyToContinue();
 int initialiserModules();
 void drawCases(SDL_Renderer *renderer, int, int, int, int, int, int);

@@ -21,6 +21,14 @@ paramètres  SDL_Renderer, coordonnées x et y du rectangle contenant les cases
 largeur et sa hauteur width et height,
 nombre de lignes et de colonnes de cases rows et cols
 */
+//prend en entrée une chaîne de caractères et renvoie une nouvelle chaîne avec la première lettre en majuscule.
+
+char* capitalize(char *str) {
+    char* new_str = strdup(str);
+    new_str[0] = toupper(new_str[0]);
+    return new_str;
+    // NOTE : on aura besoin de free new_str
+}
 
 void pressAnyKeyToContinue() {
     printf("Appuyez sur une touche pour continuer...");

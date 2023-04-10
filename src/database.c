@@ -118,15 +118,6 @@ pokemon_t initialiserPkm(){
     return pokemon;
 }
 
-
-//prend en entrée une chaîne de caractères et renvoie une nouvelle chaîne avec la première lettre en majuscule.
-char* capitalize(char *str) {
-    char* new_str = strdup(str);
-    new_str[0] = toupper(new_str[0]);
-    return new_str;
-    // NOTE : on aura besoin de free new_str
-}
-
 /*Permet de créer un tableau de N Pokémon avec les stats par défault*/
 pokemon_t * createPkmDatabase(int taille, int indRar){
   int c;
@@ -201,7 +192,6 @@ void printPkm(pokemon_t pokemon){
 void affichertableau(pokemon_t *tableau, int taille){
   // Vider le flux d'entrée
   while (getchar() != '\n');
-
   for (int i = 0 ; i < taille ; i++){
     printf("Pokemon numero %d\n ",i+1);
     printf("Nom : %s  ID :  %d \n",(tableau+i)->name,(tableau+i)->id);
