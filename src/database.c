@@ -129,7 +129,6 @@ char* capitalize(char *str) {
 
 /*Permet de créer un tableau de N Pokémon avec les stats par défault*/
 pokemon_t * createPkmDatabase(int taille, int indRar){
-  printf("(Si necessaire appuyer sur entree)\n");
   int c;
   int i = 0 ;
   char nomRecherche[52], saisie[52];
@@ -141,8 +140,8 @@ pokemon_t * createPkmDatabase(int taille, int indRar){
       {"Typhlosion", "Meganium", "Tortank", '\0', '\0', '\0'},
       {"mew", "arceus", '\0', '\0', '\0', '\0'}
   };
-
-  while ((c = getchar()) != '\n' && c != EOF);
+  //printf("(Si necessaire appuyer sur entree)\n");
+  //while ((c = getchar()) != '\n' && c != EOF);
   printf("Creation de %d Pokemon :\n",taille);
   pokemon_t *tableau=malloc(sizeof(pokemon_t)*taille);        /* alloc taille tableau par rapport au nombre de Pokemon */
   FILE * ptrFich = fopen("ressources/data.csv","r");
