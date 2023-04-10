@@ -34,7 +34,6 @@ typedef struct {
 } Button;
 
 Button CartePkm[NUM_BUTTONS];
-carteBoutique tabCartes[NUM_BUTTONS]; 
 
 /**/
 SDL_Rect ArenaZone = {(SCREEN_WIDTH-AREA_WIDTH)/2,0,AREA_WIDTH,AREA_HIGH};
@@ -44,8 +43,6 @@ SDL_Rect ArenaZone = {(SCREEN_WIDTH-AREA_WIDTH)/2,0,AREA_WIDTH,AREA_HIGH};
 pokemon_t genererCartes(SDL_Renderer* renderer , SDL_Window* window, pokemon_t* tabCartes) {
 
  //   "parametres des boutons (taille espacement...)"*/
-
-pokemon_t *pokemon=NULL;
 
 carteBoutique* genererTabCarte(pokemon_t* pokemonListe, SDL_Renderer* renderer, SDL_Window* window) {
     const int buttonWidth = (SCREEN_WIDTH * 0.6) / NUM_BUTTONS;
@@ -229,7 +226,7 @@ int main(int argc, char* argv[]) {
                         for (int i = 0; i < 5; i++) {
                             if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &tabcarte[i].blackRect) && tabcarte[i].click==0) {
                                 printf("la carte numero %d à été cliqué\n",i);
-                                acheterCarte(&TabJoueurs[0],&tabCartes[i],&pokemon[i]);
+                                acheterCarte(&TabJoueurs[0],&tabcarte[i],&listepokemon[i]);
                             }
                         }
                 break;

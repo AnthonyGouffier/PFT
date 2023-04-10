@@ -119,15 +119,17 @@ void stat_player(player_t* joueur) {
 
 void acheterCarte(player_t* joueur, carteBoutique* carte ,pokemon_t* pokemon){
     //récupération du nombre de pkm de l'équipe
-    printf("Achat en cours...\n");
     int nbpkm = nbPkmTeam(joueur);
     printf("nombre de pkm : %d\n",nbpkm);
+    printf(" joueur -> alive : %d  joueur->money : %d pokemon->rarete : %d " , joueur->alive , joueur->money , pokemon->rarete);
     //Impossible d'acheter si :
-    if( joueur->alive==false && joueur->money < pokemon->rarete && nbpkm >= 10){
+    if( joueur->alive==false || joueur->money < pokemon->rarete || nbpkm >= 10){
         printf("Impossible d'effectuer l'achat de %s",pokemon->name);
     }
     else{
+        printf("Achat en cours...\n");
         joueur->money-=pokemon->rarete;
         carte->click=1;
+        joueur->team[nbpkm]=*pokemon;
     }
 }
