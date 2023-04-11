@@ -58,7 +58,7 @@ void deplacement_pok(pokemon_t * mat[N][N],pos_t pos,pos_t newpos){
     int i=newpos.x,j=newpos.y;
     int x=pos.x,y=pos.y;
       mat[i][j]=mat[x][y];
-     // mat[i][j]=initialiserPkm(mat[i][j]);
+     mat[i][j]=initialiserPkm();
       pos.x=newpos.x;
       pos.y=newpos.y;
 }
@@ -237,8 +237,8 @@ void combat(pokemon_t * mat[N][N]){
 
 int main(){
   pokemon_t *  plateau[N][N];
-  pokemon_t *  poke=createPkmDatabase(1);
-  pokemon_t *  poke2=createPkmDatabase(1);
+  pokemon_t *  poke=createPkmDatabase(1,1);
+  pokemon_t *  poke2=createPkmDatabase(1,2);
   pokemon_t * poke_save;
   poke->alive=1;
   poke2->alive=1;
@@ -248,7 +248,7 @@ int main(){
   for(int i=0;i<=N;i++){
         for(int j=0;j<=N;j++){
             plateau[i][j] = malloc(sizeof(pokemon_t));
-            plateau[i][j]=initialiserPkm(plateau[i][j]);
+            plateau[i][j]=initialiserPkm();
         }
     }
 

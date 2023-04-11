@@ -113,7 +113,7 @@ int main(int argc, char* args[]) {
     for(int i=0;i<GRID_ROWS;i++){
         for(int j=0;j<GRID_COLUMNS;j++){
             plateau[i][j] = malloc(sizeof(pokemon_t));
-            plateau[i][j]=initialiserPkm(plateau[i][j]);
+            plateau[i][j]=initialiserPkm();
         }
     }
 
