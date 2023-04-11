@@ -1,126 +1,134 @@
-#include "joueur.h"
-#include "commun.h"
-/*
-gcc .\src\afficher_stat_joueur.c .\src\joueur.c .\src\fonction.c .\src\database.c -o .\bin\test -I include -L lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf && .\bin\test.exe
-*/
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
-
-#define WIDTH_PLAQUE 600 / 4
-#define HIGHT_PLAQUE 215 / 4
 
 
-typedef struct 
-{
-    SDL_Rect rectDest;
-    SDL_Rect rectTexte;
-    SDL_Rect rectNiv;
-    SDL_Rect rectHp;
-    SDL_Rect rectXp;
-    SDL_Texture* nameT;
-    SDL_Texture* lvlT;
-    SDL_Texture* plaqueT;
-}plaqueStat;
-
-
-int main(int arc,char** argv){
-
-    initialiserModules();
-    player_t *joueur;
-    createPlayer(&joueur,1);
-    stat_player(&joueur);
+plaqueStat CreerGraphStats(SDL_Renderer* renderer, SDL_Window* window, player_t* player , int x , int y , int width_plaque , int hight_plaque){
+    
     plaqueStat plaque;
-    // Création de la fenêtre
-    SDL_Window* window = SDL_CreateWindow("PFT", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if ( window == NULL){ 
-        SDL_Log("Creation fenetre: %s\n",SDL_GetError());
-        return EXIT_FAILURE;
+
+    // Charger une police de caractères
+    TTF_Font* font = TTF_OpenFont("ressources/font/Pokemon_Classic.ttf", 12);
+    if (font == NULL) {
+        // Gestion de l'erreur de chargement de la police
+        printf("Erreur de chargement de la police : %s\n", TTF_GetError());
     }
 
-    // Création du renderer
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer) {
-        SDL_Log("Erreur de création du renderer : %s", SDL_GetError());
-        return EXIT_FAILURE;
+    SDL_Color gris = {50, 50, 50}; // Couleur blanche
+
+    // Créer une surface de texte
+    SDL_Surface* nameS = TTF_RenderText_Solid(font, player->nom, gris);
+    if (nameS == NULL) {
+        // Gestion de l'erreur de création de la surface de texte
+        printf("Erreur de création de la surface de texte : %s\n", TTF_GetError());
+    }
+       
+    char* niveau=int_to_string(player->niveau);
+    SDL_Surface* lvlS = TTF_RenderText_Solid(font, niveau, gris);
+    if (lvlS == NULL) {
+        // Gestion de l'erreur de création de la surface de texte
+        printf("Erreur de création de la surface de texte : %s\n", TTF_GetError());
     }
 
-    int x = 0 ;
-    int y = 0 ;
-    SDL_Color textColor = {255,255,255};
-    // Chargement de la police Pokemon
-    TTF_Font* font = TTF_OpenFont("ressources/font/Pokemon_Classic.ttf",12);
-    if (!font) {
-        printf("Erreur de chargement de la police: %s\n", TTF_GetError());
-        // Gestion de l'erreur
+
+    // Chargement de l'image
+    SDL_Surface* plaqueS = IMG_Load("ressources/img/plaquestats.png"); 
+    if (!plaqueS) {
+        SDL_Log("Erreur lors du chargement de l'image : %s", IMG_GetError());
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        IMG_Quit();
+        return;
     }
 
-    //chargement de l'image
-    SDL_Surface* plaqueS = IMG_Load("ressources/img/plaquestats.png");
-    if(!plaqueS) {
-        printf("Erreur de chargement de l'image : %s", IMG_GetError());
+    //Creation des rectangles d'emplacement
+    int const x = 0; 
+    int const y = 120;
+    int const w = width_plaque;
+    int const h = hight_plaque;
+    SDL_Rect temp0={x,y,w,h};
+    SDL_Rect temptxt={temp0.x + (temp0.w * 0.02),temp0.y + (temp0.h * 0.19), temp0.w * 0.84 ,  (temp0.y * 0.28) };
+    SDL_Rect tempniv={temp0.x + (temp0.w * 0.75),temp0.y + (temp0.h * 0.55), temp0.w * 0.167 , (temp0.y * 0.265) };
+    SDL_Rect temphp={temp0.x +  (temp0.w * 0.17),temp0.y + (temp0.h * 0.633),temp0.w * 0.53 ,  (temp0.y * 0.105) };
+    SDL_Rect tempxp={temp0.x +  (temp0.w * 0.06),temp0.y + (temp0.h * 0.87), temp0.w * 0.77 ,  (temp0.y * 0.07) };
+
+
+    plaque.rectDest=temp0;
+    plaque.rectTexte=temptxt;
+    plaque.rectNiv=tempniv;
+    plaque.rectHp=temphp;
+    plaque.rectXp=tempxp;
+
+    // Création d'une texture à partir de l'image
+    plaque.plaqueT = SDL_CreateTextureFromSurface(renderer, plaqueS);
+    SDL_FreeSurface(plaqueS); // Libération de la surface chargée
+
+    if (!plaque.plaqueT) {
+        SDL_Log("Erreur lors de la création de la texture : %s", SDL_GetError());
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        IMG_Quit();
+        return;
     }
-    SDL_Texture* plaqueT = SDL_CreateTextureFromSurface(renderer, plaqueS);
-    // Vérifier texture
-    if (!plaqueT) {
-        SDL_Log("Erreur de création de la texture d'arrière-plan : %s", SDL_GetError());
-        return EXIT_FAILURE;
-    }
-    SDL_FreeSurface(plaqueS);
 
-
-    SDL_Surface* nameS = TTF_RenderText_Solid(font,joueur->nom,textColor);
-    if (!nameS) {
-        printf("Erreur de surface du texte: %s\n", TTF_GetError());
+    // Créer une texture à partir de la surface de texte
+    plaque.nameT = SDL_CreateTextureFromSurface(renderer, nameS);
+    if (plaque.nameT == NULL) {
+    // Gestion de l'erreur de création de la texture
+        printf("Erreur de création de la texture de texte : %s\n", SDL_GetError());
     }
 
-    SDL_Surface* nivS = TTF_RenderText_Solid(font,joueur->niveau,textColor);
-    if (!nivS) {
-        printf("Erreur de surface du texte: %s\n", TTF_GetError());
-    }
 
-    // Création d'une texture à partir de la surface de texte
-    plaque.nameT = SDL_CreateTextureFromSurface(renderer,nivS);
-    plaque.lvlT = SDL_CreateTextureFromSurface(renderer,nivS);
+    // Récupérer la hauteur et la largeur de la surface de texte
+    int texteLargeur, texteHauteur;
+    SDL_QueryTexture(plaque.nameT, NULL, NULL, &texteLargeur, &texteHauteur);
+    //calcul en fonction des données
+    float ratioHauteur = (float)temp0.h * 0.28 / texteHauteur;
+    float ratioLargeur = (float)temp0.w * 0.84 / texteLargeur;
+    float ratioMin = fmin(ratioHauteur, ratioLargeur);
+    int textureLargeur = texteLargeur * ratioMin;
+    int textureHauteur = texteHauteur * ratioMin;
+    //redimension du rectangle
+    plaque.rectTexte.x= temptxt.x;
+    plaque.rectTexte.y= temptxt.y;
+    plaque.rectTexte.w= textureLargeur;
+    plaque.rectTexte.h= textureHauteur;
 
-
-    //creation des rectangles
-    //rectangle de position
     
-
- 
-    printf("position du rectangle conteneur : %d %d\n",(x - WIDTH_PLAQUE), (y - HIGHT_PLAQUE));
-
-    /*INITIALISATION DES RECTANGLES*/                                               /*et stockage des val dans la structure*/
-    SDL_Rect temp0= { x , y ,WIDTH_PLAQUE,HIGHT_PLAQUE};                                    plaque.rectDest=temp0;
-    SDL_Rect temp1= {temp0.x * 0.02 , temp0.y * 0.19 , temp0.w * 0.84, temp0.y * 0.28};     plaque.rectTexte=temp1;
-    SDL_Rect temp2= {temp0.x * 0.75 , temp0.y * 0.55 , temp0.w * 0.167, temp0.y * 0.265};   plaque.rectNiv=temp2;
-    SDL_Rect temp3= {temp0.x * 0.17 , temp0.y * 0.633 , temp0.w * 0.53, temp0.y * 0.105};   plaque.rectHp=temp3;
-    SDL_Rect temp4= {temp0.x * 0.06 , temp0.y * 0.895 , temp0.w * 0.82, temp0.y * 0.07};    plaque.rectXp=temp4;
+    // Créer une texture à partir de la surface de texte
+    plaque.lvlT = SDL_CreateTextureFromSurface(renderer, lvlS);
+    if (plaque.lvlT == NULL) {
+    // Gestion de l'erreur de création de la texture
+        printf("Erreur de création de la texture de texte : %s\n", SDL_GetError());
+    }
+    
+    // Récupérer la hauteur et la largeur de la surface de texte
+    texteLargeur, texteHauteur;
+    SDL_QueryTexture(plaque.lvlT, NULL, NULL, &texteLargeur, &texteHauteur);
+    //calcul en fonction des données
+    ratioHauteur = (float)temp0.h * 0.28 / texteHauteur;
+    ratioLargeur = (float)temp0.w * 0.84 / texteLargeur;
+    ratioMin = fmin(ratioHauteur, ratioLargeur);
+    textureLargeur = texteLargeur * ratioMin;
+    textureHauteur = texteHauteur * ratioMin;
+    //redimension du rectangle
+    plaque.rectNiv.x= tempniv.x;
+    plaque.rectNiv.y= tempniv.y;
+    plaque.rectNiv.w= textureLargeur;
+    plaque.rectNiv.h= textureHauteur;
+    
+    return plaque;
 }
-    
-void afficherPlaque(SDL_Renderer* renderer, SDL_Window* window ,plaqueStat* plaque ){
-    /*RENDU*/
 
-    //text
-    SDL_RenderFillRect(renderer, &plaque->rectTexte);
+void AfficherGraphStats(SDL_Window* window, SDL_Renderer* renderer, plaqueStat plaque ,player_t* player){
 
-    //pv
-    
+    // Affichage de la texture à l'écran
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    SDL_RenderFillRect(renderer, &plaque->rectHp);
+    SDL_RenderFillRect(renderer, &plaque.rectHp);
 
-    //xp
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-    SDL_RenderFillRect(renderer, &plaque->rectXp);
+    SDL_SetRenderDrawColor(renderer, 0, 200, 255, 255);
+    SDL_RenderFillRect(renderer, &plaque.rectXp);
 
-    
-    
-    SDL_RenderCopy(renderer,plaque->plaqueT,NULL,&plaque->rectDest);
-
-
-    // Libération des ressources
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-}   
+    SDL_RenderCopy(renderer, plaque.plaqueT, NULL, &plaque.rectDest);
+    SDL_RenderCopy(renderer, plaque.nameT , NULL, &plaque.rectTexte);
+    SDL_RenderCopy(renderer, plaque.lvlT, NULL, &plaque.rectNiv);
+}

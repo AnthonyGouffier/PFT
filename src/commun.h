@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  * 
  */
-#ifndef COMMUN_H
-#define COMMUN_H
+#ifndef COMMUN_H_INCLUDED
+#define COMMUN_H_INCLUDED
 
 #include <stdbool.h>
 #include <ctype.h>
@@ -17,6 +17,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <math.h>
 /*inclusion SDL*/
 #include <SDL.h>
 #include <SDL_image.h>
@@ -27,7 +28,7 @@ char* capitalize(char *);
 void pressAnyKeyToContinue();
 int initialiserModules();
 void drawCases(SDL_Renderer *renderer, int, int, int, int, int, int);
-char* int_to_string(int ) ;
+char* int_to_string(int);
 
 /*void ras(){
     printf("Le code fonctionne correctement !\n");

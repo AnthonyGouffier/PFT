@@ -19,8 +19,11 @@
 #define SCREEN_HEIGHT 1080
 #define NUM_BUTTONS 5
 
-#define  AREA_WIDTH SCREEN_WIDTH * 0.75
-#define  AREA_HIGH  SCREEN_HEIGHT * 0.8
+#define  AREA_WIDTH SCREEN_WIDTH * 0.60
+#define  AREA_HIGH  SCREEN_HEIGHT * 0.60
+
+#define WIDTH_STATS   SCREEN_WIDTH / 8
+#define HEIGHT_STATS  SCREEN_HEIGHT/ 12
 
 #define WIDTHX_CARTE 200
 #define HIGHTY_CARTE 150
@@ -52,18 +55,18 @@ carteBoutique* genererTabCarte(pokemon_t* pokemonListe, SDL_Renderer* renderer, 
     int firstButtonX = buttonOffset + buttonSpacing;
 
     // Allouer dynamiquement de la mémoire pour le tableau de structures
-    carteBoutique* tabCarte = malloc(NUM_BUTTONS * sizeof(carteBoutique));
-    if (tabCarte == NULL) {
+    carteBoutique* tabcarte = malloc(NUM_BUTTONS * sizeof(carteBoutique));
+    if (tabcarte == NULL) {
         // Gestion de l'erreur si l'allocation échoue
         printf("Erreur d'allocation de mémoire\n");
         return NULL; // ou effectuer une autre action appropriée
     }
     for (int i=0; i < NUM_BUTTONS; i++) {
-        // tabCarte[0] = genererCartePkmBoutique(pokemonListe[0], renderer, window , SCREEN_WIDTH * 0.1 / (NUM_BUTTONS + 1), (SCREEN_HEIGHT - buttonHeight) , buttonWidth , buttonHeight) ;
+        // tabcarte[0] = genererCartePkmBoutique(pokemonListe[0], renderer, window , SCREEN_WIDTH * 0.1 / (NUM_BUTTONS + 1), (SCREEN_HEIGHT - buttonHeight) , buttonWidth , buttonHeight) ;
         // printPkm(pokemonListe[i]);
-        tabCarte[i] = genererCartePkmBoutique(pokemonListe[i], renderer, window , firstButtonX + i*(buttonWidth+(SCREEN_WIDTH * 0.0125)), (SCREEN_HEIGHT*0.975 - buttonHeight ) , buttonWidth , buttonHeight) ;
+        tabcarte[i] = genererCartePkmBoutique(pokemonListe[i], renderer, window , firstButtonX + i*(buttonWidth+(SCREEN_WIDTH * 0.0125)), (SCREEN_HEIGHT*0.975 - buttonHeight ) , buttonWidth , buttonHeight) ;
     }
-    return tabCarte;
+    return tabcarte;
 }
 
 int main(int argc, char* argv[]) {
@@ -159,13 +162,16 @@ int main(int argc, char* argv[]) {
     
     // Initialisation des boutons
     carteBoutique *tabcarte=genererTabCarte(listepokemon,renderer,window);   
-    //carteBoutique carte1 = genererCartePkmBoutique(listepokemon[0], renderer, window, 800, 800,WIDTHX_CARTE,HIGHTY_CARTE);
-    //carteBoutique carte2 = genererCartePkmBoutique(listepokemon[1], renderer, window, 500, 500,WIDTHX_CARTE-50,HIGHTY_CARTE+100);
     
+    //Initialisation du rendu des PV
+    plaqueStat renduStat = CreerGraphStats( renderer , window , &TabJoueurs[0] , SCREEN_WIDTH/2 , SCREEN_HEIGHT/2  ,  WIDTH_STATS  , HEIGHT_STATS );
+
+
+
     // Boucle principale
-    SDL_Event event;
     bool quit = false;
     int mouseX=0, mouseY=0;
+    SDL_Event event;
     while (!quit) {
     // Gestion des événements
         while (SDL_PollEvent(&event)) {
@@ -204,9 +210,10 @@ int main(int argc, char* argv[]) {
                         }
                         if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &AcheterNiveau.rect)) {
                             acheterNiveauXP(&TabJoueurs[0]);// Enlever 4 or dans la struct joueur
-                            for (int i = 0; i < nbjoueur; i++)
-                            {
-                            stat_player(&(TabJoueurs[i]));
+                            TabJoueurs[0].hp--;
+                            renduStat = CreerGraphStats( renderer , window , &TabJoueurs[0] , SCREEN_WIDTH/2 , SCREEN_HEIGHT/2  ,  WIDTH_STATS  , HEIGHT_STATS );
+                            for (int i = 0; i < nbjoueur; i++){
+                                stat_player(&(TabJoueurs[i]));
                             }
                         }
                         for (int i = 0; i < 5; i++) {
@@ -243,7 +250,8 @@ int main(int argc, char* argv[]) {
         }
 
 /*------------------RENDU BANC------------------*/
-    drawCases(renderer, 50, 50, 200, 800, 6, 2);
+   // drawCases(renderer, 50, 50, 200, 800, 6, 2);
+    AfficherGraphStats(window,renderer,renduStat,&TabJoueurs[0]);
 
     SDL_RenderPresent(renderer);
     }
