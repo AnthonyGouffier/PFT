@@ -8,14 +8,14 @@
  * @copyright Copyright (c) 2023
  * 
  */
-
-#include "commun.h"
+#include "entites.h"
 #include "carte.h"
-
+#include "commun.h"
 
 /*******************************************GENERATION*******************************************************/
 
-carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, SDL_Window * window ,int x , int y) {
+carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, SDL_Window * window ,int x , int y, int selectlargeur , int selecthauteur){
+    
     // Récupération de la rareté du pokémon
     carteBoutique carte; 
     int pokemonRarity = pokemon.rarete;
@@ -23,17 +23,23 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     // Dessin du rectangle avec la couleur spécifiée
     carte.lvlRect.x=x; 
     carte.lvlRect.y=y;
-    carte.lvlRect.w=320;
-    carte.lvlRect.h=250;
+    carte.lvlRect.w=selectlargeur;
+    carte.lvlRect.h=selecthauteur;
     
     // Calcul des coordonnées du coin supérieur gauche du rectangle noir
-    int blackRectX = (carte.lvlRect.w - 300) / 2;
-    int blackRectY = (carte.lvlRect.h - 230) / 2;
-    
+    int decalX = selectlargeur * 0.05;
+    printf("decalage = %d\n",decalX);
+    int decalY = selecthauteur * 0.05;
+    printf("decalage = %d\n",decalX);
+    int blackRectX = x +decalX; 
+    printf("coordonné x du rectangle de niveau %d\n",x);
+    printf("coordonné x du rectangle noir %d\n",blackRectX);
+    printf("delta des deux coordonnés %d\n",x-blackRectX);
+    int blackRectY = y+decalY;
     carte.blackRect.x=blackRectX;
     carte.blackRect.y=blackRectY;
-    carte.blackRect.w=300;
-    carte.blackRect.h = 230;
+    carte.blackRect.w = carte.lvlRect.w * 0.9;
+    carte.blackRect.h = carte.lvlRect.h *  0.9;
     
     // Calcul de la hauteur du rectangle bleu
     int blueRectH = carte.blackRect.h * 0.75;
@@ -46,14 +52,18 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     // Chargement de l'image de fond
     SDL_Surface* bgSurface = IMG_Load("ressources/img/backgroundcard.jpg");
     carte.bgTexture = SDL_CreateTextureFromSurface(renderer, bgSurface);
-    
+
     // Chargement de l'image du Pokémon
-    SDL_Surface* pkmSurface = pokemon.imgSurface;
-    carte.pkmTexture = SDL_CreateTextureFromSurface(renderer, pkmSurface);
+    carte.pkmTexture = SDL_CreateTextureFromSurface(renderer, pokemon.imgSurface);
+    if(!carte.pkmTexture) {
+        printf("Erreur de chargement de l'image : %s", IMG_GetError());
+    }
+    //SDL_FreeSurface(pokemon.imgSurface);
+    
     
     // Récupération des dimensions de l'image
-    int imageWidth = pkmSurface->w;
-    int imageHeight = pkmSurface->h;
+    int imageWidth = pokemon.imgSurface->w;
+    int imageHeight = pokemon.imgSurface->h;
     
     // Calcul des dimensions du rectangle de destination
     int destWidth = carte.blueRect.w;
@@ -109,7 +119,7 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     carte.prixRect.h=prixtextH;
     SDL_Surface* nomText = TTF_RenderText_Solid(font,pokemon.name,textColor);
     if (!nomText) {
-        printf("Erreur de rendu du texte: %s\n", TTF_GetError());
+        printf("Erreur de surface du texte: %s\n", TTF_GetError());
     }
     
     // Création d'une texture à partir de la surface de texte
@@ -136,6 +146,9 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     carte.rectanglePiece.y=rectanglePieceY;
     carte.rectanglePiece.w=25;
     carte.rectanglePiece.h=25;
+
+    //initalisation de la carte en tant que non cliquée
+    carte.click=0;
     return carte;
 }
 /*************************************AFFICHAGE*************************************/
@@ -176,4 +189,13 @@ void afficherCartePkmBoutique(carteBoutique carte,SDL_Renderer* renderer,pokemon
     SDL_RenderCopy(renderer,carte.prixTexture,NULL,&carte.prixRect);
     SDL_RenderCopy(renderer,carte.nomTexture,NULL,&carte.nomRect);
     SDL_RenderCopy(renderer, carte.pieceTexture, NULL,&carte.rectanglePiece);
+}
+
+void detruireCartePkmBoutique(carteBoutique carte){
+    SDL_DestroyRenderer(carte.bgTexture);
+    SDL_DestroyRenderer(carte.pkmTexture);
+    SDL_DestroyRenderer(carte.pieceTexture);
+    SDL_DestroyRenderer(carte.textureText);
+    SDL_DestroyRenderer(carte.prixTexture);
+    SDL_DestroyRenderer(carte.nomTexture);
 }

@@ -16,6 +16,7 @@ Le tableau final correspond à la database du jeu , il contient tout les pokemon
 */
 
 #include "commun.h"
+#include "entites.h"
 
 /*Initialisation des taille */
 const int NbNiv1=6;
@@ -32,14 +33,15 @@ const int NbNiv5=2;
 #define DEFAULT_Y 0
 
 //assigne les stats par defaut à un pokemon.
-void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
-  int indRar;
+void auto_fill_pkm_stats(pokemon_t* pokemon,int taille , int indRar ){
+  /*int indRar;
   do{
     printf("Saisir rareté (gris = 1 , vert  = 2 , bleu = 3 , violet = 4 or = 5) ");scanf("%d",&indRar);
   }
   while (indRar < 0 || indRar > 5);
+*/
   for (int j = 0 ; j < taille ; j++){
-    (pokemon+j)->pv=(pokemon+j)->pv_max = DEFAULT_MAX_HP;
+    (pokemon+j)->pv=(pokemon+j)->pv_max;
     (pokemon+j)->range = DEFAULT_RANGE;
     (pokemon+j)->stade = DEFAULT_STAGE;
     (pokemon+j)->alive = DEFAULT_ALIVE;
@@ -48,21 +50,21 @@ void auto_fill_pkm_stats(pokemon_t* pokemon,int taille){
     (pokemon+j)->y = DEFAULT_Y;
     (pokemon+j)->rarete = indRar;
 
-     // Construction du nom de fichier de l'image
+    // Construction du nom de fichier de l'image
     char filename[64];
-    sprintf(filename, "ressources/img/Artwork2D/%d.png", pokemon->id);
-    printf("Localisation : %s",filename);
+    sprintf(filename, "ressources/img/Artwork2D/%d.png", (pokemon+j)->id);
+    printf("Localisation de la surface : %s\n",filename);
     // Chargement de l'image
     (pokemon+j)->imgSurface = IMG_Load(filename);
   }
 }
 
-
+/*
 pokemon_t* initialiserPkm(pokemon_t* pokemon){
     pokemon->id = 0;
     pokemon->dresseur = 0;
     memset(pokemon->name, 0, sizeof(pokemon->name));
-    /*Stats*/
+    //Stats
     pokemon->pv_max = 0;
     pokemon->pv = 0;
     pokemon->total = 0;
@@ -72,46 +74,79 @@ pokemon_t* initialiserPkm(pokemon_t* pokemon){
     pokemon->defspe = 0;
     pokemon->spd = 0;
     pokemon->range = 0;
-    /*autre*/
+    //autre
     *pokemon->classe = '\0';
     pokemon->rarete = 0;
     pokemon->stade = 0;
     pokemon->alive = 0;
-    /*partie graphique*/
+    //partie graphique
     pokemon->imgSurface = NULL;
-    /*coordonne*/
+    //coordonne
     pokemon->x = 0;
     pokemon->y = 0;
     return pokemon;
 }
+*/
 
-//prend en entrée une chaîne de caractères et renvoie une nouvelle chaîne avec la première lettre en majuscule.
-char* capitalize(char *str) {
-    char* new_str = strdup(str);
-    new_str[0] = toupper(new_str[0]);
-    return new_str;
-    // NOTE : on aura besoin de free new_str
+pokemon_t initialiserPkm(){
+    pokemon_t pokemon;
+    pokemon.id = 0;
+    pokemon.dresseur = 0;
+    memset(pokemon.name, 0, sizeof(pokemon.name));
+    /*Stats*/
+    pokemon.pv_max = 0;
+    pokemon.pv = 0;
+    pokemon.total = 0;
+    pokemon.att = 0;
+    pokemon.def = 0;
+    pokemon.attspe = 0;
+    pokemon.defspe = 0;
+    pokemon.spd = 0;
+    pokemon.range = 0;
+    /*autre*/
+    *pokemon.classe = '\0';
+    pokemon.rarete = 0;
+    pokemon.stade = 0;
+    pokemon.alive = 0;
+    /*partie graphique*/
+    pokemon.imgSurface = NULL;
+    /*coordonne*/
+    pokemon.x = 0;
+    pokemon.y = 0;
+
+    printPkm(pokemon);
+    return pokemon;
 }
 
 /*Permet de créer un tableau de N Pokémon avec les stats par défault*/
-pokemon_t * createPkmDatabase(int taille){
-  printf("(Si necessaire appuyer sur entree)\n");
+pokemon_t * createPkmDatabase(int taille, int indRar){
   int c;
-  while ((c = getchar()) != '\n' && c != EOF);
-  printf("Creation de %d Pokemon :\n",taille);
-  char nomRecherche[52];
-  char saisie[52];
   int i = 0 ;
+  char nomRecherche[52], saisie[52];
+  char *tabSaisie[6][6] = {
+      {'\0', '\0', '\0','\0', '\0', '\0'},
+      {"roucool", "chenipan", "aspicot", "pichu", "togepi", "toudoudou"},
+      {"caninos", "tentacool", "ponyta", "doduo", "otaria", '\0'},
+      {"pikachu", "salameche", "carapuce", "bulbizarre", '\0', '\0'},
+      {"Typhlosion", "Meganium", "Tortank", '\0', '\0', '\0'},
+      {"mew", "arceus", '\0', '\0', '\0', '\0'}
+  };
+  //printf("(Si necessaire appuyer sur entree)\n");
+  //while ((c = getchar()) != '\n' && c != EOF);
+  printf("Creation de %d Pokemon :\n",taille);
   pokemon_t *tableau=malloc(sizeof(pokemon_t)*taille);        /* alloc taille tableau par rapport au nombre de Pokemon */
   FILE * ptrFich = fopen("ressources/data.csv","r");
   if (ptrFich == NULL) {
     perror("Erreur lors de l'ouverture du fichier");
   }
+
+
   while(i<taille){
     printf("Saisir le nom du pokemon à rechercher : ");
     /*saisie nom pokemon*/
-    fgets(saisie, sizeof(saisie), stdin);
+  //  fgets(saisie, sizeof(saisie), stdin);
     saisie[strcspn(saisie, "\n")] = '\0'; // Remplace '\n' par '\0'
+    strcpy(saisie,tabSaisie[indRar][i]);
     char *token = strtok(saisie, " "); // Divise la chaîne de caractères en plusieurs mots
     strcpy(nomRecherche, capitalize(token)); // Stocke le premier mot dans la variable nomRecherche
     while (token != NULL) {
@@ -136,12 +171,12 @@ pokemon_t * createPkmDatabase(int taille){
     rewind(ptrFich);
   }
   fclose(ptrFich);
-  auto_fill_pkm_stats(tableau,taille);
-
-  system("cls");
-  system("clear");
-  printf("\a liste créé ! \n\n\n");
-  sleep(1);
+  auto_fill_pkm_stats(tableau,taille,indRar);
+  indRar++ ;
+//  system("cls");
+//  system("clear");
+  printf("\a liste créé !");
+ // sleep(1);
   return tableau;
 }
 
@@ -150,13 +185,13 @@ void printPkm(pokemon_t pokemon){
   printf("Ce Pokemon appartient a joueur %d\n", pokemon.dresseur);
   printf("Status : %d\n Stade d'évolution : %d\n",pokemon.alive,pokemon.stade);
   printf("Position actuelle :(%d,%d)\n", pokemon.x,pokemon.y);
+  printf("Aperçu de la surface %x\n",pokemon.imgSurface);
   printf("\n");
 }
 
 void affichertableau(pokemon_t *tableau, int taille){
   // Vider le flux d'entrée
   while (getchar() != '\n');
-
   for (int i = 0 ; i < taille ; i++){
     printf("Pokemon numero %d\n ",i+1);
     printf("Nom : %s  ID :  %d \n",(tableau+i)->name,(tableau+i)->id);
@@ -217,7 +252,7 @@ void distribution(pokemon_t* base, pokemon_t* sortie, int taille){
 }
 
 pokemon_t* genererationDatabase(){
-  int tailleFinal=(NbNiv1*29)+(NbNiv2*29)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10);
+  int tailleFinal=(NbNiv1*29)+(NbNiv2*22)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10);
   int NbNivTotal=(NbNiv1)+(NbNiv2)+(NbNiv3)+(NbNiv4)+(NbNiv5);
 
   /*initialisation statique du tableau final*/
@@ -232,13 +267,13 @@ pokemon_t* genererationDatabase(){
   }
 
   // Création des tableaux par rapport au niveau
-  pokemon_t *pkm1 = createPkmDatabase(NbNiv1);
-  pokemon_t *pkm2 = createPkmDatabase(NbNiv2);
-  pokemon_t *pkm3 = createPkmDatabase(NbNiv3);
-  pokemon_t *pkm4 = createPkmDatabase(NbNiv4);
-  pokemon_t *pkm5 = createPkmDatabase(NbNiv5);
+  pokemon_t *pkm1 = createPkmDatabase(NbNiv1,1);
+  pokemon_t *pkm2 = createPkmDatabase(NbNiv2,2);
+  pokemon_t *pkm3 = createPkmDatabase(NbNiv3,3);
+  pokemon_t *pkm4 = createPkmDatabase(NbNiv4,4);
+  pokemon_t *pkm5 = createPkmDatabase(NbNiv5,5);
 
-  // Concaténation des tableaux
+    // Concaténation des tableaux
   memcpy(basetest, pkm1, sizeof(pokemon_t) * NbNiv1);
   memcpy(basetest + NbNiv1, pkm2, sizeof(pokemon_t) * NbNiv2);
   memcpy(basetest + NbNiv1 + NbNiv2, pkm3, sizeof(pokemon_t) * NbNiv3);
@@ -252,8 +287,11 @@ pokemon_t* genererationDatabase(){
   free(pkm4);
   free(pkm5);
 
-  affichertableau(basetest,NbNivTotal);
-  printf("Le code fonctionne correctement !\n");
+  //affichertableau(basetest,NbNivTotal);
   distribution(basetest,database,NbNivTotal);
-  affichertableau(database,tailleFinal);
+  printf("Le code fonctionne correctement !\n");
+  //affichertableau(database,tailleFinal);
+  free(basetest);
+
+  return database;
 }
