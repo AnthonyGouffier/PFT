@@ -1,7 +1,5 @@
 #include "combats.h"
 
-
-
 /**
  * @brief tier de degat pour joueur
  * 
@@ -33,7 +31,7 @@ int degats_subi_pkm(int hp,int armor,int attaque){
 }
 
 int est_mort_pkm(int hp){
-   if(hp<0){
+   if(hp<=0){
     return 0;
    }
    return 1;
@@ -55,12 +53,8 @@ int aporter(pokemon_t * mat[N][N],int porter,int xpos,int ypos){
 }
 
 void deplacement_pok(pokemon_t * mat[N][N],pos_t pos,pos_t newpos){
-    int i=newpos.x,j=newpos.y;
-    int x=pos.x,y=pos.y;
-      mat[i][j]=mat[x][y];
-     mat[i][j]=initialiserPkm();
-      pos.x=newpos.x;
-      pos.y=newpos.y;
+    *mat[newpos.x][newpos.y]=*mat[pos.x][pos.y];
+    *mat[pos.x][pos.y]=initialiserPkm();
 }
 
 
@@ -149,9 +143,9 @@ void affiche_test(pokemon_t * automate[N][N]){
   printf("\n");
   for (i=0; i<N; i++) {
     for(j=0;j<N;j++) {
-      if(automate[i][j]->dresseur==enemi){
+      if(automate[i][j]->dresseur==enemi && automate[i][j]->alive==1){
         printf(" E ");
-      }else if(automate[i][j]->dresseur==pok){
+      }else if(automate[i][j]->dresseur==pok  && automate[i][j]->alive==1){
         printf(" P ");
       }else{
         printf(" _ ");
@@ -189,6 +183,7 @@ void affiche_tout(pokemon_t * mat[N][N]){
   }
 }
 
+
 void combat(pokemon_t * mat[N][N]){
   pos_t enemi_proche;
   pos_t mat_pos[N][N];
@@ -201,13 +196,16 @@ void combat(pokemon_t * mat[N][N]){
     }
   }
 
+
+
+
   for(int i=0;i<N;i++){
     for(int j=0;j<N;j++){
-      printf("%d %d %d \n ",mat[i][j]->alive,i,j);
       if(mat[i][j]->alive==1){
         enemi_proche=detecte_enemie_proche(mat,enemi_proche,mat[i][j]->dresseur);
-        if(aporter(mat,mat[i][j]->range,i,j)){
+        if(aporter(mat,mat[i][j]->range,i,j)==1){
           mat[enemi_proche.x][enemi_proche.y]->pv=degats_subi_pkm(mat[enemi_proche.x][enemi_proche.y]->pv,mat[i][j]->def,mat[i][j]->att);
+          printPkm(*mat[i][j]);
         }else{
           mat_pos[i][j]=avance(mat,enemi_proche.x,enemi_proche.y,i,j);
         }
@@ -220,14 +218,14 @@ void combat(pokemon_t * mat[N][N]){
       if(mat_pos[i2][j2].x!=i2 || mat_pos[i2][j2].y!=j2){
         deplacement.x=i2;
         deplacement.y=j2;
-        deplacement_pok(mat,mat_pos[i2][j2],deplacement);
+        deplacement_pok(mat,deplacement,mat_pos[i2][j2]);
       }
     }
   }
 
   for(int i3=0;i3<N;i3++){
     for(int j3=0;j3<N;j3++){
-      if(est_mort_pkm(mat[i3][j3]->pv)){
+      if(est_mort_pkm(mat[i3][j3]->pv)==0){
         mat[i3][j3]->alive=0;
       }
     }
@@ -245,23 +243,27 @@ int main(){
   poke2->dresseur=1;
   poke->dresseur=2;
 
-  for(int i=0;i<=N;i++){
-        for(int j=0;j<=N;j++){
+
+  int cpt=0;
+
+  for(int i=0;i<N;i++){
+        for(int j=0;j<N;j++){
             plateau[i][j] = malloc(sizeof(pokemon_t));
-            plateau[i][j]=initialiserPkm();
+            *plateau[i][j]=initialiserPkm();
         }
     }
 
-    plateau[1][1]=poke;
-    plateau[4][4]=poke2;
+    plateau[3][4]=poke;
+    plateau[3][0]=poke2;
     poke_save=poke;
-    printPkm(*poke_save);
 
     while(1){
       affiche_test(plateau);
       combat(plateau);
+      printPkm(*plateau[3][3]);
       printf("fin \n");
       sleep(1);
+      cpt++;
     }
 }
 
