@@ -204,6 +204,8 @@ int main(int argc, char* argv[]) {
                         if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &BtnActu.rect)) {
                             //genererCartes(renderer,window);
                             printf("Bouton Actualiser cliqué !\n");
+                            //free(listepokemon);
+                             detruireCartePkmBoutique(tabcarte[0]);
                             listepokemon = genererBoutique(&TabJoueurs[0],database);
                                 for (int i = 0; i < 5; i++) {
                                     tabcarte[i].click=0;
