@@ -13,10 +13,11 @@
 #include "entites.h"
 #include "carte.h"
 #include "joueur.h"
+#include "boutique.h"
 
 
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
 #define NUM_BUTTONS 5
 
 #define  AREA_WIDTH SCREEN_WIDTH * 0.60
@@ -71,11 +72,13 @@ carteBoutique* genererTabCarte(pokemon_t* pokemonListe, SDL_Renderer* renderer, 
 
 int main(int argc, char* argv[]) {
     printf("Bienvenue sur PFT !\n");
+    //Initilisation 
+    srand( time( NULL ) );
+
     //Initilisation SDL 
     initialiserModules();
 
     //Creation d'un joueur
-
     int nbjoueur;
     printf("Saisir nombre de joueurs :"); scanf("%d",&nbjoueur);
     player_t* TabJoueurs = malloc ( sizeof ( player_t ) * nbjoueur);
@@ -85,10 +88,11 @@ int main(int argc, char* argv[]) {
     }
 
     //Creation de la database
-    pokemon_t* listepokemon= genererationDatabase();
+    pokemon_t* database= genererationDatabase();
+    pokemon_t *listepokemon = genererBoutique(&TabJoueurs[0],database);
     //afficherEquipe(listepokemon,100);
 
-    afficherEquipe(listepokemon,5);
+    afficherEquipe(listepokemon,5);    //Creation d'un joueur
     // Création de la fenêtre
     SDL_Window* window = SDL_CreateWindow("PFT", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if ( window == NULL){ 
@@ -200,6 +204,7 @@ int main(int argc, char* argv[]) {
                         if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &BtnActu.rect)) {
                             //genererCartes(renderer,window);
                             printf("Bouton Actualiser cliqué !\n");
+                            listepokemon = genererBoutique(&TabJoueurs[0],database);
                                 for (int i = 0; i < 5; i++) {
                                     tabcarte[i].click=0;
                                     printf("Carte %d remise en état visible\n",i);
