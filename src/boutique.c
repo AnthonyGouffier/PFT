@@ -125,6 +125,20 @@
 
    }
 
+
+   for(int i = 0; i < 5; i++)
+   {
+
+     printf("|--------------------|\n");
+     printf("|                    |\n");
+     printf("|     (Pokemon%d)     |\n", i+1);
+     printf("|  Nom: %s           \n", boutique[i].name);
+     printf("|  Tier: %d          \n", boutique[i].rarete);
+     printf("|                    |\n");
+     printf("|--------------------|\n");
+   }
+
+
    return boutique;
  }
 
@@ -287,7 +301,7 @@
 
    /*printf("\nname=%s tier=%d\n", pokemon->name, pokemon->rarete);
 
-  
+
    for(int i = 0; i < 5; i++)
    {
 
