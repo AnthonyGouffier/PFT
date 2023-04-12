@@ -94,8 +94,19 @@
    }
  }
 
- pokemon_t * genererBoutique(player_t * player, pokemon_t * database)
- {
+  void boutiqueinfo(pokemon_t* boutique){
+    for(int i = 0; i < 5; i++)  {
+      printf("|--------------------|\n");
+      printf("|                    |\n");
+      printf("|     (Pokemon%d)     |\n", i+1);
+      printf("|  Nom: %s           |\n", boutique[i].name);
+      printf("|  Tier: %d          |\n", boutique[i].rarete);
+      printf("|                    |\n");
+      printf("|--------------------|\n");
+    }
+  }
+
+ pokemon_t * genererBoutique(player_t * player, pokemon_t * database){
    int level = (player->niveau);                 // recupere niveau du joueur
    int indice = level-1;                         // convertit le niveau du joueur en indice
    printf("indice : %i\n", indice);
@@ -123,24 +134,11 @@
 
      boutique[i] = *tirerPokemon(tier+1, database); // on ajoute à la boutique le pokemon tiré aléatoirement avec le tier selectionné
 
-   }
+  }
+  boutiqueinfo(boutique);
 
-
-   for(int i = 0; i < 5; i++)
-   {
-
-     printf("|--------------------|\n");
-     printf("|                    |\n");
-     printf("|     (Pokemon%d)     |\n", i+1);
-     printf("|  Nom: %s           \n", boutique[i].name);
-     printf("|  Tier: %d          \n", boutique[i].rarete);
-     printf("|                    |\n");
-     printf("|--------------------|\n");
-   }
-
-
-   return boutique;
- }
+  return boutique;
+  }
 
  // clear && gcc -o bin/boutique src/boutique.c src/database.c ./src/fonction_SDL.c $(sdl2-config --cflags --libs) -lSDL2 -lSDL2_image -lSDL2_ttf && ./bin/boutique
 

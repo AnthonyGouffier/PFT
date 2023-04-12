@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) {
     carteBoutique *tabcarte=genererTabCarte(listepokemon,renderer,window);   
     
     //Initialisation du rendu des PV
-    plaqueStat renduStat = CreerGraphStats( renderer , window , &TabJoueurs[0] , SCREEN_WIDTH/2 , SCREEN_HEIGHT/2  ,  WIDTH_STATS  , HEIGHT_STATS );
+    plaqueStat renduStat = CreerGraphStats( renderer , window , &TabJoueurs[0] , 0 , SCREEN_HEIGHT * 0.15  ,  WIDTH_STATS  , HEIGHT_STATS );
 
 
 
@@ -205,13 +205,20 @@ int main(int argc, char* argv[]) {
                             //genererCartes(renderer,window);
                             printf("Bouton Actualiser cliqué !\n");
                             //free(listepokemon);
-                             detruireCartePkmBoutique(tabcarte[0]);
+                            for (int i = 0; i < 5; i++) {
+                                printf("destruction carte %d\n" , i);
+                                //detruireCartePkmBoutique(*(tabcarte+i),renderer);
+                                detruireCartePkmBoutique( &tabcarte[i] );
+                            }
                             listepokemon = genererBoutique(&TabJoueurs[0],database);
-                                for (int i = 0; i < 5; i++) {
-                                    tabcarte[i].click=0;
-                                    printf("Carte %d remise en état visible\n",i);
-                                    printf("Le joueur perd 2 Or\n Or restant : (a remplir)");
-                                 }
+
+                            /*
+                            for (int i = 0; i < 5; i++) {
+                                tabcarte[i].click=0;
+                                printf("Carte %d remise en état visible\n",i);
+                                printf("Le joueur perd 2 Or\n Or restant : (a remplir)");
+                            }
+                            */
                             //genererTabCarte(pokemon,renderer,window);
                             // Enlever 2 or dans la structure du joueur
                         }

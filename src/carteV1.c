@@ -190,13 +190,53 @@ void afficherCartePkmBoutique(carteBoutique carte,SDL_Renderer* renderer,pokemon
     SDL_RenderCopy(renderer,carte.nomTexture,NULL,&carte.nomRect);
     SDL_RenderCopy(renderer, carte.pieceTexture, NULL,&carte.rectanglePiece);
 }
-
+/*
 void detruireCartePkmBoutique(carteBoutique carte, SDL_Renderer* renderer){
     SDL_RenderClear(renderer);
+    printf("Render clear\n");
     SDL_DestroyRenderer(carte.bgTexture);
+    printf("Supression effectuee\n");
     SDL_DestroyRenderer(carte.pkmTexture);
+    printf("Supression effectuee\n");
     SDL_DestroyRenderer(carte.pieceTexture);
+    printf("Supression effectuee\n");
     SDL_DestroyRenderer(carte.textureText);
+    printf("Supression effectuee\n");
     SDL_DestroyRenderer(carte.prixTexture);
+    printf("Supression effectuee\n");
     SDL_DestroyRenderer(carte.nomTexture);
+    printf("Supression effectuee\n");
+}
+*/
+void detruireCartePkmBoutique(carteBoutique* carte) {
+    if (carte->bgTexture != NULL) {
+        printf("Destruction\n");
+        SDL_DestroyTexture(carte->bgTexture);
+        carte->bgTexture = NULL;
+    }
+    if (carte->pkmTexture != NULL) {
+        printf("Destruction\n");
+        SDL_DestroyTexture(carte->pkmTexture);
+        carte->pkmTexture = NULL;
+    }
+    if (carte->pieceTexture != NULL) {
+        printf("Destruction\n");
+        SDL_DestroyTexture(carte->pieceTexture);
+        carte->pieceTexture = NULL;
+    }
+    if (carte->textureText != NULL) {
+        printf("Destruction\n");
+        SDL_DestroyTexture(carte->textureText);
+        carte->textureText = NULL;
+    }
+    if (carte->prixTexture != NULL) {
+        printf("Destruction\n");
+        SDL_DestroyTexture(carte->prixTexture);
+        carte->prixTexture = NULL;
+    }
+    if (carte->nomTexture != NULL) {
+        printf("Destruction\n");
+        SDL_DestroyTexture(carte->nomTexture);
+        carte->nomTexture = NULL;
+    }
 }
