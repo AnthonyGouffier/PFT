@@ -3,7 +3,7 @@
 Bienvenue dans le README pour notre projet codé en SDL2 nommé "Pokemon Figth Tactics (PFT)". 
 
 ## Introduction
-Develloppé par Gerome Vivien - Gaumont Mael - Deletang Elie - Gouffier Anthony 
+Develloppé par Gerome Vivien - Gaumont Mael - Deletang Elie - Gouffier Anthony étudiants en license informatique.
 Ce jeu est basé sur TeamFightTactic, un jeu de Riot Games. 
 Il met en scene des personnages (dans notre cas des pokémon) qui s'affronteront de façon autonomes.
 En fontion du résultat de cet affrontement le dresseur perdra progressivement ces PV. 

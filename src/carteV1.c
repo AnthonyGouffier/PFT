@@ -190,3 +190,12 @@ void afficherCartePkmBoutique(carteBoutique carte,SDL_Renderer* renderer,pokemon
     SDL_RenderCopy(renderer,carte.nomTexture,NULL,&carte.nomRect);
     SDL_RenderCopy(renderer, carte.pieceTexture, NULL,&carte.rectanglePiece);
 }
+
+void detruireCartePkmBoutique(carteBoutique carte){
+    SDL_DestroyRenderer(carte.bgTexture);
+    SDL_DestroyRenderer(carte.pkmTexture);
+    SDL_DestroyRenderer(carte.pieceTexture);
+    SDL_DestroyRenderer(carte.textureText);
+    SDL_DestroyRenderer(carte.prixTexture);
+    SDL_DestroyRenderer(carte.nomTexture);
+}
