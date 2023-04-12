@@ -1,6 +1,6 @@
 /**
  * \file combats.h
- * @author mael (you@domain.com)
+ * @author mael 
  * @brief le combat 
  * @version 0.1
  * @date 2023-04-03
@@ -11,6 +11,7 @@
 #define COMBATS_H
 
 #include "commun.h"
+#include "entites.h"
 
 #define pok 1
 #define enemi 2
@@ -25,15 +26,6 @@ typedef struct PL_s{
 
 
 
-/**
- * @brief tier de degat
- * 
- */
-int tier_damage[3][5] = {   //tier de damage a infliger au joueur
-  {1,1,1,2,3},
-  {2,2,2,3,4},
-  {3,3,3,5,8}
-};
 
 
 /**
@@ -72,7 +64,7 @@ int est_mort_pkm(int hp);
  * @param ypos 
  * @return int 
  */
-int aporter(pokemon_t mat[N][N],int porter,int xpos,int ypos);
+int aporter(pokemon_t * mat[N][N],int porter,int xpos,int ypos);
 
 
 
@@ -82,7 +74,7 @@ int aporter(pokemon_t mat[N][N],int porter,int xpos,int ypos);
  * @param mat 
  * @param pos 
  */
-void effacer(pokemon_t mat[N][N],pos_t pos);
+void effacer(pokemon_t * mat[N][N],pos_t pos);
 
 
 /**
@@ -92,7 +84,7 @@ void effacer(pokemon_t mat[N][N],pos_t pos);
  * @param pos 
  * @param newpos 
  */
-void deplacement_pok(pokemon_t mat[N][N],pos_t pos,pos_t newpos);
+void deplacement_pok(pokemon_t * mat[N][N],pos_t pos,pos_t newpos);
 
 
 /**
@@ -105,7 +97,7 @@ void deplacement_pok(pokemon_t mat[N][N],pos_t pos,pos_t newpos);
  * @param posy 
  * @return pos_t 
  */
-pos_t avance(pokemon_t mat[N][N],int xenemie,int yenemie,int posx,int posy);
+pos_t avance(pokemon_t * mat[N][N],int xenemie,int yenemie,int posx,int posy);
 
 /**
  * @brief detecte le premiere enemie le plus proche et renvoi ces cordone
@@ -115,7 +107,7 @@ pos_t avance(pokemon_t mat[N][N],int xenemie,int yenemie,int posx,int posy);
  * @param equipe 
  * @return pos_t 
  */
-pos_t detecte_enemie_proche(pokemon_t mat[N][N],pos_t pos,int equipe);
+pos_t detecte_enemie_proche(pokemon_t * mat[N][N],pos_t pos,int equipe);
 
 
 /**
@@ -126,7 +118,7 @@ pos_t detecte_enemie_proche(pokemon_t mat[N][N],pos_t pos,int equipe);
  * @param hp 
  * @return int 
  */
-int dmg_player(pokemon_t mat[N][N],int stage,int hp);
+int dmg_player(pokemon_t * mat[N][N],int stage,int hp,int equipe);
 
 /**
  * @brief recupere et retoune les hp d un pokemon a des cordonner donner
@@ -136,14 +128,14 @@ int dmg_player(pokemon_t mat[N][N],int stage,int hp);
  * @param y 
  * @return int 
  */
-int recuperehp(pokemon_t mat[N][N],int x,int y);
+int recuperehp(pokemon_t * mat[N][N],int x,int y);
 
 /**
  * @brief affiche le test (beta)
  * 
  * @param automate 
  */
-void affiche_test(pokemon_t automate[N][N]);
+void affiche_test(pokemon_t * automate[N][N]);
 
 
 
@@ -154,13 +146,13 @@ void affiche_test(pokemon_t automate[N][N]);
  * @param mat 
  * @param pos 
  */
-void affiche_stat(pokemon_t mat[N][N],pos_t pos);
+void affiche_stat(pokemon_t * mat[N][N],pos_t pos);
 
 /**
  * @brief donne tout les stat des pokemon de la matrice 
  * 
  * @param mat 
  */
-void affiche_tout(pokemon_t mat[N][N]);
+void affiche_tout(pokemon_t * mat[N][N]);
 
 #endif

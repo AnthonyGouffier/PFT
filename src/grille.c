@@ -10,10 +10,11 @@
  */
 
 #include "grille.h"
+#include "entites.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-const int BUTTON_SIZE = 40;
+const int BUTTON_SIZE = 55;
 const int BUTTON_MARGIN = 15;
 const int GRID_ROWS = 6;
 const int GRID_COLUMNS = 6;
@@ -72,7 +73,7 @@ int main(int argc, char* args[]) {
     int gridHeight = GRID_ROWS * (BUTTON_SIZE + BUTTON_MARGIN) - BUTTON_MARGIN;
 
     // initialise les image
-    SDL_Surface* buttonSurface2 = IMG_Load("ressources/img/image.jpg");
+    SDL_Surface* buttonSurface2 = IMG_Load("ressources/img/piece.png");
     SDL_Texture* buttonTexture2 = SDL_CreateTextureFromSurface(renderer, buttonSurface2);
     SDL_FreeSurface(buttonSurface2);
 
@@ -80,7 +81,7 @@ int main(int argc, char* args[]) {
 
 
     // Chargement de l'image de fond
-    SDL_Surface* backgroundSurface = IMG_Load("ressources/img/PlateauDeJeu.png");
+    SDL_Surface* backgroundSurface = IMG_Load("ressources/img/plateaudejeu.png");
     if (backgroundSurface == NULL) {
         printf("Erreur de chargement de l'image de fond : %s\n", IMG_GetError());
         return 1;
@@ -99,7 +100,7 @@ int main(int argc, char* args[]) {
     int phase=1;
     int x_save,y_save;
     pokemon_t *  plateau[GRID_ROWS][GRID_COLUMNS];
-    pokemon_t *  poke=createPkmDatabase(1);
+    pokemon_t *  poke=createPkmDatabase(1,5);
     pokemon_t * poke_save;
     poke->alive=1;
     // initialise les image du poke de test 
@@ -113,12 +114,12 @@ int main(int argc, char* args[]) {
     for(int i=0;i<GRID_ROWS;i++){
         for(int j=0;j<GRID_COLUMNS;j++){
             plateau[i][j] = malloc(sizeof(pokemon_t));
-            plateau[i][j]=initialiserPkm();
+            *plateau[i][j]=initialiserPkm();
         }
     }
 
     plateau[3][3]=poke;
-    plateau[4][4]=poke;                                            plateau[x_save][y_save]=plateau[row][column];
+    plateau[4][4]=poke;                                   
     poke_save=poke;
     printPkm(*poke_save);
 
