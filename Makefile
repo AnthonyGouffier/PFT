@@ -1,11 +1,11 @@
 ifeq ($(OS),Windows_NT)
     # Compilation pour Windows
-    CC = gcc
+    CC = gcc -g
     CFLAGS = -I include -L lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
     EXECUTABLE = bin/PFT.exe
 else
     # Compilation pour Linux
-    CC = gcc
+    CC = gcc -g
     CFLAGS = `sdl2-config --cflags`
     LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lm
     EXECUTABLE = bin/PFT

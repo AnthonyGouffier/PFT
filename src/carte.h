@@ -22,7 +22,7 @@ typedef struct carteBoutique_s {
     SDL_Texture* nomTexture;
 } carteBoutique;
 
-void detruireCartePkmBoutique(carteBoutique);
+void detruireCartePkmBoutique(carteBoutique,SDL_Renderer*);
 carteBoutique genererCartePkmBoutique(pokemon_t ,SDL_Renderer* , SDL_Window *  ,int  , int , int , int) ;
 void afficherCartePkmBoutique(carteBoutique ,SDL_Renderer* ,pokemon_t );
 

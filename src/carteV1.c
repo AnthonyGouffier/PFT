@@ -191,7 +191,8 @@ void afficherCartePkmBoutique(carteBoutique carte,SDL_Renderer* renderer,pokemon
     SDL_RenderCopy(renderer, carte.pieceTexture, NULL,&carte.rectanglePiece);
 }
 
-void detruireCartePkmBoutique(carteBoutique carte){
+void detruireCartePkmBoutique(carteBoutique carte, SDL_Renderer* renderer){
+    SDL_RenderClear(renderer);
     SDL_DestroyRenderer(carte.bgTexture);
     SDL_DestroyRenderer(carte.pkmTexture);
     SDL_DestroyRenderer(carte.pieceTexture);
