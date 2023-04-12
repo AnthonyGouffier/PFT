@@ -13,8 +13,6 @@
  #include <time.h>
  #include "boutique.h"
 
- //srand( time( NULL ) );
-
  int rarete[9][5] = // stocke la probabilité de chaque tier de pokemon pour chaque niveau du joueur
  {
    // {tier1, tier2, tier3, tier4, tier4, tier5}
@@ -55,22 +53,6 @@
 
  */
 
- // PROTOTYPE
-
- /*pokemon_t * tirerPokemon(int tier, pokemon_t * database)
- {
-   int start = 0;
-   for(int i = 0; i <= tier-1; i++)
-   {
-     start += nbPokeTier[i] * nbRepliqueTier[i];
-   }
-
-   int pok_pos = rand() % (nbPokeTier[tier] * nbRepliqueTier[tier]);
-   pok_pos += start;
-
-   return database += sizeof(pokemon_t) * pok_pos;
- }*/
-
  int nbPokeTier[5]     = { 6,5,4,3,2 };     // nombre de pokemon différent pour chaque tier
  int nbRepliqueTier[5] = { 29,22,16,12,10}; // nombre de replique de chaque pokemon different pour chaque tier
 
@@ -99,28 +81,7 @@
    printf("\npos : %d\n", pok_pos);
 
    return &database[pok_pos];
-   //return pok_pos;
  }
-
- /*pokemon_t * tirerPokemon(int tier, pokemon_t * database, int database_size)
- {
-   int pok_pos = rand() % database_size;
-
-   printf("%d\n", pok_pos);
-
-   //database+=sizeof(pokemon_t)*pok_pos;
-
-   for(int i = 0; i < pok_pos; i++)
-   {
-     database++;
-   }
-
-   pokemon_t * pokemon = malloc(sizeof(pokemon_t));
-
-   pokemon=database;
-
-   return pokemon;
- }*/
 
  void acheter(player_t * player, pokemon_t * pokemon, boutique_t * boutique)
  {
@@ -132,45 +93,6 @@
      //player->team += pokemon;
    }
  }
-
- // PROTOTYPE
-
- /*pokemon_t * genererBoutique(player_t * player, pokemon_t * database)
- {
-   int level = (player->niveau);                 // recupere niveau du joueur
-   int indice = level-1;                         // convertit le niveau du joueur en indice
-   printf("indice : %i\n", indice);
-   int drop = 0;
-
-   pokemon_t * boutique = malloc(sizeof(pokemon_t) * 5)
-
-   for(int i = 0; i < 5; i++)                    // pour les 5 pokemons tiré dans la boutique
-   {
-     printf("\n  [[ POKEMON %i ]] \n", i+1);
-
-     int tier = 4;
-
-     while(tier > 0)
-     {
-       drop = rand() % 101;                      // on génére un nombre entre 0 et 100
-       //printf("\ntier(%i) => %i% >= %i\n", tier+1, rarete[indice][tier], drop);
-       if(rarete[indice][tier] > drop) //
-       {
-         //printf("     ^\n");
-         break;
-       }
-       tier--;
-     }
-
-     printf("\n  ** TIER **  %i\n", tier+1);
-
-     // tirage d'un pokemon aléatoire du tier tirer
-     //pokemon_t * poke = tirerPokemon(tier+1, database);
-     // stockage du pokemon dans la boutique du joueur
-     //player->boutique = poke;
-     //player->boutique += sizeof(pokemon_t);
-   }
- }*/
 
  pokemon_t * genererBoutique(player_t * player, pokemon_t * database)
  {
@@ -190,76 +112,26 @@
      while(tier > 0)
      {
        drop = rand() % 101;                      // on génére un nombre entre 0 et 100
-       //printf("\ntier(%i) => %i% >= %i\n", tier+1, rarete[indice][tier], drop);
-       if(rarete[indice][tier] > drop) //
+       if(rarete[indice][tier] > drop)           // Si le nombre générer est plus petit ou égal au taux de drop
        {
-         //printf("     ^\n");
-         break;
+         break;                                  // Le tier courant est selectionné
        }
-       tier--;
+       tier--;                                   // Sinon on passe au tier d'en dessous
      }
 
      printf("\n  ** TIER **  %i\n", tier+1);
 
-     boutique[i] = *tirerPokemon(tier+1, database);
+     boutique[i] = *tirerPokemon(tier+1, database); // on ajoute à la boutique le pokemon tiré aléatoirement avec le tier selectionné
 
-     //pokemon_t * pok = malloc(sizeof(pokemon_t));
-
-     //pok = ;
-
-     //pokemon_t ** pok = malloc(sizeof(pokemon_t));
-
-
-
-     //pok=tirerPokemon(tier, database);
-
-     //int pos = tirerPokemon(tier, database);
-
-     //printf("\n**%d**\n", pos);
-
-
-     //boutique[i] = *tirerPokemon(tier, database);
-
-     //printf("**%s**", pok->name);
-
-     //pokemon_t * pokemon = malloc(sizeof(pokemon_t));
-
-     //pokemon = tirerPokemon(tier, database);
-
-     //printf("pokemon tirer : %s\n", pokemon->name);
-
-     //boutique = pokemon;
-     //(boutique+i) = tirerPokemon(tier, database);
-     //printf("pokemon tirer(2) : %s\n", boutique[i].name);
-
-
-     //if(i!=4)boutique++;
-     //boutique++;
-     // tirage d'un pokemon aléatoire du tier tirer
-     //pokemon_t * poke = tirerPokemon(tier+1, database);
-     // stockage du pokemon dans la boutique du joueur
-     //player->boutique = poke;
-     //player->boutique += sizeof(pokemon_t);
    }
-   //boutique = debut;
 
    return boutique;
  }
 
+ // clear && gcc -o bin/boutique src/boutique.c src/database.c ./src/fonction_SDL.c $(sdl2-config --cflags --libs) -lSDL2 -lSDL2_image -lSDL2_ttf && ./bin/boutique
 
- /*void affichertableau(pokemon_t *tableau, int taille){
-   // Vider le flux d'entrée
-   while (getchar() != '\n');
+ // clear && gcc -o bin/gif src/pkm-tactics.c ./src/CEV_gif.h ./src/CEV_gifDeflate.c ./src/CEV_gifDeflate.h ./src/CEV_gifToSurface.c ./src/CEV_gifToSurface.h ./src/CEV_gifUser.c $(sdl2-config --cflags --libs) -lSDL2 -lSDL2_image -lSDL2_ttf && ./bin/gif
 
-   for (int i = 0 ; i < taille ; i++){
-     printf("Pokemon numero %d\n ",i+1);
-     printf("Nom : %s  ID :  %d \n",(tableau+i)->name,(tableau+i)->id);
-     printf("\nAppuyez sur Entrée pour continuer...\n");
-     getchar();
-   }
- }*/
-
- //clear && gcc -o bin/boutique src/boutique.c src/database.c ./src/fonction_SDL.c $(sdl2-config --cflags --libs) -lSDL2 -lSDL2_image -lSDL2_ttf && ./bin/boutique
 
  int main(int argc, char* argv[])
  {
@@ -405,9 +277,8 @@
    //printf("\n**%d**\n", test);
 
    //int boutique[5];
-   pokemon_t * boutique = malloc(sizeof(pokemon_t)*5);
+   pokemon_t * boutique = genererBoutique(joueur, database);
 
-   boutique = genererBoutique(joueur, database);
 
    //pokemon_t * pokemon;
 
