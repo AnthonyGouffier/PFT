@@ -132,10 +132,10 @@
 
  // clear && gcc -o bin/gif src/pkm-tactics.c ./src/CEV_gif.h ./src/CEV_gifDeflate.c ./src/CEV_gifDeflate.h ./src/CEV_gifToSurface.c ./src/CEV_gifToSurface.h ./src/CEV_gifUser.c $(sdl2-config --cflags --libs) -lSDL2 -lSDL2_image -lSDL2_ttf && ./bin/gif
 
-
+/*
  int main(int argc, char* argv[])
  {
-   srand( time( NULL ) );
+  srand( time( NULL ) );
 
 
    /*int pokemon_size = 1;
@@ -255,7 +255,8 @@
      printf("Nom : %s  ID :  %d \n",(database+i)->name,(database+i)->id);
      printf("\nAppuyez sur Entrée pour continuer...\n");
      getchar();
-   }*/
+   }
+
    pokemon_t * database = genererationDatabase();
 
    int taille = nbPokeTier[0]*nbRepliqueTier[0];
@@ -286,7 +287,7 @@
 
    /*printf("\nname=%s tier=%d\n", pokemon->name, pokemon->rarete);
 
-   */
+  
    for(int i = 0; i < 5; i++)
    {
 
@@ -300,3 +301,4 @@
    }
 
  }
+*/
