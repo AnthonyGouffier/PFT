@@ -140,7 +140,9 @@ void acheterCarte(player_t* joueur, carteBoutique* carte ,pokemon_t* pokemon){
 
 
 plaqueStat CreerGraphStats(SDL_Renderer* renderer, SDL_Window* window, player_t* player , int x , int y , int width_plaque , int hight_plaque){
-    
+    // Remet la taille de ton carré a la taille maximale
+
+
     plaqueStat plaque;
     // Charger une police de caractères
     TTF_Font* font = TTF_OpenFont("ressources/font/Pokemon_Classic.ttf", 12);
@@ -181,9 +183,11 @@ plaqueStat CreerGraphStats(SDL_Renderer* renderer, SDL_Window* window, player_t*
     int  h = hight_plaque;
 
     SDL_Rect temp0={x,y,w,h};
+    printf("x : %d ,y %d ,w %d ,h %d\n\n ", x,y,w,h);
     SDL_Rect temptxt={temp0.x + (temp0.w * 0.02),temp0.y + (temp0.h * 0.19), temp0.w * 0.84 ,  (temp0.h * 0.28) };
     SDL_Rect tempniv={temp0.x + (temp0.w * 0.75),temp0.y + (temp0.h * 0.55), temp0.w * 0.167 , (temp0.h * 0.265) };
     SDL_Rect temphp={temp0.x +  (temp0.w * 0.17),temp0.y + (temp0.h * 0.633),temp0.w * 0.54 ,  (temp0.h * 0.105) };
+    temphp.w=temp0.w * 0.54 ;
     SDL_Rect tempxp={temp0.x +  (temp0.w * 0.06),temp0.y + (temp0.h * 0.87), temp0.w * 0.77 ,  (temp0.h * 0.08) };
     
     /*calcul dans la dimension de la bar de HP*/
