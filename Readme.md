@@ -30,4 +30,4 @@ Le projet comporte les fonctionnalités suivantes :
 - (a venir ) Systeme de jeu en réseau
 
 ## PS :
-Actuellement les fonctionnalités sur le jeu sont éparpillé à travers de divers fichier, l'épique de dévellopement fait de son mieux dans le but d'unifier le code
+Actuellement les fonctionnalités sur le jeu sont éparpillé à travers de divers fichier, l'équique de dévellopement fait au mieux afin d'unifier le code dans les plus brefs délais
