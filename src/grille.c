@@ -41,7 +41,13 @@ typedef struct {
     SDL_Texture* texture; // Texture du bouton (à générer avec SDL_CreateTextureFromSurface())
 } Button;
 
-
+/**
+ * @brief Get the Button Rect object
+ * 
+ * @param bouttonx 
+ * @param bouttony 
+ * @return SDL_Rect 
+ */
 SDL_Rect getButtonRect(int bouttonx, int bouttony) {
     Button buttonRect;
     buttonRect.rect.x = bouttonx;
@@ -53,7 +59,13 @@ SDL_Rect getButtonRect(int bouttonx, int bouttony) {
 }
 
 
-
+/**
+ * @brief test de simulation d un combats sur un plateau et de phase de Placement
+ * 
+ * @param argc 
+ * @param args 
+ * @return int 
+ */
 int main(int argc, char* args[]) {
 
 
@@ -101,7 +113,7 @@ int main(int argc, char* args[]) {
     // Boucle principale
     int quit = 0;
     int cpt=0; //compteur pour que tout les 2 bouton on switch les deplacement
-    int phase=2;
+    int phase=1;
     int x_save,y_save;
     pokemon_t *  plateau[GRID_ROWS][GRID_COLUMNS];
     pokemon_t *  poke=createPkmDatabase(1,5);
@@ -176,19 +188,6 @@ int main(int argc, char* args[]) {
             }
         }
 
-        if(phase==2){
-            combat(plateau,tour);
-            tour++;
-            printf("wesh");
-                for (int row = 0; row < GRID_ROWS; row++) {
-                    for (int column = 0; column < GRID_COLUMNS; column++) {
-                        if(plateau[row][column]==){
-
-                        }
-                    }
-                }    
-        }
-
 
         // Effacer le renderer
         SDL_RenderClear(renderer);
@@ -208,7 +207,6 @@ int main(int argc, char* args[]) {
                 buttonRect.rect.w =  BUTTON_SIZE;
                 buttonRect.rect.h = BUTTON_SIZE;
                 if(plateau[row][column]->alive==1){
-                    SDL_Delay(50);
                     SDL_Texture* Texturetampon = SDL_CreateTextureFromSurface(renderer, plateau[row][column]->imgSurface);
                     setButtonImage(renderer,Texturetampon,&buttonRect.rect);
                     SDL_DestroyTexture(Texturetampon);

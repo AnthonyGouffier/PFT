@@ -12,7 +12,10 @@
 
  #include <time.h>
  #include "boutique.h"
-
+/**
+ * @brief genere la rarete des pokemon
+ * 
+ */
  int rarete[9][5] = // stocke la probabilité de chaque tier de pokemon pour chaque niveau du joueur
  {
    // {tier1, tier2, tier3, tier4, tier4, tier5}
@@ -55,7 +58,13 @@
 
  int nbPokeTier[5]     = { 6,5,4,3,2 };     // nombre de pokemon différent pour chaque tier
  int nbRepliqueTier[5] = { 29,22,16,12,10}; // nombre de replique de chaque pokemon different pour chaque tier
-
+/**
+ * @brief tire un pokemon 
+ * 
+ * @param tier 
+ * @param database 
+ * @return pokemon_t* 
+ */
  pokemon_t * tirerPokemon(int tier, pokemon_t * database)
  {
 
@@ -82,7 +91,13 @@
 
    return &database[pok_pos];
  }
-
+/**
+ * @brief permet d acheter un pokemon 
+ * 
+ * @param player 
+ * @param pokemon 
+ * @param boutique 
+ */
  void acheter(player_t * player, pokemon_t * pokemon, boutique_t * boutique)
  {
    if(player->money >= pokemon->rarete)
@@ -105,7 +120,13 @@
       printf("|--------------------|\n");
     }
   }
-
+/**
+ * @brief genere 5 pokemon tirer aleatoirement dans une base 
+ * 
+ * @param player 
+ * @param database 
+ * @return pokemon_t* 
+ */
  pokemon_t * genererBoutique(player_t * player, pokemon_t * database){
    int level = (player->niveau);                 // recupere niveau du joueur
    int indice = level-1;                         // convertit le niveau du joueur en indice
