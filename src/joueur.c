@@ -8,7 +8,7 @@
 
 void acheterNiveauXP(player_t *joueur){
     /*Recupere les valeures importantes*/
-    if(joueur->alive==true && joueur->money > 4 && joueur->niveau>2 && joueur->niveau < 11 ){
+    if(joueur->alive==true && joueur->money > 4 && joueur->niveau>2 && joueur->niveau < 10 ){
         joueur->xp += 4;
         joueur->money -= 4;
 
@@ -54,13 +54,6 @@ void acheterNiveauXP(player_t *joueur){
                     joueur->niveau++;
                     printf("Vous passez au niveau %d\n",joueur->niveau);
                     joueur->xp-=80;
-                } 
-                break;
-            case 9:
-                if(joueur->xp > 100){
-                    joueur->niveau++;
-                    printf("Vous passez au niveau %d\n",joueur->niveau);
-                    joueur->xp-=100;
                 } 
                 break;
             default:
@@ -191,13 +184,12 @@ plaqueStat CreerGraphStats(SDL_Renderer* renderer, SDL_Window* window, player_t*
     SDL_Rect tempxp={temp0.x +  (temp0.w * 0.06),temp0.y + (temp0.h * 0.87), temp0.w * 0.77 ,  (temp0.h * 0.08) };
 
     /*calcul dans la dimension de la bar de HP*/
-    int cpt_hp=100;
-    while(cpt_hp != player->hp){
-        cpt_hp--;
-    }
-    temphp.w=(temphp.w  * cpt_hp) / 100;
+    temphp.w=(temphp.w  * player->hp) / 100;
 
-    
+    /*calcul dans la dimension de la bar de XP*/
+    int etageniv = player->xp;
+    tempxp.w=(tempxp.w  * player->xp) / player -> lvlcap[etageniv-1];
+    printf("\ntempxp.w = %d\n",tempxp.w);
 
     plaque.rectDest=temp0;
     plaque.rectTexte=temptxt;
