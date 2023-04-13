@@ -189,17 +189,15 @@ plaqueStat CreerGraphStats(SDL_Renderer* renderer, SDL_Window* window, player_t*
     SDL_Rect temphp={temp0.x +  (temp0.w * 0.17),temp0.y + (temp0.h * 0.633),temp0.w * 0.54 ,  (temp0.h * 0.105) };
     temphp.w=temp0.w * 0.54 ;
     SDL_Rect tempxp={temp0.x +  (temp0.w * 0.06),temp0.y + (temp0.h * 0.87), temp0.w * 0.77 ,  (temp0.h * 0.08) };
-    
+
     /*calcul dans la dimension de la bar de HP*/
-
-    printf("temphp.w AVANT %d\n" ,temphp.w);
-    for(int i = 100 ; i >= player->hp ; i--){
-        temphp.w=(temphp.w  * i) / 100;
-        printf("i : %d , PV : %d\n",i,player->hp);
-        printf("taille bar XP en pixel : %d \n",temphp.w);
+    int cpt_hp=100;
+    while(cpt_hp != player->hp){
+        cpt_hp--;
     }
-    printf("temphp.w APRES %d\n" ,temphp.w);
+    temphp.w=(temphp.w  * cpt_hp) / 100;
 
+    
 
     plaque.rectDest=temp0;
     plaque.rectTexte=temptxt;
