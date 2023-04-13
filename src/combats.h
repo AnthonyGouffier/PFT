@@ -15,7 +15,7 @@
 
 #define pok 1
 #define enemi 2
-#define N 5
+#define N 6
 
 typedef struct PL_s{
   int hp;
@@ -154,5 +154,13 @@ void affiche_stat(pokemon_t * mat[N][N],pos_t pos);
  * @param mat 
  */
 void affiche_tout(pokemon_t * mat[N][N]);
+
+/**
+ * @brief fait un tour de combats
+ * 
+ * @param mat 
+ * @param tour 
+ */
+void combats(pokemon_t * mat[N][N],int tour);
 
 #endif

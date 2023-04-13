@@ -12,6 +12,7 @@
 #include "grille.h"
 #include "entites.h"
 
+
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int BUTTON_SIZE = 55;
@@ -97,7 +98,7 @@ int main(int argc, char* args[]) {
     // Boucle principale
     int quit = 0;
     int cpt=0; //compteur pour que tout les 2 bouton on switch les deplacement
-    int phase=1;
+    int phase=2;
     int x_save,y_save;
     pokemon_t *  plateau[GRID_ROWS][GRID_COLUMNS];
     pokemon_t *  poke=createPkmDatabase(1,5);
@@ -118,11 +119,13 @@ int main(int argc, char* args[]) {
         }
     }
 
-    plateau[3][3]=poke;
-    plateau[4][4]=poke;                                   
+    plateau[1][1]=poke;
+    plateau[4][4]=poke;   
+    plateau[4][4]->dresseur=1;
+    plateau[1][1]->dresseur=2;                           
     poke_save=poke;
     printPkm(*poke_save);
-
+    int tour=0;
 
     while (!quit) {
         int mouseX, mouseY;
@@ -156,20 +159,7 @@ int main(int argc, char* args[]) {
                                             cpt--;
                                         }
                                         //phase==2;
-                                   }else if(phase==2){
-                                        
-                                        //phase==1;
                                    }
-                                   
-                                   /* if(cpt==0){
-                                        bouton1.rect=getButtonRect(buttonX,buttonY);
-                                        bouton1.texture=buttonRect.texture;
-                                        cpt++;
-                                    }else{
-                                        cpt=0;
-                                        bouton2.rect=getButtonRect(buttonX,buttonY);
-                                        bouton2.texture=buttonRect.texture;
-                                    }*/
 
                             }
                         }
@@ -177,6 +167,7 @@ int main(int argc, char* args[]) {
                     break;
             }
         }
+
 
         // Effacer le renderer
         SDL_RenderClear(renderer);
@@ -195,6 +186,10 @@ int main(int argc, char* args[]) {
                 buttonRect.rect.y = buttonY;
                 buttonRect.rect.w =  BUTTON_SIZE;
                 buttonRect.rect.h = BUTTON_SIZE;
+                if(phase==2){
+                    combats(plateau,tour);
+                    tour++;
+                }
                 if(plateau[row][column]->alive==1){
                     SDL_Texture* Texturetampon = SDL_CreateTextureFromSurface(renderer, plateau[row][column]->imgSurface);
                     setButtonImage(renderer,Texturetampon,&buttonRect.rect);
