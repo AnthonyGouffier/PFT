@@ -221,7 +221,7 @@ int main(int argc, char* argv[]) {
                         if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &AcheterNiveau.rect)) {
                             acheterNiveauXP(&TabJoueurs[0]);// Enlever 4 or dans la struct joueur
                             TabJoueurs[0].hp--;
-                            renduStat = CreerGraphStats( renderer , window , &TabJoueurs[0] , SCREEN_WIDTH/2 , SCREEN_HEIGHT/2  ,  WIDTH_STATS  , HEIGHT_STATS );
+                            renduStat = CreerGraphStats( renderer , window , &TabJoueurs[0] , 0 , SCREEN_HEIGHT * 0.15  ,  WIDTH_STATS  , HEIGHT_STATS );
                             for (int i = 0; i < nbjoueur; i++){
                                 stat_player(&(TabJoueurs[i]));
                             }
