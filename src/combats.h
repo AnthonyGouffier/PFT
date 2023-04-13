@@ -7,8 +7,8 @@
  * 
  * 
  */
-#ifndef COMBATS_H
-#define COMBATS_H
+#ifndef COMBATS_H_INCLUDED
+#define COMBATS_H_INCLUDED
 
 #include "commun.h"
 #include "entites.h"

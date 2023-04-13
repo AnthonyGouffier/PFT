@@ -109,22 +109,21 @@ pos_t avance(pokemon_t * mat[N][N],int xenemie,int yenemie,int posx,int posy){
   newpos.y=posy; 
   if (posx < xenemie && valides((newpos.x+1),newpos.y ) && mat[newpos.x+1][newpos.y]->alive!=1){
     newpos.x += 1;
-    printf("déplacement\n");
+
     return newpos;
   } else if (posx > xenemie && valides((newpos.x-1),newpos.y) && mat[newpos.x-1][newpos.y]->alive!=1){
     newpos.x -= 1;
-    printf("déplacement\n");
+
     return newpos;
   } else if(posy < yenemie && valides(newpos.x,(newpos.y+1)) && mat[newpos.x][newpos.y+1]->alive!=1){ 
       newpos.y += 1;
-      printf("déplacement\n");
+
       return newpos;
   }else if(posy > yenemie && valides(newpos.x,(newpos.y-1)) && mat[newpos.x][newpos.y-1]->alive!=1){
       newpos.y -= 1;
-      printf("déplacement\n ");
+
       return newpos;
   }
-  printf("ne peut avancer");
   return newpos;
 }
 
@@ -282,7 +281,6 @@ void combat(pokemon_t * mat[N][N],int tour){
         if(aporter(mat,mat[i][j]->range,i,j)==1 && mat[i][j]->x==tour){
           mat[i][j]->x+=1;
           mat[enemi_proche.y][enemi_proche.x]->pv=degats_subi_pkm(mat[enemi_proche.y][enemi_proche.x]->pv,mat[enemi_proche.y][enemi_proche.x]->def,mat[i][j]->att);
-          printPkm(*mat[i][j]);
         }else{
         if(mat[i][j]->x==tour){   
               mat[i][j]->x+=1;
@@ -330,11 +328,17 @@ void reset_plateau(pokemon_t * mat[N][N],int equipe){
   }
 }
 
+
+
+
+
+
 /**
  * @brief test de combat
  * 
  * @return int 
  */
+ /*
 int main(){
   pokemon_t *  plateau[N][N];
   pokemon_t *  poke=createPkmDatabase(1,1);
@@ -375,7 +379,7 @@ int main(){
       cpt++;
     }
 }
-
+*/
 
 
 
