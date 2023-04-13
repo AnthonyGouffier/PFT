@@ -17,7 +17,6 @@ typedef struct carteBoutique_s {
     SDL_Texture* bgTexture;
     SDL_Texture* pkmTexture;
     SDL_Texture* pieceTexture;
-    SDL_Texture* textureText;
     SDL_Texture* prixTexture;
     SDL_Texture* nomTexture;
 } carteBoutique;
@@ -27,5 +26,6 @@ typedef struct carteBoutique_s {
 void detruireCartePkmBoutique(carteBoutique*);
 carteBoutique genererCartePkmBoutique(pokemon_t ,SDL_Renderer* , SDL_Window *  ,int  , int , int , int) ;
 void afficherCartePkmBoutique(carteBoutique ,SDL_Renderer* ,pokemon_t );
+void cartevisibles(carteBoutique* ,int);
 
 #endif

@@ -87,7 +87,7 @@ carteBoutique genererCartePkmBoutique(pokemon_t pokemon,SDL_Renderer* renderer, 
     carte.destRect.h =destHeight;
 
     // Chargement de la police Arial
-    TTF_Font* font = TTF_OpenFont("ressources/font/spiegel.ttf",22);
+    TTF_Font* font = TTF_OpenFont("ressources/font/spiegel.ttf",14);
     if (!font) {
         printf("Erreur de chargement de la police: %s\n", TTF_GetError());
         // Gestion de l'erreur
@@ -210,33 +210,43 @@ void detruireCartePkmBoutique(carteBoutique carte, SDL_Renderer* renderer){
 */
 void detruireCartePkmBoutique(carteBoutique* carte) {
     if (carte->bgTexture != NULL) {
-        printf("Destruction\n");
+        printf("Destruction img arriere plan ... ");
         SDL_DestroyTexture(carte->bgTexture);
         carte->bgTexture = NULL;
+        printf("detruite\n");
     }
     if (carte->pkmTexture != NULL) {
-        printf("Destruction\n");
+        printf("Destruction image pokemon ... ");
         SDL_DestroyTexture(carte->pkmTexture);
         carte->pkmTexture = NULL;
+        printf("detruite\n");
     }
     if (carte->pieceTexture != NULL) {
-        printf("Destruction\n");
+        printf("Destruction logo de la piece ... ");
         SDL_DestroyTexture(carte->pieceTexture);
         carte->pieceTexture = NULL;
+        printf("detruite\n");
     }
-    if (carte->textureText != NULL) {
-        printf("Destruction\n");
-        SDL_DestroyTexture(carte->textureText);
-        carte->textureText = NULL;
-    }
+    
     if (carte->prixTexture != NULL) {
-        printf("Destruction\n");
+        printf("Destruction texte du prix... ");
         SDL_DestroyTexture(carte->prixTexture);
         carte->prixTexture = NULL;
+        printf("detruite\n");
     }
     if (carte->nomTexture != NULL) {
-        printf("Destruction\n");
+        printf("Destruction ... ");
         SDL_DestroyTexture(carte->nomTexture);
         carte->nomTexture = NULL;
+        printf("detruite\n");
+    }
+    
+}
+
+/*Rend les cartes visibles, prend le tableau le nombre de carte à modifier*/
+void cartevisibles(carteBoutique* tableau_de_cartes ,int i){
+    for (int i = 0; i < 5; i++) {
+        tableau_de_cartes[i].click=0;
+        printf("Carte %d remise en état visible\n",i);
     }
 }
