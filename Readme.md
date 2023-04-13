@@ -25,9 +25,9 @@ Actuellement des mofications sont en cours ...
 Le projet comporte les fonctionnalités suivantes :
 
 - Génération d'une database dynamiquement
-- (a venir ) systeme d'économie (boutique , interet ect...)
-- (a venir )Combat entre les différentes entités 
+- Systeme d'économie (boutique , interet ect...)
+- (En cours )Combat entre les différentes entités 
 - (a venir ) Systeme de jeu en réseau
 
 ## PS :
-Actuellement les fonctionnalités sur le jeu sont éparpillé à travers de divers fichier, l'épique de dévellopement fait de son mieux dans le but d'unifier clean
+Actuellement les fonctionnalités sur le jeu sont éparpillé à travers de divers fichier, l'épique de dévellopement fait de son mieux dans le but d'unifier le code
