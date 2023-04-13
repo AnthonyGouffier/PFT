@@ -135,7 +135,7 @@
      boutique[i] = *tirerPokemon(tier+1, database); // on ajoute à la boutique le pokemon tiré aléatoirement avec le tier selectionné
 
   }
-  boutiqueinfo(boutique);
+  //boutiqueinfo(boutique);
 
   return boutique;
   }
