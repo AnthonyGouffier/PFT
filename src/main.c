@@ -202,23 +202,19 @@ int main(int argc, char* argv[]) {
                         mouseX = event.button.x;
                         mouseY = event.button.y;
                         if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &BtnActu.rect)) {
-                            //genererCartes(renderer,window);
                             printf("Bouton Actualiser cliqué !\n");
-                            //free(listepokemon);
+                            /*Destruction carte boutique*/
                             for (int i = 0; i < 5; i++) {
                                 printf("destruction carte %d\n" , i);
-                                //detruireCartePkmBoutique(*(tabcarte+i),renderer);
                                 detruireCartePkmBoutique( &tabcarte[i] );
                             }
                             listepokemon = genererBoutique(&TabJoueurs[0],database);
+                            tabcarte=genererTabCarte(listepokemon,renderer,window);
 
-                            /*
-                            for (int i = 0; i < 5; i++) {
-                                tabcarte[i].click=0;
-                                printf("Carte %d remise en état visible\n",i);
-                                printf("Le joueur perd 2 Or\n Or restant : (a remplir)");
-                            }
-                            */
+                            //Les cartes redeviennent visibles
+                            cartevisibles( tabcarte , NUM_BUTTONS);
+                            printf("Le joueur perd 2 Or\n Or restant : (a remplir)");
+                            
                             //genererTabCarte(pokemon,renderer,window);
                             // Enlever 2 or dans la structure du joueur
                         }
