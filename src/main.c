@@ -16,12 +16,12 @@
 #include "boutique.h"
 
 
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
 #define NUM_BUTTONS 5
 
-#define  AREA_WIDTH SCREEN_WIDTH * 0.60
-#define  AREA_HIGH  SCREEN_HEIGHT * 0.60
+#define  AREA_WIDTH SCREEN_WIDTH * 0.53
+#define  AREA_HIGH  SCREEN_HEIGHT * 0.66
 
 #define WIDTH_STATS   SCREEN_WIDTH / 8
 #define HEIGHT_STATS  SCREEN_HEIGHT/ 12
@@ -40,7 +40,7 @@ typedef struct {
 Button CartePkm[NUM_BUTTONS];
 
 /**/
-SDL_Rect ArenaZone = {( SCREEN_WIDTH - AREA_WIDTH) / 2 , 0 , AREA_WIDTH , AREA_HIGH };
+SDL_Rect ArenaZone = {( SCREEN_WIDTH * 0.23) , SCREEN_HEIGHT * 0.03 , AREA_WIDTH , AREA_HIGH };
 
 
 /*
@@ -90,9 +90,7 @@ int main(int argc, char* argv[]) {
     //Creation de la database
     pokemon_t* database= genererationDatabase();
     pokemon_t *listepokemon = genererBoutique(&TabJoueurs[0],database);
-    //afficherEquipe(listepokemon,100);
 
-    afficherEquipe(listepokemon,5);    //Creation d'un joueur
     // Création de la fenêtre
     SDL_Window* window = SDL_CreateWindow("PFT", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if ( window == NULL){ 
@@ -108,7 +106,6 @@ int main(int argc, char* argv[]) {
     }
 
     // Charger les images de l'ATH
-
 
     //image de fond
     //button boutiques
@@ -166,10 +163,12 @@ int main(int argc, char* argv[]) {
     
     // Initialisation des boutons
     carteBoutique *tabcarte=genererTabCarte(listepokemon,renderer,window);   
-    
+     
     //Initialisation du rendu des PV
     plaqueStat renduStat = CreerGraphStats( renderer , window , &TabJoueurs[0] , 0 , SCREEN_HEIGHT * 0.15  ,  WIDTH_STATS  , HEIGHT_STATS );
 
+
+    //chargerBancPlayer(window , renderer , TabJoueurs[0] , SCREEN_WIDTH/2 , 0 , SCREEN_WIDTH * 0.10 , SCREEN_HEIGHT * 0.75 );
 
 
     // Boucle principale
@@ -222,6 +221,7 @@ int main(int argc, char* argv[]) {
                             acheterNiveauXP(&TabJoueurs[0]);// Enlever 4 or dans la struct joueur
                             TabJoueurs[0].hp--;
                             renduStat = CreerGraphStats( renderer , window , &TabJoueurs[0] , 0 , SCREEN_HEIGHT * 0.15  ,  WIDTH_STATS  , HEIGHT_STATS );
+                            //chargerBancPlayer(window , renderer , TabJoueurs[0] , SCREEN_WIDTH/2 , 0 , SCREEN_WIDTH * 0.10 , SCREEN_HEIGHT * 0.75 );
                             for (int i = 0; i < nbjoueur; i++){
                                 stat_player(&(TabJoueurs[i]));
                             }
@@ -230,6 +230,7 @@ int main(int argc, char* argv[]) {
                             if (SDL_PointInRect(&(SDL_Point){mouseX, mouseY}, &tabcarte[i].blackRect) && tabcarte[i].click==0) {
                                 printf("la carte numero %d à été cliqué\n",i);
                                 acheterCarte(&TabJoueurs[0],&tabcarte[i],&listepokemon[i]);
+                                //chargerBancPlayer(window , renderer , TabJoueurs[0] , SCREEN_WIDTH/2 , 0 , SCREEN_WIDTH * 0.10 , SCREEN_HEIGHT * 0.75 );
                             }
                         }
                 break;
@@ -262,6 +263,9 @@ int main(int argc, char* argv[]) {
 /*------------------RENDU BANC------------------*/
    // drawCases(renderer, 50, 50, 200, 800, 6, 2);
     AfficherGraphStats(window,renderer,renduStat,&TabJoueurs[0]);
+
+        //Initilisation du banc
+    //drawRects(renderer, window, TabJoueurs[0]) ;
 
     SDL_RenderPresent(renderer);
     }
