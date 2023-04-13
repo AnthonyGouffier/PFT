@@ -27,5 +27,5 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
-	rm -f $(BIN_DIR)/*.o $(EXECUTABLE)
+	rm $(BIN_DIR)/*.o $(EXECUTABLE)
 	del /Q /S $(BIN_DIR)\*.o $(EXECUTABLE)
