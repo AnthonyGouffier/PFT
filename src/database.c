@@ -33,6 +33,13 @@ const int NbNiv5=2;
 #define DEFAULT_Y 0
 
 //assigne les stats par defaut à un pokemon.
+/**
+ * @brief stat de de taille
+ * 
+ * @param pokemon 
+ * @param taille 
+ * @param indRar 
+ */
 void auto_fill_pkm_stats(pokemon_t* pokemon,int taille , int indRar ){
   /*int indRar;
   do{
@@ -88,6 +95,11 @@ pokemon_t* initialiserPkm(pokemon_t* pokemon){
 }
 */
 
+/**
+ * @brief initialise un pok
+ * 
+ * @return pokemon_t 
+ */
 pokemon_t initialiserPkm(){
     pokemon_t pokemon;
     pokemon.id = 0;
@@ -114,11 +126,18 @@ pokemon_t initialiserPkm(){
     pokemon.x = 0;
     pokemon.y = 0;
 
-    printPkm(pokemon);
+    //rintPkm(pokemon);
     return pokemon;
 }
 
-/*Permet de créer un tableau de N Pokémon avec les stats par défault*/
+
+/**
+ * @brief Permet de créer un tableau de N Pokémon avec les stats par défault
+ *
+ * @param taille 
+ * @param indRar 
+ * @return pokemon_t* 
+ */
 pokemon_t * createPkmDatabase(int taille, int indRar){
   int c;
   int i = 0 ;
@@ -180,6 +199,11 @@ pokemon_t * createPkmDatabase(int taille, int indRar){
   return tableau;
 }
 
+/**
+ * @brief affiche un pkm
+ * 
+ * @param pokemon 
+ */
 void printPkm(pokemon_t pokemon){
   printf("Nom : %s (id:%d) \nType : %s\nTotal %d\n PV max %d\n PV %d\n Attaque %3.f\n Defense %3.f\n Attaque Speciale %3.f\n Defense Speciale %3.f\n Vitesse %3.f\n portee %d\n Rarete %d\n alive %d \n ",pokemon.name,pokemon.id,pokemon.classe,pokemon.total,pokemon.pv_max,pokemon.pv,pokemon.att,pokemon.def,pokemon.attspe,pokemon.defspe,pokemon.spd,pokemon.range,pokemon.rarete,pokemon.alive);
   printf("Ce Pokemon appartient a joueur %d\n", pokemon.dresseur);
@@ -189,6 +213,12 @@ void printPkm(pokemon_t pokemon){
   printf("\n");
 }
 
+/**
+ * @brief affiche un tableau pkm
+ * 
+ * @param tableau 
+ * @param taille 
+ */
 void affichertableau(pokemon_t *tableau, int taille){
   // Vider le flux d'entrée
   while (getchar() != '\n');
@@ -199,7 +229,12 @@ void affichertableau(pokemon_t *tableau, int taille){
     getchar();
   }
 }
-
+/**
+ * @brief affiche une equipe de pokemon
+ * 
+ * @param equipe 
+ * @param taille 
+ */
 void afficherEquipe(pokemon_t *equipe,int taille){
   //taille=sizeof((equipe)-1);
   for (int i = 0; i < taille; i++)
@@ -210,6 +245,13 @@ void afficherEquipe(pokemon_t *equipe,int taille){
 }
 
 /* Copie les pokemon N fois selon le niveau de rarete */
+/**
+ * @brief distribue les pokemon par tier 
+ * 
+ * @param base 
+ * @param sortie 
+ * @param taille 
+ */
 void distribution(pokemon_t* base, pokemon_t* sortie, int taille){
   int copie;
   int index = 0;
@@ -250,7 +292,11 @@ void distribution(pokemon_t* base, pokemon_t* sortie, int taille){
     index += copie;
   }
 }
-
+/**
+ * @brief genere une database de 5 pokemon
+ * 
+ * @return pokemon_t* 
+ */
 pokemon_t* genererationDatabase(){
   int tailleFinal=(NbNiv1*29)+(NbNiv2*22)+(NbNiv3*16)+(NbNiv4*12)+(NbNiv5*10);
   int NbNivTotal=(NbNiv1)+(NbNiv2)+(NbNiv3)+(NbNiv4)+(NbNiv5);

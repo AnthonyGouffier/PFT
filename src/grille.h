@@ -7,10 +7,11 @@
  * 
  * 
  */
-#ifndef grille_H
-#define grille_H
+#ifndef GRILLE_H_INCLUDED
+#define GRILLE_H_INCLUDED
 
+#include "combats.h"
 #include "commun.h"
-
+#include "entites.h"
 
 #endif
