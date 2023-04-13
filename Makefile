@@ -29,3 +29,8 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.c
 clean:
 	rm $(BIN_DIR)/*.o $(EXECUTABLE)
 	del /Q /S $(BIN_DIR)\*.o $(EXECUTABLE)
+
+doc:
+	doxygen Doxyfile
+
+.PHONY: all clean doc
